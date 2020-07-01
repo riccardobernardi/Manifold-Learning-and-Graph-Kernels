@@ -1,0 +1,8 @@
+/venv
+*.iml
+*.xml
+*.pyc
+/.DS_store
+sudokus/.DS_Store
+sudoku_csvs/sudoku.csv
+sudoku_csvs/.DS_Store
