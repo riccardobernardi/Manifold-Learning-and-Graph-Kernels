@@ -14,15 +14,7 @@ Bernardi Riccardo - 864018
 
 <div style="page-break-after: always;"></div>
 
-
-
-# 1. Introduction
-
-
-
-
-
-# 2. Problem Description
+# 1. Problem Statement
 
 Read [this article](https://www.dsi.unive.it/~atorsell/AI/graph/Unfolding.pdf) presenting a way to improve the disciminative power of graph kernels.
 
@@ -62,7 +54,77 @@ NEW I have added zip files with csv versions of the adjacecy matrices of the gra
 
 
 
-## Bibliography
+# 2. Introduction
+
+
+
+
+
+# 3. The Graph Kernel
+
+
+
+Introduction to graph kernels, what is it?
+
+
+
+### 3.1 The available kernels
+
+explain the choice of a kernel
+
+### 3.2 Examples 
+
+examples of some kernels
+
+
+
+# 4. The Manifold Technique
+
+
+
+Introduction to Manifold Techniques, what is it?
+
+
+
+### 4.1 The available Manifold Techniques
+
+explain the choice of a Manifold Techniques
+
+### 4.2 Examples 
+
+examples of some Manifold Techniques
+
+
+
+
+
+# 5. Comparison
+
+Train an SVM with the kernel chosen applying the manifold technique or not and show the difference
+
+
+
+### 4.1 Training without Manifold
+
+Training without Manifold
+
+### 4.2 Training with Manifold
+
+Training with Manifold
+
+### 4.2 Results
+
+Results of Manifold Techniques
+
+
+
+
+
+# 6. Conclusions
+
+
+
+# Bibliography
 
 1. Manifold Learning and Dimensionality Reduction for Data Visualization... - Stefan Kühn - https://www.youtube.com/watch?v=j8080l9Pvic
 2. Unsupervised Learning Explained (+ Clustering, Manifold Learning, ...) - https://www.youtube.com/watch?v=-OEgiMH5aok
