@@ -58,6 +58,8 @@ NEW I have added zip files with csv versions of the adjacecy matrices of the gra
 
 
 
+Protein Protein Interaction dataset
+
 
 
 # 3. The Graph Kernel
@@ -235,4 +237,8 @@ Results of Manifold Techniques
 107. Deep Graph Kernels - https://www.youtube.com/watch?v=hqbMbTlTpXU
 108. Graph Theory FAQs: 03. Isomorphism Using Adjacency Matrix - https://www.youtube.com/watch?v=UCle3Smvh1s
 109. Deep Graph Kernels - https://dl.acm.org/doi/pdf/10.1145/2783258.2783417
+110. GRAPHLET COUNTING - http://evlm.stuba.sk/APLIMAT2018/proceedings/Papers/0442_Hocevar.pdf
+111. Graphlet based network analysis - https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=2207&context=open_access_dissertations
+112. Graphlet Counting for Topological Data Analysis - https://webthesis.biblio.polito.it/7641/1/tesi.pdf
+113. Estimating Graphlet Statistics via Lifting - https://arxiv.org/pdf/1802.08736.pdf
 
