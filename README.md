@@ -225,3 +225,14 @@ Results of Manifold Techniques
 97. LOCALL Y LINEAR EMBEDDING ALGORI THM - http://jultika.oulu.fi/files/isbn9514280415.pdf
 98. Truly Incremental Locally Linear Embedding - http://ai.stanford.edu/~schuon/learning/inclle.pdf
 99. Supervised locally linear embedding - http://rduin.nl/papers/icann_03_lle.pdf
+100. Me gusta en YouTube: On Graph Kernels - https://www.youtube.com/watch?v=xwVOarJGD7Q
+101. Embedding & Manifold Learning - https://moodle.unive.it/mod/resource/view.php?id=176673
+102. Wednesday 29/4/2020 - https://drive.google.com/file/d/1jQfGEqw9CYOHYAiIIdxmG7zc-7GKh5sY/view
+103. Monday 27/4/2020 - https://drive.google.com/file/d/1IM9csbR7s-ec2_I_ck1GzOoZeaRAaFGx/view
+104. Wednesday 22/4/2020 - https://drive.google.com/file/d/1wzkmQJ344orELbQKoVL1P-yrAMofi3v8/view
+105. On Graph Kernels - https://www.youtube.com/watch?v=xwVOarJGD7Q
+106. Weisfeiler-Lehman Neural Machine for Link Prediction - https://www.youtube.com/watch?v=QYhgLVt56z8
+107. Deep Graph Kernels - https://www.youtube.com/watch?v=hqbMbTlTpXU
+108. Graph Theory FAQs: 03. Isomorphism Using Adjacency Matrix - https://www.youtube.com/watch?v=UCle3Smvh1s
+109. Deep Graph Kernels - https://dl.acm.org/doi/pdf/10.1145/2783258.2783417
+
