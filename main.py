@@ -62,7 +62,7 @@ print(clf.score(X,Y))
 #############################################
 
 k=1
-embedding = LocallyLinearEmbedding(n_components=k)
+embedding = LocallyLinearEmbedding(n_components=k, n_neighbors=2)
 # print(np.array(pca.fit(graphs[0]["g"]).components_).flatten())
 
 X = pd.DataFrame([np.array(embedding.fit(i["g"]).embedding_).flatten() for i in graphs]).fillna(0)
