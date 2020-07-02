@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io
 from sklearn import svm
-import grakel.kernels.graphlet_sampling as graphlet
+from grakel.kernels import graphlet_sampling
 import pandas as pd
 from sklearn.decomposition import PCA
+from sklearn.manifold import LocallyLinearEmbedding
 
 base = "./"
 PPI_file = os.path.join(base, "PPI.mat")
@@ -35,39 +36,48 @@ for i in range(len(data)):
 #print(graphs[0]["g"].shape)
 #print(graphs[0]["l"])
 
+#############################################
+######## WITHOUT Manifold and Graph Kernel
+#############################################
+
 k=1
 pca = PCA(n_components=k)
 # print(np.array(pca.fit(graphs[0]["g"]).components_).flatten())
 
 
 X = pd.DataFrame([np.array(pca.fit(i["g"]).components_).flatten() for i in graphs]).fillna(0)
-#print(X)
+print(X.shape)
 Y = [i["l"] for i in graphs]
 
 #print(X[0])
 #print(Y)
 
 # we create an instance of SVM and fit out data.
-clf = svm.SVC(kernel=graphlet)
-clf.fit(X, Y)
+clf = svm.SVC()
+clf.fit(X,Y)
+print(clf.score(X,Y))
 
-# Plot the decision boundary. For that, we will assign a color to each
-# point in the mesh [x_min, x_max]x[y_min, y_max].
+#############################################
+######## WITH Manifold and Graph Kernel
+#############################################
 
-h = .02  # step size in the mesh
+k=1
+embedding = LocallyLinearEmbedding(n_components=k)
+# print(np.array(pca.fit(graphs[0]["g"]).components_).flatten())
 
-x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+X = pd.DataFrame([np.array(embedding.fit(i["g"]).embedding_).flatten() for i in graphs]).fillna(0)
+print(X.shape)
+Y = [i["l"] for i in graphs]
 
-# Put the result into a color plot
-Z = Z.reshape(xx.shape)
-plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
+#print(X[0])
+#print(Y)
 
-# Plot also the training points
-plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Paired, edgecolors='k')
-plt.title('3-Class classification using Support Vector Machine with custom'
-          ' kernel')
-plt.axis('tight')
-plt.show()
+# we create an instance of SVM and fit out data.
+clf = svm.SVC()
+clf.fit(X,Y)
+print(clf.score(X,Y))
+
+
+
+
+
