@@ -7,6 +7,12 @@ print("----------PPI-SP-KERNEL")
 gk = ShortestPath(normalize=True)
 K_train = gk.fit_transform(G_train_PPI)
 
+import matplotlib.pyplot as plt
+plt.style.use("ggplot")
+plt.imshow(K_train, zorder=2, cmap='Blues', interpolation='nearest')
+plt.colorbar();
+plt.show()
+
 embedding = LocallyLinearEmbedding(n_components=3)
 X_transformed = embedding.fit_transform(K_train)
 
@@ -15,14 +21,14 @@ X_transformed = embedding.fit_transform(K_train)
 #plt.scatter(X_transformed[:,0],X_transformed[:,1], c= y_train_PPI)
 #plt.show()
 
-from mpl_toolkits import mplot3d
-import numpy as np
-import matplotlib.pyplot as plt
-
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.scatter3D(X_transformed[:,0],X_transformed[:,1],X_transformed[:,2], c=y_train_PPI)
-plt.show()
+# from mpl_toolkits import mplot3d
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# fig = plt.figure()
+# ax = plt.axes(projection='3d')
+# ax.scatter3D(X_transformed[:,0],X_transformed[:,1],X_transformed[:,2], c=y_train_PPI)
+# plt.show()
 
 # K_test = gk.transform(G_test_PPI)
 #
