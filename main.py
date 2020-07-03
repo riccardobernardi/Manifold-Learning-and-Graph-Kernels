@@ -7,6 +7,23 @@ from grakel.kernels import graphlet_sampling
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.manifold import LocallyLinearEmbedding
+from grakel.graph import Graph
+import numpy as np
+
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+from grakel.datasets import fetch_dataset
+from grakel.kernels import ShortestPath
+import networkx as nx
+
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+from grakel.datasets import fetch_dataset
+from grakel.kernels import WeisfeilerLehman, VertexHistogram
 
 base = "./"
 PPI_file = os.path.join(base, "PPI.mat")
@@ -15,67 +32,268 @@ SHOCK_file = os.path.join(base, "SHOCK.mat")
 PPI = scipy.io.loadmat(PPI_file)
 SHOCK = scipy.io.loadmat(SHOCK_file)
 
-#print(PPI.keys())
-#print(SHOCK.keys())
-
-#print(PPI["G"].shape)
-#print(PPI["labels"].shape)
-
 graphs = [i for i in range(86)]
-#print(len(graphs))
+
+
+def from_adj_to_set(adj):
+    ss = set()
+    lab = {i:0 for i in range(len(adj))}
+    w = dict()
+    for idx,i in enumerate(adj):
+        for jdx,j in enumerate(i):
+            if j==1:
+                ss.add((idx,jdx))
+                ss.add((jdx, idx))
+
+    for i in list(ss):
+        if adj[i[0]][i[1]] == 1:
+            w[i]=1
+        else:
+            w[i] = 0
+
+    return ss,lab,w
+
+
+print("##########################################")
+print("----------PPI-SP-KERNEL")
 
 data = PPI["G"][0]["am"]
 labels = PPI["labels"]
 for i in range(len(data)):
-    graphs[i] = dict()
-    graphs[i]["g"] = data[i]
-    graphs[i]["l"] = labels[i][0]
-    #print(data[i].shape)
+    ss,lab,w = from_adj_to_set(data[i])
+    graphs[i] = [ss,lab,w]
 
-#print(graphs[0])
-#print(graphs[0]["g"].shape)
-#print(graphs[0]["l"])
+G = graphs
+y = [i[0] for i in labels]
 
-#############################################
-######## WITHOUT Manifold and Graph Kernel
-#############################################
-
-k=1
-pca = PCA(n_components=k)
-# print(np.array(pca.fit(graphs[0]["g"]).components_).flatten())
+# print(G[0])
+# print(len(G[0]))
+# for i in G[0]:
+#     print(type(i))
 
 
-X = pd.DataFrame([np.array(pca.fit(i["g"]).components_).flatten() for i in graphs]).fillna(0)
-print(X.shape)
-Y = [i["l"] for i in graphs]
+# Splits the dataset into a training and a test set
+G_train, G_test, y_train, y_test = train_test_split(G, y, test_size=0.1, random_state=25061997)
 
-#print(X[0])
-#print(Y)
+# print(len(G_train))
+# print(len(G_test))
 
-# we create an instance of SVM and fit out data.
-clf = svm.SVC()
-clf.fit(X,Y)
-print(clf.score(X,Y))
+# Uses the shortest path kernel to generate the kernel matrices
+gk = ShortestPath(normalize=True)
+K_train = gk.fit_transform(G_train)
+K_test = gk.transform(G_test)
 
-#############################################
-######## WITH Manifold and Graph Kernel
-#############################################
+print("----------with precomputed kernel")
 
-k=1
-embedding = LocallyLinearEmbedding(n_components=k, n_neighbors=2)
-# print(np.array(pca.fit(graphs[0]["g"]).components_).flatten())
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="precomputed")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
 
-X = pd.DataFrame([np.array(embedding.fit(i["g"]).embedding_).flatten() for i in graphs]).fillna(0)
-print(X.shape)
-Y = [i["l"] for i in graphs]
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-#print(X[0])
-#print(Y)
+print("----------with linear kernel")
 
-# we create an instance of SVM and fit out data.
-clf = svm.SVC()
-clf.fit(X,Y)
-print(clf.score(X,Y))
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="linear")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with RBF kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="rbf", gamma="auto")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+
+
+print("##########################################")
+print("----------SHOCK-SP-KERNEL")
+
+
+
+
+data = SHOCK["G"][0]["am"]
+
+graphs = [i for i in range(len(data))]
+
+labels = SHOCK["labels"]
+for i in range(len(data)):
+    ss,lab,w = from_adj_to_set(data[i])
+    graphs[i] = [ss,lab,w]
+
+G = graphs
+y = [i[0] for i in labels]
+
+# print(G[0])
+# print(len(G[0]))
+# for i in G[0]:
+#     print(type(i))
+
+
+# Splits the dataset into a training and a test set
+G_train, G_test, y_train, y_test = train_test_split(G, y, test_size=0.1, random_state=25061997)
+
+# print(len(G_train))
+# print(len(G_test))
+
+# Uses the shortest path kernel to generate the kernel matrices
+gk = ShortestPath(normalize=True)
+K_train = gk.fit_transform(G_train)
+K_test = gk.transform(G_test)
+
+print("----------with precomputed kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="precomputed")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with linear kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="linear")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with RBF kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="rbf", gamma="auto")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+
+print("##########################################")
+print("----------PPI-WL-KERNEL")
+
+data = PPI["G"][0]["am"]
+
+graphs = [i for i in range(len(data))]
+
+labels = PPI["labels"]
+for i in range(len(data)):
+    ss,lab,w = from_adj_to_set(data[i])
+    graphs[i] = [ss,lab,w]
+
+G = graphs
+y = [i[0] for i in labels]
+
+G_train, G_test, y_train, y_test = train_test_split(G, y, test_size=0.1, random_state=25061997)
+
+# Uses the Weisfeiler-Lehman subtree kernel to generate the kernel matrices
+gk = WeisfeilerLehman(n_iter=4, normalize=True)
+K_train = gk.fit_transform(G_train)
+K_test = gk.transform(G_test)
+
+print("----------with precomputed kernel")
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="precomputed")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with linear kernel")
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="linear")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with rbf kernel")
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="rbf")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+
+print("##########################################")
+print("----------SHOCK-WL-KERNEL")
+
+data = SHOCK["G"][0]["am"]
+
+graphs = [i for i in range(len(data))]
+
+labels = SHOCK["labels"]
+for i in range(len(data)):
+    ss,lab,w = from_adj_to_set(data[i])
+    graphs[i] = [ss,lab,w]
+
+G = graphs
+y = [i[0] for i in labels]
+
+G_train, G_test, y_train, y_test = train_test_split(G, y, test_size=0.1, random_state=25061997)
+
+# Uses the Weisfeiler-Lehman subtree kernel to generate the kernel matrices
+gk = WeisfeilerLehman(n_iter=4, normalize=True)
+K_train = gk.fit_transform(G_train)
+K_test = gk.transform(G_test)
+
+print("----------with precomputed kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="precomputed")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with linear kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="linear")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+print("----------with rbf kernel")
+
+# Uses the SVM classifier to perform classification
+clf = SVC(kernel="rbf")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
+
+# Computes and prints the classification accuracy
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy:", str(round(acc*100, 2)) + "%")
 
 
 
