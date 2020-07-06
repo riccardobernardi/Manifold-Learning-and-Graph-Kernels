@@ -1,10 +1,10 @@
 from utils import *
 
 print("##########################################")
-print("----------PPI-SP-KERNEL")
+print("----------PPI-DSGK-KERNEL")
 
 # Uses the shortest path kernel to generate the kernel matrices
-gk = ShortestPath(normalize=True)
+gk = DomSetGraKer()
 K_train = gk.fit_transform(G_train_PPI)
 K_test = gk.transform(G_test_PPI)
 
@@ -19,7 +19,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("DSGK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 print("----------with linear kernel")
 
@@ -32,7 +32,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("DSGK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 print("----------with RBF kernel")
 
@@ -45,14 +45,16 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("DSGK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+
+
 
 print("##########################################")
-print("----------SHOCK-SP-KERNEL")
+print("----------SHOCK-DSGK-KERNEL")
 
 
 # Uses the shortest path kernel to generate the kernel matrices
-gk = ShortestPath(normalize=True)
+gk = DomSetGraKer()
 K_train = gk.fit_transform(G_train_SHOCK)
 K_test = gk.transform(G_test_SHOCK)
 
@@ -67,7 +69,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("DSGK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 print("----------with linear kernel")
 
@@ -80,7 +82,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("DSGK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 print("----------with RBF kernel")
 
@@ -93,5 +95,5 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("DSGK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
