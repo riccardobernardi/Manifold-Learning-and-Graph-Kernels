@@ -1,13 +1,18 @@
 from utils import *
 
 print("##########################################")
-print("----------PPI-SUBGRAPH-KERNEL")
+print("----------PPI-SUBGRAPH-KERNEL-LLE")
 
 # Initialize neighborhood subgraph pairwise distance kernel
 gk = NeighborhoodSubgraphPairwiseDistance(r=3, d=2)
 K_train = gk.fit_transform(G_train_PPI)
 K_test = gk.transform(G_test_PPI)
 
+embedding = LocallyLinearEmbedding(n_components=3)
+K_train = embedding.fit_transform(K_train)
+embedding = LocallyLinearEmbedding(n_components=3)
+K_test = embedding.fit_transform(K_test)
+
 start = time()
 print("----------with precomputed kernel")
 # Uses the SVM classifier to perform classification
@@ -19,7 +24,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("STK-KERNEL-precomputed-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_PPI += [("SPK-KERNEL-precomputed-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 start = time()
 print("----------with linear kernel")
@@ -32,7 +37,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("STK-KERNEL-linear-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_PPI += [("SPK-KERNEL-linear-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 start = time()
 print("----------with rbf kernel")
@@ -45,16 +50,21 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("STK-KERNEL-RBF-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_PPI += [("SPK-KERNEL-RBF-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 print("##########################################")
-print("----------SHOCK-ST-KERNEL")
+print("----------SHOCK-ST-KERNEL-LLE")
 
 # Initialize neighborhood subgraph pairwise distance kernel
 gk = NeighborhoodSubgraphPairwiseDistance(r=3, d=2)
 K_train = gk.fit_transform(G_train_SHOCK)
 K_test = gk.transform(G_test_SHOCK)
 
+embedding = LocallyLinearEmbedding(n_components=3)
+K_train = embedding.fit_transform(K_train)
+embedding = LocallyLinearEmbedding(n_components=3)
+K_test = embedding.fit_transform(K_test)
+
 start = time()
 print("----------with precomputed kernel")
 
@@ -67,7 +77,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("STK-KERNEL-precomputed-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_SHOCK += [("SPK-KERNEL-precomputed-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 start = time()
 print("----------with linear kernel")
@@ -81,7 +91,7 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("STK-KERNEL-linear-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_SHOCK += [("SPK-KERNEL-linear-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 start = time()
 print("----------with rbf kernel")
@@ -95,6 +105,6 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("STK-KERNEL-RBF-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+results_SHOCK += [("SPK-KERNEL-RBF-LLE", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 

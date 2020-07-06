@@ -8,8 +8,8 @@ gk = ShortestPath(normalize=True)
 K_train = gk.fit_transform(G_train_PPI)
 K_test = gk.transform(G_test_PPI)
 
+start = time()
 print("----------with precomputed kernel")
-
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="precomputed")
 clf.fit(K_train, y_train_PPI)
@@ -19,10 +19,10 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("STK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
+start = time()
 print("----------with linear kernel")
-
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="linear")
 clf.fit(K_train, y_train_PPI)
@@ -32,10 +32,10 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("STK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
-print("----------with RBF kernel")
-
+start = time()
+print("----------with rbf kernel")
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="rbf", gamma="auto")
 clf.fit(K_train, y_train_PPI)
@@ -45,17 +45,17 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_PPI += [("SP-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_PPI += [("STK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
 print("##########################################")
-print("----------SHOCK-SP-KERNEL")
-
+print("----------SHOCK-ST-KERNEL")
 
 # Uses the shortest path kernel to generate the kernel matrices
 gk = ShortestPath(normalize=True)
 K_train = gk.fit_transform(G_train_SHOCK)
 K_test = gk.transform(G_test_SHOCK)
 
+start = time()
 print("----------with precomputed kernel")
 
 # Uses the SVM classifier to perform classification
@@ -67,8 +67,9 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("STK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
+start = time()
 print("----------with linear kernel")
 
 # Uses the SVM classifier to perform classification
@@ -80,9 +81,10 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("STK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
 
-print("----------with RBF kernel")
+start = time()
+print("----------with rbf kernel")
 
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="rbf", gamma="auto")
@@ -93,5 +95,6 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
-results_SHOCK += [("SP-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+results_SHOCK += [("STK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%", str(time()-start))]
+
 
