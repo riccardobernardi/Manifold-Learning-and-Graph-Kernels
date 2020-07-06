@@ -106,20 +106,7 @@ Train an SVM with the kernel chosen applying the manifold technique or not and s
 
 
 
-|      | method                  | PPI_score   | SHOCK_score |
-| ---: | :---------------------- | :---------- | :---------- |
-|    0 | SP-KERNEL-precomputed   | Acc: 66.67% | Acc: 6.67%  |
-|    1 | SP-KERNEL-linear        | Acc: 77.78% | Acc: 26.67% |
-|    2 | SP-KERNEL-RBF           | Acc: 66.67% | Acc: 0.0%   |
-|    3 | WLK-KERNEL-precomputed  | Acc: 88.89% | Acc: 33.33% |
-|    4 | WLK-KERNEL-linear       | Acc: 55.56% | Acc: 33.33% |
-|    5 | WLK-KERNEL-RBF          | Acc: 66.67% | Acc: 0.0%   |
-|    6 | STK-KERNEL-precomputed  | Acc: 55.56% | Acc: 33.33% |
-|    7 | STK-KERNEL-linear       | Acc: 55.56% | Acc: 40.0%  |
-|    8 | STK-KERNEL-RBF          | Acc: 55.56% | Acc: 33.33% |
-|    9 | DSGK-KERNEL-precomputed | Acc: 77.78% | Acc: 26.67% |
-|   10 | DSGK-KERNEL-linear      | Acc: 88.89% | Acc: 26.67% |
-|   11 | DSGK-KERNEL-RBF         | Acc: 66.67% | Acc: 6.67%  |
+
 
 
 
