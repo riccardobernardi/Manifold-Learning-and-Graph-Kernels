@@ -18,6 +18,8 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
+results_PPI += [("WLK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+
 print("----------with linear kernel")
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="linear")
@@ -28,6 +30,8 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
+results_PPI += [("WLK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+
 print("----------with rbf kernel")
 # Uses the SVM classifier to perform classification
 clf = SVC(kernel="rbf", gamma="auto")
@@ -37,6 +41,8 @@ y_pred = clf.predict(K_test)
 # Computes and prints the classification accuracy
 acc = accuracy_score(y_test_PPI, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+results_PPI += [("WLK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 print("##########################################")
 print("----------SHOCK-WL-KERNEL")
@@ -57,6 +63,8 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
+results_SHOCK += [("WLK-KERNEL-precomputed", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+
 print("----------with linear kernel")
 
 # Uses the SVM classifier to perform classification
@@ -68,6 +76,8 @@ y_pred = clf.predict(K_test)
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
 
+results_SHOCK += [("WLK-KERNEL-linear", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
+
 print("----------with rbf kernel")
 
 # Uses the SVM classifier to perform classification
@@ -78,5 +88,7 @@ y_pred = clf.predict(K_test)
 # Computes and prints the classification accuracy
 acc = accuracy_score(y_test_SHOCK, y_pred)
 print("Accuracy:", str(round(acc*100, 2)) + "%")
+
+results_SHOCK += [("WLK-KERNEL-RBF", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
 
 
