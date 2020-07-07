@@ -8,9 +8,9 @@ gk = ShortestPath(normalize=True)
 K_train = gk.fit_transform(G_train_PPI)
 K_test = gk.transform(G_test_PPI)
 
-embedding = LocallyLinearEmbedding(n_components=3)
+embedding = LocallyLinearEmbedding(n_neighbors = 3, n_components=3)
 K_train = embedding.fit_transform(K_train)
-embedding = LocallyLinearEmbedding(n_components=3)
+embedding = LocallyLinearEmbedding(n_neighbors = 3, n_components=3)
 K_test = embedding.fit_transform(K_test)
 
 start = time()
