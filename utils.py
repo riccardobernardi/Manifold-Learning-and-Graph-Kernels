@@ -11,6 +11,12 @@ from sklearn.manifold import LocallyLinearEmbedding
 from grakel.graph import Graph
 import numpy as np
 
+from sklearn import manifold
+from sklearn.metrics import pairwise_distances
+
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import cross_val_score
+
 from networkx.algorithms import dominating_set
 
 from sklearn.model_selection import train_test_split
