@@ -23,7 +23,7 @@ def launch(ker, results_PPI, results_SHOCK, red=False):
 
 		if j=="PPI":
 			K = gk.fit_transform(G_PPI)
-			D = pairwise_distances(K, metric='euclidean', n_jobs=4)
+			D = pairwise_distances(np.array(K), metric='euclidean', n_jobs=4)
 			y = y_PPI
 		else:
 			K = gk.fit_transform(G_SHOCK)

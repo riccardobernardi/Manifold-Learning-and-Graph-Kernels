@@ -11,6 +11,7 @@ from sklearn.manifold import LocallyLinearEmbedding
 from grakel.graph import Graph
 import numpy as np
 from numpy.linalg import norm
+from numexpr.necompiler import evaluate
 
 from sklearn import manifold
 from sklearn.metrics import pairwise_distances
@@ -43,6 +44,11 @@ from grakel.kernels.graphlet_sampling import GraphletSampling
 from grakel.kernels.random_walk import RandomWalk
 
 from sklearn.manifold import LocallyLinearEmbedding
+
+import redis
+r = redis.Redis()
+r.mset({"Croatia": "Zagreb", "Bahamas": "Nassau"})
+r.get("Bahamas")
 
 
 def from_adj_to_set(adj):
@@ -150,9 +156,11 @@ def dominant_set(A, x=None, epsilon=1.0e-4):
 	while distance > epsilon:
 		x_old = x.copy()
 		# x = x * np.dot(A, x) # this works only for dense A
-		x = x * A.dot(x)  # this works both for dense and sparse A
-		x = x / x.sum()
-		distance = norm(x - x_old)
+		ss = A.dot(x)
+		x = evaluate("x * ss")  # this works both for dense and sparse A
+		ss = x.sum()
+		x = evaluate("x / ss")
+		distance = norm( evaluate("x - x_old") )
 
 	return x
 
@@ -182,11 +190,8 @@ class DomSetGraKer():
 		a, b, c = from_adj_to_set(ds1adj)
 		d, e, f = from_adj_to_set(ds2adj)
 
-		if a.issubset(d) and d.issubset(a):
-			# print("WARNING: they have no edges")
-			return 1
-
-		tmp = ShortestPath().fit_transform([[a, b, c], [d, e, f]])
+		# tmp = ShortestPath(normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
+		tmp = WeisfeilerLehman(n_iter=4, normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
 
 		return tmp
 
@@ -195,12 +200,14 @@ class DomSetGraKer():
 		kernel_sim = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]
 
 		for i in range(len(graphs)):
-			for j in range(len(graphs)):
+			for j in range(i, len(graphs)):
 				g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
 				g2 = nx.from_numpy_matrix(from_set_to_adj(graphs[j]))
 				g1adj = from_set_to_adj(graphs[i])
 				g2adj = from_set_to_adj(graphs[j])
-				kernel_sim[i][j] = self.similarity2(g1adj,g2adj)
+				ss = self.similarity2(g1adj,g2adj)
+				kernel_sim[i][j] = ss
+				kernel_sim[j][i] = ss
 
 		return copy.deepcopy(kernel_sim)
 
