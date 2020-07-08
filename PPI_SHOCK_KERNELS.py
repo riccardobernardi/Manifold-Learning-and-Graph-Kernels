@@ -45,9 +45,12 @@ def launch(ker, results_PPI, results_SHOCK, red=False):
 			else:
 				clf = SVC(kernel=i)
 
-			strat_k_fold = StratifiedKFold(n_splits = 10, shuffle = True) #10
-			scores_ln = cross_val_score(clf, D, y, cv = strat_k_fold, n_jobs= 8)
-			print(str(np.min(scores_ln)) +" - "+str(np.mean(scores_ln))+ " - " + str(np.max(scores_ln)) + " - "+ str(np.std(scores_ln)))
+			if red:
+				scores_ln = cross_val_score(clf, D, y, cv=10, n_jobs=8)
+			else:
+				strat_k_fold = StratifiedKFold(n_splits = 10, shuffle = True) #10
+				scores_ln = cross_val_score(clf, D, y, cv = strat_k_fold, n_jobs= 8)
+			print(str(np.min(scores_ln)) + " - " +str(np.mean(scores_ln))+ " - " + str(np.max(scores_ln)) + " - "+ str(np.std(scores_ln)))
 			acc= np.mean(scores_ln)
 
 			if j=="PPI":
