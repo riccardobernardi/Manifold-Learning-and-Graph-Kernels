@@ -10,6 +10,7 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import LocallyLinearEmbedding
 from grakel.graph import Graph
 import numpy as np
+from numpy.linalg import norm
 
 from sklearn import manifold
 from sklearn.metrics import pairwise_distances
@@ -134,38 +135,85 @@ G_train_SHOCK, G_test_SHOCK, y_train_SHOCK, y_test_SHOCK = train_test_split(G_SH
 def jaccard(A,B):
 	return len(list(A & B))/len(list(A | B))
 
-def pairwiseDSGK(G_name_adj):
-	kernel_sim = [[0 for _ in range(len(G_name_adj))] for _ in range(len(G_name_adj))]
 
-	for i in range(len(G_name_adj)):
-		for j in range(len(G_name_adj)):
-			g1 = nx.from_numpy_matrix(from_set_to_adj(G_name_adj[i]))
-			g2 = nx.from_numpy_matrix(from_set_to_adj(G_name_adj[j]))
-			kernel_sim[i][j] = jaccard(set(dominating_set(g1)),set(dominating_set(g2)))
+def dominant_set(A, x=None, epsilon=1.0e-4):
+	"""Compute the dominant set of the similarity matrix A with the
+	replicator dynamics optimization approach. Convergence is reached
+	when x changes less than epsilon.
+	See: 'Dominant Sets and Pairwise Clustering', by Massimiliano
+	Pavan and Marcello Pelillo, PAMI 2007.
+	"""
+	if x is None:
+		x = np.ones(A.shape[0]) / float(A.shape[0])
 
-	return copy.deepcopy(kernel_sim)
+	distance = epsilon * 2
+	while distance > epsilon:
+		x_old = x.copy()
+		# x = x * np.dot(A, x) # this works only for dense A
+		x = x * A.dot(x)  # this works both for dense and sparse A
+		x = x / x.sum()
+		distance = norm(x - x_old)
 
-def pairwiseDSGKtest(G_name_adj, train):
-	kernel_sim = [[0 for _ in range(len(train))] for _ in range(len(G_name_adj))]
-
-	for i in range(len(G_name_adj)):
-		for j in range(len(train)):
-			g1 = nx.from_numpy_matrix(from_set_to_adj(G_name_adj[i]))
-			g2 = nx.from_numpy_matrix(from_set_to_adj(train[j]))
-			kernel_sim[i][j] = jaccard(set(dominating_set(g1)),set(dominating_set(g2)))
-
-	return copy.deepcopy(kernel_sim)
+	return x
 
 class DomSetGraKer():
 	def __init__(self):
 		self.train_graphs = None
 
+	def similarity(self,g1,g2):
+		return jaccard(set(dominating_set(g1)), set(dominating_set(g2)))
+
+	def similarity2(self,g1adj,g2adj):
+		ds1list = [i for i,x in enumerate(list(dominant_set(g1adj))) if x>0]
+		ds2list = [i for i,x in enumerate(list(dominant_set(g2adj))) if x>0]
+		ds1adj = []
+		ds2adj = []
+		for i in ds1list:
+			a = []
+			for j in ds1list:
+				a += [g1adj[i][j]]
+			ds1adj += [a]
+		for i in ds2list:
+			a = []
+			for j in ds2list:
+				a += [g2adj[i][j]]
+			ds2adj += [a]
+
+		a, b, c = from_adj_to_set(ds1adj)
+		d, e, f = from_adj_to_set(ds2adj)
+
+		if a.issubset(d) and d.issubset(a):
+			# print("WARNING: they have no edges")
+			return 1
+
+		tmp = ShortestPath().fit_transform([[a, b, c], [d, e, f]])
+
+		return tmp
+
 	def fit_transform(self, graphs):
 		self.train_graphs = graphs
-		return pairwiseDSGK(graphs)
+		kernel_sim = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]
+
+		for i in range(len(graphs)):
+			for j in range(len(graphs)):
+				g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
+				g2 = nx.from_numpy_matrix(from_set_to_adj(graphs[j]))
+				g1adj = from_set_to_adj(graphs[i])
+				g2adj = from_set_to_adj(graphs[j])
+				kernel_sim[i][j] = self.similarity2(g1adj,g2adj)
+
+		return copy.deepcopy(kernel_sim)
 
 	def transform(self, graphs):
-		return pairwiseDSGKtest(graphs, self.train_graphs)
+		kernel_sim = [[0 for _ in range(len(self.train_graphs))] for _ in range(len(graphs))]
+
+		for i in range(len(graphs)):
+			for j in range(len(self.train_graphs)):
+				g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
+				g2 = nx.from_numpy_matrix(from_set_to_adj(self.train_graphs[j]))
+				kernel_sim[i][j] = self.similarity2(g1,g2)
+
+		return copy.deepcopy(kernel_sim)
 
 results_PPI = []
 results_SHOCK = []

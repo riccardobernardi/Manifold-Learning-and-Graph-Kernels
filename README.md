@@ -108,18 +108,26 @@ Train an SVM with the kernel chosen applying the manifold technique or not and s
 
 |      | method           | PPI_score   | SHOCK_score |
 | ---: | :--------------- | :---------- | :---------- |
-|    0 | SPK-precomputed  | Acc: 47.64% | Acc: 0.0%   |
-|    1 | SPK-linear       | Acc: 76.67% | Acc: 45.0%  |
-|    2 | SPK-rbf          | Acc: 65.83% | Acc: 36.0%  |
-|    3 | WLK-precomputed  | Acc: 41.94% | Acc: 4.0%   |
-|    4 | WLK-linear       | Acc: 73.61% | Acc: 36.5%  |
-|    5 | WLK-rbf          | Acc: 43.89% | Acc: 31.0%  |
-|    6 | STK-precomputed  | Acc: 42.92% | Acc: 2.0%   |
-|    7 | STK-linear       | Acc: 74.44% | Acc: 41.0%  |
-|    8 | STK-rbf          | Acc: 68.47% | Acc: 41.5%  |
-|    9 | DSGK-precomputed | Acc: 35.14% | Acc: 2.5%   |
-|   10 | DSGK-linear      | Acc: 71.81% | Acc: 41.0%  |
-|   11 | DSGK-rbf         | Acc: 63.61% | Acc: 32.5%  |
+|    0 | SPK-precomputed  | Acc: 47.92% | Acc: 0.0%   |
+|    1 | SPK-linear       | Acc: 76.81% | Acc: 42.0%  |
+|    2 | SPK-rbf          | Acc: 65.56% | Acc: 32.5%  |
+|    3 | WLK-precomputed  | Acc: 41.53% | Acc: 2.5%   |
+|    4 | WLK-linear       | Acc: 71.53% | Acc: 39.0%  |
+|    5 | WLK-rbf          | Acc: 46.67% | Acc: 27.5%  |
+|    6 | STK-precomputed  | Acc: 40.97% | Acc: 1.0%   |
+|    7 | STK-linear       | Acc: 73.61% | Acc: 41.5%  |
+|    8 | STK-rbf          | Acc: 70.97% | Acc: 40.0%  |
+|    9 | DSGK-precomputed | Acc: 37.08% | Acc: 5.5%   |
+|   10 | DSGK-linear      | Acc: 72.22% | Acc: 41.0%  |
+|   11 | DSGK-rbf         | Acc: 68.47% | Acc: 35.0%  |
+|   12 | SPK-linear-RED   | Acc: 62.92% | Acc: 32.0%  |
+|   13 | SPK-rbf-RED      | Acc: 75.83% | Acc: 34.5%  |
+|   14 | WLK-linear-RED   | Acc: 53.47% | Acc: 22.5%  |
+|   15 | WLK-rbf-RED      | Acc: 64.03% | Acc: 33.0%  |
+|   16 | STK-linear-RED   | Acc: 56.81% | Acc: 17.0%  |
+|   17 | STK-rbf-RED      | Acc: 57.22% | Acc: 29.5%  |
+|   18 | DSGK-linear-RED  | Acc: 64.17% | Acc: 27.5%  |
+|   19 | DSGK-rbf-RED     | Acc: 66.81% | Acc: 27.0%  |
 
 
 

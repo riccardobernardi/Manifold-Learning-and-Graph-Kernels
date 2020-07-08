@@ -33,20 +33,22 @@ def launch(ker, results_PPI, results_SHOCK, red=False):
 		if red:
 			n_neighbors = 15
 			n_components = 2
-			D = manifold.Isomap(n_neighbors, n_components).fit_transform(D)
+			iso_prj_D = manifold.Isomap(n_neighbors, n_components).fit_transform(D)
 
 		for i in ["precomputed","linear","rbf"]:
+			if red and (i=="precomputed"):
+				continue
 			start = time()
 			print("----------with "+i+" kernel")
 
 			# Uses the SVM classifier to perform classification
 			if i=="rbf":
-				clf = SVC(kernel=i, gamma="auto")
+				clf = SVC(kernel=i, gamma="auto", C = 1.0)
 			else:
-				clf = SVC(kernel=i)
+				clf = SVC(kernel=i, C = 1.0)
 
 			if red:
-				scores_ln = cross_val_score(clf, D, y, cv=10, n_jobs=8)
+				scores_ln = cross_val_score(clf, iso_prj_D, y, cv=10, n_jobs=8)
 			else:
 				strat_k_fold = StratifiedKFold(n_splits = 10, shuffle = True) #10
 				scores_ln = cross_val_score(clf, D, y, cv = strat_k_fold, n_jobs= 8)
