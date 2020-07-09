@@ -25,8 +25,6 @@ Choose one [graph kernel](https://www.dsi.unive.it/~atorsell/AI/graph/kernels.pd
 - Random Walk Kernel
 - Weisfeiler-Lehman Kernel
 
-
-
 Choose one manifold learning technique among
 
 - Isomap
