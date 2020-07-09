@@ -34,20 +34,14 @@ Choose one manifold learning technique among
 - Laplacian Eigenmaps
 - Local Linear Embedding
 
-
-
 Compare the performance of an SVM trained on the given kernel, with or without the manifold learning step, on the following datasets:
 
 - [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.mat)
 - [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.mat)
 
-
-
 **Note:** the datasets are contained in Matlab files. The variable G contains a vector of cells, one per graph. The entry am of each cell is the adjacency matrix of the graph. The variable labels, contains the class-labels of each graph. 
 
 NEW I have added zip files with csv versions of the adjacecy matrices of the graphs and of the lavels. the files graphxxx.csv contain the adjaccency matrices, one per file, while the file labels.csv contais allthe labels 
-
-
 
 - [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.zip)
 - [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.zip)

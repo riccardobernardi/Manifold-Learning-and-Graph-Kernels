@@ -52,7 +52,6 @@ def launch(ker, red, results_PPI, results_SHOCK):
 		if red == "TSNE":
 			iso_prj_D = manifold.TSNE(n_components).fit_transform(D)
 
-
 		for i in ["precomputed","linear","rbf"]:
 			if (red!="no-RED") and (i=="precomputed"):
 				continue
@@ -75,6 +74,16 @@ def launch(ker, red, results_PPI, results_SHOCK):
 
 			pd_name = ker+"-"+i+"-"+red
 			pd_acc = "Acc: "+str(str(round(acc*100, 2)))+ "%"
+
+			if (red != "no-RED"):
+				if j == "PPI":
+					plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1],c=y_PPI)
+					plt.savefig(os.path.join("./images", j+"-"+pd_name + '.png'))
+					plt.show()
+				else:
+					plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1], c=y_SHOCK)
+					plt.savefig(os.path.join("./images", j+"-" + pd_name + '.png'))
+					plt.show()
 
 			if j=="PPI":
 				results_PPI += [(pd_name, pd_acc)]
