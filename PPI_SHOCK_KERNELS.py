@@ -14,12 +14,12 @@ def launch(ker, red, results_PPI, results_SHOCK):
 	if ker == "DSGK":
 		gk = DomSetGraKer()
 
+	if red == "NOP":
+		red = "no-RED"
+
 	for j in ["PPI", "SHOCK"]:
 		print("##########################################")
-		if red:
-			print("----------"+j+"-" + ker + "-KERNEL-RED")
-		else:
-			print("----------" + j + "-" + ker + "-KERNEL")
+		print("----------"+j+"-" + ker + "-" + red)
 
 		if j=="PPI":
 			K = gk.fit_transform(G_PPI)
@@ -54,7 +54,7 @@ def launch(ker, red, results_PPI, results_SHOCK):
 
 
 		for i in ["precomputed","linear","rbf"]:
-			if red and (i=="precomputed"):
+			if (red!="no-RED") and (i=="precomputed"):
 				continue
 			start = time()
 			print("----------with "+i+" kernel")
@@ -65,7 +65,7 @@ def launch(ker, red, results_PPI, results_SHOCK):
 			else:
 				clf = SVC(kernel=i, C = 1.0)
 
-			if red:
+			if red!="no-RED":
 				scores_ln = cross_val_score(clf, iso_prj_D, y, cv=10, n_jobs=8)
 			else:
 				strat_k_fold = StratifiedKFold(n_splits = 10, shuffle = True) #10
