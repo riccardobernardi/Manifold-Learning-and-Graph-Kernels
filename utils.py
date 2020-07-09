@@ -45,10 +45,10 @@ from grakel.kernels.random_walk import RandomWalk
 
 from sklearn.manifold import LocallyLinearEmbedding
 
-import redis
-r = redis.Redis()
-r.mset({"Croatia": "Zagreb", "Bahamas": "Nassau"})
-r.get("Bahamas")
+# import redis
+# r = redis.Redis()
+# r.mset({"Croatia": "Zagreb", "Bahamas": "Nassau"})
+# r.get("Bahamas")
 
 
 def from_adj_to_set(adj):

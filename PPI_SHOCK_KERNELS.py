@@ -2,7 +2,7 @@ from sklearn.metrics import pairwise_distances
 
 from utils import *
 
-def launch(ker, results_PPI, results_SHOCK, red=False):
+def launch(ker, red, results_PPI, results_SHOCK):
 	# Uses the shortest path kernel to generate the kernel matrices
 	gk = None
 	if ker == "SPK":
@@ -30,10 +30,28 @@ def launch(ker, results_PPI, results_SHOCK, red=False):
 			D = pairwise_distances(K, metric='euclidean', n_jobs=4)
 			y=y_SHOCK
 
-		if red:
-			n_neighbors = 15
-			n_components = 2
+		n_neighbors = 15
+		n_components = 2
+		iso_prj_D = None
+
+		if red == "NOP":
+			red="no-RED"
+
+		if red == "ISO":
 			iso_prj_D = manifold.Isomap(n_neighbors, n_components).fit_transform(D)
+
+		if red == "LLE":
+			iso_prj_D = manifold.LocallyLinearEmbedding(n_components).fit_transform(D)
+
+		if red == "SE":
+			iso_prj_D = manifold.SpectralEmbedding(n_components).fit_transform(D)
+
+		if red == "MDS":
+			iso_prj_D = manifold.MDS(n_components).fit_transform(D)
+
+		if red == "TSNE":
+			iso_prj_D = manifold.TSNE(n_components).fit_transform(D)
+
 
 		for i in ["precomputed","linear","rbf"]:
 			if red and (i=="precomputed"):
@@ -55,15 +73,12 @@ def launch(ker, results_PPI, results_SHOCK, red=False):
 			print(str(np.min(scores_ln)) + " - " +str(np.mean(scores_ln))+ " - " + str(np.max(scores_ln)) + " - "+ str(np.std(scores_ln)))
 			acc= np.mean(scores_ln)
 
+			pd_name = ker+"-"+i+"-"+red
+			pd_acc = "Acc: "+str(str(round(acc*100, 2)))+ "%"
+
 			if j=="PPI":
-				if red:
-					results_PPI += [(ker+"-"+i+"-RED", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
-				else:
-					results_PPI += [(ker + "-" + i, "Acc: " + str(str(round(acc * 100, 2))) + "%")]
+				results_PPI += [(pd_name, pd_acc)]
 			else:
-				if red:
-					results_SHOCK += [(ker+"-"+i+"-RED", "Acc: "+str(str(round(acc*100, 2)))+ "%")]
-				else:
-					results_SHOCK += [(ker + "-" + i, "Acc: " + str(str(round(acc * 100, 2))) + "%")]
+				results_SHOCK += [(pd_name, pd_acc)]
 
 	return results_PPI, results_SHOCK
