@@ -201,8 +201,8 @@ class DomSetGraKer():
 
 		for i in range(len(graphs)):
 			for j in range(i, len(graphs)):
-				g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
-				g2 = nx.from_numpy_matrix(from_set_to_adj(graphs[j]))
+				#g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
+				#g2 = nx.from_numpy_matrix(from_set_to_adj(graphs[j]))
 				g1adj = from_set_to_adj(graphs[i])
 				g2adj = from_set_to_adj(graphs[j])
 				ss = self.similarity2(g1adj,g2adj)
@@ -216,9 +216,14 @@ class DomSetGraKer():
 
 		for i in range(len(graphs)):
 			for j in range(len(self.train_graphs)):
-				g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
-				g2 = nx.from_numpy_matrix(from_set_to_adj(self.train_graphs[j]))
-				kernel_sim[i][j] = self.similarity2(g1,g2)
+				#g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
+				#g2 = nx.from_numpy_matrix(from_set_to_adj(self.train_graphs[j]))
+				#kernel_sim[i][j] = self.similarity2(g1,g2)
+				g1adj = from_set_to_adj(graphs[i])
+				g2adj = from_set_to_adj(self.train_graphs[j])
+				ss = self.similarity2(g1adj, g2adj)
+				kernel_sim[i][j] = ss
+				kernel_sim[j][i] = ss
 
 		return copy.deepcopy(kernel_sim)
 
