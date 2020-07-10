@@ -16,9 +16,9 @@ Bernardi Riccardo - 864018
 
 # 1. Problem Statement
 
-Read [this article](https://www.dsi.unive.it/~atorsell/AI/graph/Unfolding.pdf) presenting a way to improve the disciminative power of graph kernels.
+Read this article presenting a way to improve the disciminative power of graph kernels.
 
-Choose one [graph kernel](https://www.dsi.unive.it/~atorsell/AI/graph/kernels.pdf) among
+Choose one graph kernel among
 
 - Shortest-path Kernel
 - Graphlet Kernel
@@ -37,7 +37,7 @@ Compare the performance of an SVM trained on the given kernel, with or without t
 - [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.mat)
 - [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.mat)
 
-**Note:** the datasets are contained in Matlab files. The variable G contains a vector of cells, one per graph. The entry am of each cell is the adjacency matrix of the graph. The variable labels, contains the class-labels of each graph. 
+Note: the datasets are contained in Matlab files. The variable G contains a vector of cells, one per graph. The entry am of each cell is the adjacency matrix of the graph. The variable labels, contains the class-labels of each graph. 
 
 NEW I have added zip files with csv versions of the adjacecy matrices of the graphs and of the lavels. the files graphxxx.csv contain the adjaccency matrices, one per file, while the file labels.csv contais all the labels 
 
@@ -68,191 +68,192 @@ We are going here to answer these questions:
 
 ### 3.1 What is a kernel
 
-In [machine learning](https://en.wikipedia.org/wiki/Machine_learning), **kernel methods** are a class of algorithms for [pattern analysis](https://en.wikipedia.org/wiki/Pattern_analysis), whose best known member is the [support vector machine](https://en.wikipedia.org/wiki/Support_vector_machine) (SVM). The general task of pattern analysis is to find and study general types of relations (for example [clusters](https://en.wikipedia.org/wiki/Cluster_analysis), [rankings](https://en.wikipedia.org/wiki/Ranking), [principal components](https://en.wikipedia.org/wiki/Principal_components), [correlations](https://en.wikipedia.org/wiki/Correlation), [classifications](https://en.wikipedia.org/wiki/Statistical_classification)) in datasets. For many algorithms that solve these tasks, the data in raw representation have to be explicitly transformed into [feature vector](https://en.wikipedia.org/wiki/Feature_vector) representations via a user-specified *feature map*: in contrast, kernel methods require only a user-specified *kernel*, i.e., a [similarity function](https://en.wikipedia.org/wiki/Similarity_function) over pairs of data points in raw representation.
+In machine learning, kernel methods are a class of algorithms for pattern analysis, whose best known member is the support vector machine (SVM). For many algorithms that solve these tasks, the data in raw representation have to be explicitly transformed into feature vector representations via a user-specified feature map: in contrast, kernel methods require only a user-specified kernel, i.e., a similarity function over pairs of data points in raw representation.
 
-Kernel methods owe their name to the use of [kernel functions](https://en.wikipedia.org/wiki/Positive-definite_kernel), which enable them to operate in a high-dimensional, *implicit* [feature space](https://en.wikipedia.org/wiki/Feature_space) without ever computing the coordinates of the data in that space, but rather by simply computing the [inner products](https://en.wikipedia.org/wiki/Inner_product) between the [images](https://en.wikipedia.org/wiki/Image_(mathematics)) of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "**kernel trick**".[[1\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-1) Kernel functions have been introduced for sequence data, [graphs](https://en.wikipedia.org/wiki/Graph_kernel), text, images, as well as vectors.
+Kernel methods owe their name to the use of kernel functions, which enable them to operate in a high-dimensional, implicit feature space without ever computing the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "kernel trick".[1] Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.
 
+The kernel trick avoids the explicit mapping that is needed to get linear learning algorithms to learn a nonlinear function or decision boundary. For all x and x′ in the input space X, certain functions k(x,x′) can be expressed as an inner product in another space V. The function k:X×X→R is often referred to as a kernel or a kernel function. The word "kernel" is used in mathematics to denote a weighting function for a weighted sum or integral.
 
+The key restriction is that ⟨⋅,⋅⟩ must be a proper inner product. On the other hand, an explicit representation for φ is not necessary, as long as V is an inner product space. The alternative follows from Mercer's theorem: an implicitly defined function φ exists whenever the space X can be equipped with a suitable measure ensuring the function k satisfies Mercer's condition.
 
-The kernel trick avoids the explicit mapping that is needed to get linear [learning algorithms](https://en.wikipedia.org/wiki/Learning_algorithms) to learn a nonlinear function or [decision boundary](https://en.wikipedia.org/wiki/Decision_boundary). For all x![\mathbf {x} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2) and x′![\mathbf {x'} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/7d14ab6186e99346cb608a30858c3e1580f760e6) in the input space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9), certain functions k(x,x′)![k(\mathbf {x} ,\mathbf {x'} )](https://wikimedia.org/api/rest_v1/media/math/render/svg/7d02f87329f893c16295074bcfe9d974fb72c4eb) can be expressed as an [inner product](https://en.wikipedia.org/wiki/Inner_product) in another space V![{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/47d69f309b6deb2e5008f6130ee11e09bbabd7b6). The function k:X×X→R![k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/ecc3c27f7e04f4ce7c0088a69e0b414a74869e3e) is often referred to as a *kernel* or a *[kernel function](https://en.wikipedia.org/wiki/Kernel_function)*. The word "kernel" is used in mathematics to denote a weighting function for a weighted sum or [integral](https://en.wikipedia.org/wiki/Integral).
+Mercer's theorem is similar to a generalization of the result from linear algebra that associates an inner product to any positive-definite matrix. In fact, Mercer's condition can be reduced to this simpler case. If we choose as our measure the counting measure μ(T)=|T| for all T⊂X, which counts the number of points inside the set T, then the integral in Mercer's theorem reduces to a summation. If this summation holds for all finite sequences of points (x1,…,xn) in X and all choices of n real-valued coefficients (c1,…,cn) (cf. positive definite kernel), then the function k satisfies Mercer's condition.
 
-Certain problems in machine learning have more structure than an arbitrary weighting function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40). The computation is made much simpler if the kernel can be written in the form of a "feature map" φ:X→V![\varphi \colon {\mathcal {X}}\to {\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/b8484d2e5a2fb0ed38f151079dceaca4a395eca5) which satisfies
+Some algorithms that depend on arbitrary relationships in the native space X would, in fact, have a linear interpretation in a different setting: the range space of φ. The linear interpretation gives us insight about the algorithm. Furthermore, there is often no need to compute φ directly during computation, as is the case with support vector machines. Some cite this running time shortcut as the primary benefit. Researchers also use it to justify the meanings and properties of existing algorithms.
 
-
-
-The key restriction is that ⟨⋅,⋅⟩V![\langle \cdot ,\cdot \rangle _{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cfaf5152d8c0788782803dc35974e62634f7a635) must be a proper inner product. On the other hand, an explicit representation for φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) is not necessary, as long as V![{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/47d69f309b6deb2e5008f6130ee11e09bbabd7b6) is an [inner product space](https://en.wikipedia.org/wiki/Inner_product_space). The alternative follows from [Mercer's theorem](https://en.wikipedia.org/wiki/Mercer's_theorem): an implicitly defined function φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) exists whenever the space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) can be equipped with a suitable [measure](https://en.wikipedia.org/wiki/Measure_(mathematics))ensuring the function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) satisfies [Mercer's condition](https://en.wikipedia.org/wiki/Mercer's_condition).
-
-Mercer's theorem is similar to a generalization of the result from linear algebra that [associates an inner product to any positive-definite matrix](https://en.wikipedia.org/wiki/Positive-definite_matrix#Characterizations). In fact, Mercer's condition can be reduced to this simpler case. If we choose as our measure the [counting measure](https://en.wikipedia.org/wiki/Counting_measure) μ(T)=|T|![\mu (T)=|T|](https://wikimedia.org/api/rest_v1/media/math/render/svg/a44af909e4eab9daa53ba7b9e6901c8df5bf2bc1) for all T⊂X![T\subset X](https://wikimedia.org/api/rest_v1/media/math/render/svg/28eb68af8d21de80992dc26e6ee9b6a99f5c54f9), which counts the number of points inside the set T![T](https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0), then the integral in Mercer's theorem reduces to a summation
-
-
-
-If this summation holds for all finite sequences of points (x1,…,xn)![(\mathbf {x} _{1},\dotsc ,\mathbf {x} _{n})](https://wikimedia.org/api/rest_v1/media/math/render/svg/5b4e4c8cc45e704f262c34fda4e3a3fa52754d0e) in X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) and all choices of n![n](https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b) real-valued coefficients (c1,…,cn)![(c_{1},\dots ,c_{n})](https://wikimedia.org/api/rest_v1/media/math/render/svg/bd731fbc6215cae64c53bf0120c4ebfee01d3f96) (cf. [positive definite kernel](https://en.wikipedia.org/wiki/Positive_definite_kernel)), then the function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) satisfies Mercer's condition.
-
-Some algorithms that depend on arbitrary relationships in the native space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) would, in fact, have a linear interpretation in a different setting: the range space of φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e). The linear interpretation gives us insight about the algorithm. Furthermore, there is often no need to compute φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) directly during computation, as is the case with [support vector machines](https://en.wikipedia.org/wiki/Support_vector_machines). Some cite this running time shortcut as the primary benefit. Researchers also use it to justify the meanings and properties of existing algorithms.
-
-Theoretically, a [Gram matrix](https://en.wikipedia.org/wiki/Gram_matrix) K∈Rn×n![\mathbf {K} \in \mathbb {R} ^{n\times n}](https://wikimedia.org/api/rest_v1/media/math/render/svg/5ddf49f743a8541a3c6812638951cc6d13015d07) with respect to {x1,…,xn}![\{\mathbf {x} _{1},\dotsc ,\mathbf {x} _{n}\}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8246b26ae9914d260265dfbea03c55be5e8d00b3) (sometimes also called a "kernel matrix"[[3\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-3)), where Kij=k(xi,xj)![{\displaystyle K_{ij}=k(\mathbf {x} _{i},\mathbf {x} _{j})}](https://wikimedia.org/api/rest_v1/media/math/render/svg/bd50a73f3c68c1ec4fad86ce50b4c413b22b075e), must be [positive semi-definite (PSD)](https://en.wikipedia.org/wiki/Positive-definite_matrix).[[4\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-4) Empirically, for machine learning heuristics, choices of a function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) that do not satisfy Mercer's condition may still perform reasonably if k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) at least approximates the intuitive idea of similarity.[[5\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-5) Regardless of whether k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) is a Mercer kernel, k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) may still be referred to as a "kernel".
+Theoretically, a Gram matrix K∈Rn×n with respect to {x1,…,xn} (sometimes also called a "kernel matrix"[3]), where Kij=k(xi,xj), must be positive semi-definite (PSD).[4] Empirically, for machine learning heuristics, choices of a function k that do not satisfy Mercer's condition may still perform reasonably if k at least approximates the intuitive idea of similarity.[5] Regardless of whether k is a Mercer kernel, k may still be referred to as a "kernel".
 
 
 
 ### 3.2 What is a Graph kernel
 
-In [structure mining](https://en.wikipedia.org/wiki/Structure_mining), a domain of learning on structured data objects in [machine learning](https://en.wikipedia.org/wiki/Machine_learning), a **graph kernel** is a [kernel function](https://en.wikipedia.org/wiki/Positive-definite_kernel) that computes an [inner product](https://en.wikipedia.org/wiki/Inner_product_space) on [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)).[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1) Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow [kernelized](https://en.wikipedia.org/wiki/Kernel_trick) learning algorithms such as [support vector machines](https://en.wikipedia.org/wiki/Support_vector_machine) to work directly on graphs, without having to do [feature extraction](https://en.wikipedia.org/wiki/Feature_extraction) to transform them to fixed-length, real-valued [feature vectors](https://en.wikipedia.org/wiki/Feature_vector). They find applications in [bioinformatics](https://en.wikipedia.org/wiki/Bioinformatics), in [chemoinformatics](https://en.wikipedia.org/wiki/Chemoinformatics) (as a type of [molecule kernels](https://en.wikipedia.org/wiki/Molecule_kernel)[[2\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Ralaivola2005-2)), and in [social network analysis](https://en.wikipedia.org/wiki/Social_network_analysis).[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1)
+In structure mining, a domain of learning on structured data objects in machine learning, a graph kernel is a kernel function that computes an inner product on graphs.[1] Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow kernelized learning algorithms such as support vector machines to work directly on graphs, without having to do feature extraction to transform them to fixed-length, real-valued feature vectors.
 
-Concepts of graph kernels have been around since the 1999, when D. Haussler[[3\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-3) introduced convolutional kernels on discrete structures. The term graph kernels was more officially coined in 2002 by R. I. Kondor and John Lafferty[[4\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-4) as kernels *on* graphs, i.e. similarity functions between the nodes of a single graph, with the [World Wide Web](https://en.wikipedia.org/wiki/World_Wide_Web) [hyperlink](https://en.wikipedia.org/wiki/Hyperlink) graph as a suggested application. In 2003, Gaertner *et al.*[[5\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Gaertner-5) and Kashima *et al.*[[6\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Kashima-6) defined kernels *between* graphs. In 2010, Vishwanathan *et al.* gave their unified framework.[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1) In 2018, Ghosh et al. [[7\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-7) described the history of graph kernels and their evolution over two decades.
+All starts with Graph isomorphism: Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; i.e. (x,y) is an edge of G1 iff (f(x),f(y)) is an edge of G2. Then f is an isomorphism, and G1 and G2 are called isomorphic. No polynomial-time algorithm is known for graph isomorphism. Neither is it known to be NP-complete.
 
-An example of a kernel between graphs is the **random walk kernel**[[5\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Gaertner-5)[[6\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Kashima-6), which conceptually performs [random walks](https://en.wikipedia.org/wiki/Random_walk) on two graphs simultaneously, then counts the number of [paths](https://en.wikipedia.org/wiki/Path_(graph_theory)) that were produced by *both* walks. This is equivalent to doing random walks on the [direct product](https://en.wikipedia.org/wiki/Tensor_product_of_graphs) of the pair of graphs, and from this, a kernel can be derived that can be efficiently computed.[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1)
+We can move to Subgraph isomorphism(easier?). Subgraph isomorphism asks if there is a subset of edges and vertices of G1 that is isomorphic to a smaller graph G2. Subgraph isomorphism is NP-complete.
 
-**Graph isomorphism**
+**Drawbacks:**
 
-Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; i.e. (x,y) is an edge of G1 iff (f(x),f(y)) is an edge of G2. Then f is an isomorphism, and G1 and G2 are called isomorphic
+- Excessive runtime in worst case
+- Runtime may grow exponentially with the number of nodes
+- For larger graphs with many nodes and for large datasets of graphs, this is an enormous problem
 
-No polynomial-time algorithm is known for graph isomorphism Neither is it known to be NP-complete
 
-**Subgraph isomorphism**
-
-Subgraph isomorphism asks if there is a subset of edges and vertices of G1 that is isomorphic to a smaller graph G2
-
-Subgraph isomorphism is NP-complete
-
-**NP-completeness**
-
-A decision problem C is NP-complete iff
-CisinNP
-C is NP-hard, i.e. every other problem in NP is reducible to it.
-
-**Problems for the practitioner**
-
-Excessive runtime in worst case
- Runtime may grow exponentially with the number of nodes
-
-For larger graphs with many nodes and for large datasets of graphs, this is an enormous problem
-
-**Graph kernels inspired by concepts from chemoinformatics**
-
-!  
-
-!  
-
-!  
-
-Define three new kernels (Tanimoto, MinMax, Hybrid) for function prediction of chemical compounds
-
-Based on the idea of molecular fingerprints and
-
-Counting labeled paths of depth up to *d* using depth-first search from each possible vertex
-
-**Properties**
-
-!  Tailored for applications in chemical informatics, !  Exploit the small size and
- !  Low average degree of these molecular graphs.
 
 ### 3.3 The available kernels
 
 
 
-**Principle**
-
-!  Count common walks in two input graphs G and G’
- !  Walks are sequences of nodes that allow repetitions of nodes
-
-**Elegant computation**
-
-!  Walks of length *k* can be computed by looking at the *k*-th power of the adjacency matrix !  Construct direct product graph of G and G'
- !  Count walks in this product graph Gx=(Vx,Ex)
- !  Each walk in the product graph corresponds to one walk in G and G'
+The kernels we used come from GraKel. Explain...
 
 
 
-**Disadvantages**
-
-!  Runtime problems !  Tottering
- !  'Halting'
-
-**Potential solutions**
-
-!  Fast computation of random walk graph kernels (Vishwanathan et al., NIPS 2006) !  Preventing tottering and label enrichment (Mahe et al., ICML 2004)
- !  Graph kernels based on shortest paths (B. and Kriegel, ICDM 2005)
+#### Random Walk
 
 
 
-**Direct computation: O(n****6****)**
+Principle:
 
-**Solution**
+- Count common walks in two input graphs G and G’
+- Walks are sequences of nodes that allow repetitions of nodes
 
-!  Cast computation of random walk kernel as Sylvester Equation !  These can be solved in O(n3)
+Pros:
 
-**Vec-Operator**
+- Elegant computation
+- Walks of length k can be computed by looking at the k-th power of the adjacency matrix !  Construct direct product graph of G and G'
+- Count walks in this product graph Gx=(Vx,Ex)
+- Each walk in the product graph corresponds to one walk in G and G'
 
-vec flattens an n x n matrix A into an n2 x1 vector vec(A).
- !  It stacks the columns of the matrix on top of each other, from left to right.
+Disadvantages:
+
+- Runtime problems 
+- Tottering
+- Halting
+
+Potential solutions:
+
+- Fast computation of random walk graph kernels (Vishwanathan et al., NIPS 2006) !  Preventing tottering and label enrichment (Mahe et al., ICML 2004)
+- Graph kernels based on shortest paths (B. and Kriegel, ICDM 2005)
+
+Direct computation: O(n**6)**
+
+Solution: Cast computation of random walk kernel as Sylvester Equation !  These can be solved in O(n3)
+
+Vec-Operator flattens an n x n matrix A into an n2 x1 vector vec(A).
+
+- It stacks the columns of the matrix on top of each other, from left to right.
 
 Vec-Operator and Kronecker Products
 
-**Kronecker Product**
+Kronecker Product
 
-!  Product of two matrices A and B
- !  Each element of A is multiplied with the full matrix B:
-
-
-
-**Phenomenon of tottering**
-
-!  Walks allow for repetitions of nodes
- !  A walk can visit the same cycle of nodes all over again
- !  Kernel measures similarity in terms of common walks
- !  Hence a small structural similarity can cause a huge kernel value
+- Product of two matrices A and B
+- Each element of A is multiplied with the full matrix B:
 
 
 
-Subtree Kernel (Ramon and Gaertner, 2004)
+Phenomenon of tottering:
+
+- Walks allow for repetitions of nodes
+- A walk can visit the same cycle of nodes all over again
+- Kernel measures similarity in terms of common walks
+- Hence a small structural similarity can cause a huge kernel value
 
 
 
-**Principle**
-
-!  Compare subtree-like patterns in two graphs
- !  Subtree-like pattern is a subtree that allows for repetitions of nodes and edges (similar to
-
-walk versus path)
- !  ForallpairsofnodesvfromGandufromG‘:
-
-!  Compare u and v via a kernel function
- !  Recursively compare all sets of neighbours of u and v via a kernel function
-
-**Advantages**
-
-!  Richer representation of graph structure than walk-based approach
-
-**Disadvantages**
-
-!  Runtime grows exponentially with the recursion depth of the subtree-like patterns
+#### Subtree Kernel (Ramon and Gaertner, 2004)
 
 
 
-Graphlet Kernel (B., Petri, et al., MLG 2007)
+Principle:
+
+- Compare subtree-like patterns in two graphs
+- Subtree-like pattern is a subtree that allows for repetitions of nodes and edges (similar to walk versus path)
 
 
 
-**Principle**
+For all pairs of nodes v from G and u fromG‘:
 
-!  Count subgraphs of limited size *k* in *G* and *G‘
-\* !  These subgraphs are referred to as **graphlets** (Przulj, Bioinformatics 2007) !  Define graph kernel that counts isomorphic graphlets in two graphs
+- Compare u and v via a kernel function
+- Recursively compare all sets of neighbours of u and v via a kernel function
 
-**Runtime problems**
+Advantages:
 
-!  Pairwise test of isomorphism is expensive !  Number of graphlets scales as O(nk)
+- Richer representation of graph structure than walk-based approach
 
-**Two solutions on unlabeled graphs**
+Disadvantages:
 
-!  Precompute isomorphisms !  Sample graphlets
-
-**Disadvantage**
-
-!  Same solutions not feasible on labeled graphs
+- Runtime grows exponentially with the recursion depth of the subtree-like patterns
 
 
 
+#### Graphlet Kernel (B., Petri, et al., MLG 2007)
 
+
+
+Principle:
+
+- Count subgraphs of limited size k in G and G‘
+- These subgraphs are referred to as graphlets (Przulj, Bioinformatics 2007)
+- Define graph kernel that counts isomorphic graphlets in two graphs
+
+Runtime problems
+
+- Pairwise test of isomorphism is expensive !  Number of graphlets scales as O(nk)
+
+Two solutions on unlabeled graphs
+
+- Precompute isomorphisms
+- Sample graphlets
+
+Disadvantage:
+
+- Same solutions not feasible on labeled graphs
+
+
+
+#### Weisfeiler-Lehman Kernel
+
+Our graph kernels use concepts from the Weisfeiler-Lehman test of isomorphism (Weisfeiler and Lehman, 1968), more specifically its 1-dimensional variant, also known as “naive vertex refine- ment”. Assume we are given two graphs *G* and *G*′ and we would like to test whether they are isomorphic. The 1-dimensional Weisfeiler-Lehman test proceeds in iterations, which we index by *i* and which comprise the steps given in Algorithm 1.
+
+The key idea of the algorithm is to augment the node labels by the sorted set of node labels of neighbouring nodes, and compress these augmented labels into new, short labels. These steps are then repeated until the node label sets of *G* and *G*′ differ, or the number of iterations reaches *n*. See Figure 2, a-d, for an illustration of these steps (note however, that the two graphs in the figure would directly be identified as non-isomorphic by the Weisfeiler-Lehman test, as their label sets are already different in the beginning).
+
+Sorting the set of multisets allows for a straightforward definition and implementation of *f* for the compression of labels in step 4: one keeps a counter variable for *f* that records the number of distinct strings that *f* has compressed before. *f* assigns the current value of this counter to a string if an identical string has been compressed before, but when one encounters a new string, one increments the counter by one and *f* assigns its value to the new string. The sorted order of the set of multisets guarantees that all identical strings are mapped to the same number, because they occur in a consecutive block. However, note that the sorting of the set of multisets is not required for defining *f* . Any other injective mapping will give equivalent results. The alphabet Σ has to be sufficiently large for *f* to be injective. For two graphs, |Σ| = 2*n* suffices.
+
+The Weisfeiler-Lehman algorithm terminates after step 4 of iteration *i* if {*l**i*(*v*)|*v* ∈ *V* } ≠ {*l**i*(*v*′)| ′′′
+
+*v* ∈ *V* }, that is, if the sets of newly created labels are not identical in *G* and *G* . The graphs are then not isomorphic. If the sets are identical after *n* iterations, it means that either *G* and *G*′ are isomorphic, or the algorithm has not been able to determine that they are not isomorphic (see Cai et al., 1992, for examples of graphs that cannot be distinguished by this algorithm or its higher- dimensional variants). As a side note, we mention that the 1-dimensional Weisfeiler-Lehman algorithm has been shown to be a valid isomorphism test for almost all graphs (Babai and Kucera, 1979).
+
+Note that in Algorithm 1 we used the same node labeling functions l,*l*0,...,*l**h* for both *G* and *G*′ in order not to overload the notation. We will continue using this notation throughout the paper and assume without loss of generality that the domain of these functions l,*l*0,...,*l**h* is the set of all nodes in our data set of graphs, which corresponds to *V* ∪ *V* ′ in the case of Algorithm 1.
+
+
+
+**Algorithm 1** One iteration of the 1-dim. Weisfeiler-Lehman test of graph isomorphism 
+
+1: Multiset-labeldetermination
+
+​	• For*i*=0,set*M*(*v*):=*l* (*v*)=l(*v*). 2 *i*0
+
+​	• For *i* > 0, assign a multiset-label *M**i*(*v*) to each node *v* in *G* and *G*′ which consists of the multiset {*l**i*−1(*u*)|*u* ∈ *N* (*v*)}.
+
+2: Sortingeachmultiset
+	• Sort elements in *M**i*(*v*) in ascending order and concatenate them into a string *s**i*(*v*). 
+
+​	• Add *l**i*−1(*v*) as a prefix to *s**i*(*v*) and call the resulting string *s**i*(*v*).
+
+3: Labelcompression
+	• Sort all of the strings *s**i*(*v*) for all *v* from *G* and *G*′ in ascending order.
+	• Map each string *s**i*(*v*) to a new compressed label, using a function *f* : Σ∗ → Σ such that *f* (*s**i*(*v*)) = *f* (*s**i*(*w*)) if and only if *s**i*(*v*) = *s**i*(*w*). 
+
+4: Relabeling
+
+​	• Set *l**i*(*v*) := *f*(*s**i*(*v*)) for all nodes in *G* and *G* .
+
+
+
+#### DSGK - Dominant Set Graph Kernel
+
+Explain
 
 
 
@@ -266,15 +267,144 @@ examples of some kernels
 
 
 
-Introduction to Manifold Techniques, what is it?
+We are going here to answer these questions:
+
+- what is a manifold technique and how to use one ? 
+- which manifold techniques are available and where ?
 
 
 
-### 4.1 The available Manifold Techniques
+### 4.1 What is a Manifold Technique
 
-explain the choice of a Manifold Techniques
+Also called Nonlinear dimensionality reduction.
 
-### 4.2 Examples 
+High-dimensional data, meaning data that requires more than two or three dimensions to represent, can be difficult to interpret. One approach to simplification is to assume that the data of interest lie on an embedded non-linear manifold within the higher-dimensional space. If the manifold is of low enough dimension, the data can be visualised in the low-dimensional space.
+
+
+
+Consider a dataset represented as a matrix (or a database table), such that each row represents a set of attributes (or features or dimensions) that describe a particular instance of something. If the number of attributes is large, then the space of unique possible rows is exponentially large. Thus, the larger the dimensionality, the more difficult it becomes to sample the space. This causes many problems. Algorithms that operate on high-dimensional data tend to have a very high time complexity. Many machine learning algorithms, for example, struggle with high-dimensional data. This has become known as the curse of dimensionality. Reducing data into fewer dimensions often makes analysis algorithms more efficient, and can help machine learning algorithms make more accurate predictions.
+
+Humans often have difficulty comprehending data in many dimensions. Thus, reducing data to a small number of dimensions is useful for visualization purposes.
+
+
+
+Plot of the two-dimensional points that results from using a NLDR algorithm. In this case, Manifold Sculpting used to reduce the data into just two dimensions (rotation and scale).
+
+The reduced-dimensional representations of data are often referred to as "intrinsic variables". This description implies that these are the values from which the data was produced. For example, consider a dataset that contains images of a letter 'A', which has been scaled and rotated by varying amounts. Each image has 32x32 pixels. Each image can be represented as a vector of 1024 pixel values. Each row is a sample on a two-dimensional manifold in 1024-dimensional space (a Hamming space). The intrinsic dimensionality is two, because two variables (rotation and scale) were varied in order to produce the data. Information about the shape or look of a letter 'A' is not part of the intrinsic variables because it is the same in every instance. Nonlinear dimensionality reduction will discard the correlated information (the letter 'A') and recover only the varying information (rotation and scale). The image to the right shows sample images from this dataset (to save space, not all input images are shown), and a plot of the two-dimensional points that results from using a NLDR algorithm (in this case, Manifold Sculpting was used) to reduce the data into just two dimensions.
+
+
+
+PCA (a linear dimensionality reduction algorithm) is used to reduce this same dataset into two dimensions, the resulting values are not so well organized.
+
+By comparison, if Principal component analysis, which is a linear dimensionality reduction algorithm, is used to reduce this same dataset into two dimensions, the resulting values are not so well organized. This demonstrates that the high-dimensional vectors (each representing a letter 'A') that sample this manifold vary in a non-linear manner.
+
+It should be apparent, therefore, that NLDR has several applications in the field of computer-vision. For example, consider a robot that uses a camera to navigate in a closed static environment. The images obtained by that camera can be considered to be samples on a manifold in high-dimensional space, and the intrinsic variables of that manifold will represent the robot's position and orientation. This utility is not limited to robots. Dynamical systems, a more general class of systems, which includes robots, are defined in terms of a manifold. Active research in NLDR seeks to unfold the observation manifolds associated with dynamical systems to develop techniques for modeling such systems and enable them to operate autonomously.[3]
+
+
+
+### 4.2 The available Manifold Techniques
+
+#### SDD Maps[edit]
+
+SDD Maps are fast manifold learning algorithms obtained by formulating the problem as a Laplacian Linear System.[4] This is done by replacing the quadratic weighted orthonormality constraints used in popular manifold learning techniques to prevent trivial solutions with a linear constraint that prevents the same. This converts the quadratically constrained quadratic optimization problem into a simpler formulation that is a linearly constrained quadratic optimization problem. Furthermore, in the case of SDD Maps, this problem is equivalent to solving a symmetric diagonally dominant (SDD) linear system which can be solved very fast using Spielman and Teng solvers for Laplacian Linear Systems. The work by Spielman/Teng on such solvers had won a Godel prize, and found many applications later on such as the SDD Maps.
+
+#### Isomap[edit]
+
+Isomap[5] is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. Landmark-Isomap is a variant of this algorithm that uses landmarks to increase speed, at the cost of some accuracy.
+
+#### Locally-linear embedding[edit]
+
+Locally-Linear Embedding (LLE)[6] was presented at approximately the same time as Isomap. It has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. LLE has no internal model.
+
+LLE computes the barycentric coordinates of a point X**i based on its neighbors X**j. The original point is reconstructed by a linear combination, given by the weight matrix W**ij, of its neighbors. The reconstruction error is given by the cost function E(W).
+
+
+
+The weights W**ij refer to the amount of contribution the point X**j has while reconstructing the point X**i. The cost function is minimized under two constraints: (a) Each data point X**i is reconstructed only from its neighbors, thus enforcing W**ij to be zero if point X**j is not a neighbor of the point X**i and (b) The sum of every row of the weight matrix equals 1.
+
+
+
+The original data points are collected in a D dimensional space and the goal of the algorithm is to reduce the dimensionality to d such that D >> d. The same weights W**ij that reconstructs the ith data point in the D dimensional space will be used to reconstruct the same point in the lower d dimensional space. A neighborhood preserving map is created based on this idea. Each point Xi in the D dimensional space is mapped onto a point Yi in the d dimensional space by minimizing the cost function
+
+
+
+In this cost function, unlike the previous one, the weights Wij are kept fixed and the minimization is done on the points Yi to optimize the coordinates. This minimization problem can be solved by solving a sparse N X N eigen value problem (N being the number of data points), whose bottom d nonzero eigen vectors provide an orthogonal set of coordinates. Generally the data points are reconstructed from K nearest neighbors, as measured by Euclidean distance. For such an implementation the algorithm has only one free parameter K, which can be chosen by cross validation.
+
+#### Laplacian eigenmaps[edit]
+
+See also: Manifold regularization
+
+Laplacian Eigenmaps[7] uses spectral techniques to perform dimensionality reduction. This technique relies on the basic assumption that the data lies in a low-dimensional manifold in a high-dimensional space.[8] This algorithm cannot embed out-of-sample points, but techniques based on Reproducing kernel Hilbert space regularization exist for adding this capability.[9] Such techniques can be applied to other nonlinear dimensionality reduction algorithms as well.
+
+Traditional techniques like principal component analysis do not consider the intrinsic geometry of the data. Laplacian eigenmaps builds a graph from neighborhood information of the data set. Each data point serves as a node on the graph and connectivity between nodes is governed by the proximity of neighboring points (using e.g. the k-nearest neighbor algorithm). The graph thus generated can be considered as a discrete approximation of the low-dimensional manifold in the high-dimensional space. Minimization of a cost function based on the graph ensures that points close to each other on the manifold are mapped close to each other in the low-dimensional space, preserving local distances. The eigenfunctions of the Laplace–Beltrami operator on the manifold serve as the embedding dimensions, since under mild conditions this operator has a countable spectrum that is a basis for square integrable functions on the manifold (compare to Fourier serieson the unit circle manifold). Attempts to place Laplacian eigenmaps on solid theoretical ground have met with some success, as under certain nonrestrictive assumptions, the graph Laplacian matrix has been shown to converge to the Laplace–Beltrami operator as the number of points goes to infinity.[10] Matlab code for Laplacian Eigenmaps can be found in algorithms[11] and the PhD thesis of Belkin can be found at the Ohio State University.[12]
+
+In classification applications, low dimension manifolds can be used to model data classes which can be defined from sets of observed instances. Each observed instance can be described by two independent factors termed ’content’ and ’style’, where ’content’ is the invariant factor related to the essence of the class and ’style’ expresses variations in that class between instances.[13]Unfortunately, Laplacian Eigenmaps may fail to produce a coherent representation of a class of interest when training data consist of instances varying significantly in terms of style.[14] In the case of classes which are represented by multivariate sequences, Structural Laplacian Eigenmaps has been proposed to overcome this issue by adding additional constraints within the Laplacian Eigenmaps neighborhood information graph to better reflect the intrinsic structure of the class.[15] More specifically, the graph is used to encode both the sequential structure of the multivariate sequences and, to minimise stylistic variations, proximity between data points of different sequences or even within a sequence, if it contains repetitions. Using dynamic time warping, proximity is detected by finding correspondences between and within sections of the multivariate sequences that exhibit high similarity. Experiments conducted on vision-based activity recognition, object orientation classification and human 3D pose recovery applications have demonstrate the added value of Structural Laplacian Eigenmaps when dealing with multivariate sequence data.[15] An extension of Structural Laplacian Eigenmaps, Generalized Laplacian Eigenmaps led to the generation of manifolds where one of the dimensions specifically represents variations in style. This has proved particularly valuable in applications such as tracking of the human articulated body and silhouette extraction.[16]
+
+
+
+#### Kernel principal component analysis[edit]
+
+Perhaps the most widely used algorithm for manifold learning is kernel PCA.[31] It is a combination of Principal component analysis and the kernel trick. PCA begins by computing the covariance matrix of the m×n matrix X
+
+
+
+It then projects the data onto the first k eigenvectors of that matrix. By comparison, KPCA begins by computing the covariance matrix of the data after being transformed into a higher-dimensional space,
+
+
+
+It then projects the transformed data onto the first k eigenvectors of that matrix, just like PCA. It uses the kernel trick to factor away much of the computation, such that the entire process can be performed without actually computing Φ(x). Of course Φ must be chosen such that it has a known corresponding kernel. Unfortunately, it is not trivial to find a good kernel for a given problem, so KPCA does not yield good results with some problems when using standard kernels. For example, it is known to perform poorly with these kernels on the Swiss roll manifold. However, one can view certain other methods that perform well in such settings (e.g., Laplacian Eigenmaps, LLE) as special cases of kernel PCA by constructing a data-dependent kernel matrix.[32]
+
+KPCA has an internal model, so it can be used to map points onto its embedding that were not available at training time.
+
+
+
+#### Diffusion maps[edit]
+
+Diffusion maps leverages the relationship between heat diffusion and a random walk (Markov Chain); an analogy is drawn between the diffusion operator on a manifold and a Markov transition matrix operating on functions defined on the graph whose nodes were sampled from the manifold.[34]](https://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction#cite_note-34) In particular, let a data set be represented by X=[x1,x2,…,xn]∈Ω⊂RD![\mathbf {X} =[x{1},x{2},\ldots ,x_{n}]\in \Omega \subset \mathbf {R^{D}} . The underlying assumption of diffusion map is that the high-dimensional data lies on a low-dimensional manifold of dimension d. Let X represent the data set and μ represent the distribution of the data points on X. Further, define a kernel which represents some notion of affinity of the points in X. The kernel k has the following properties[35]
+
+
+
+k is symmetric
+
+
+
+k is positivity preserving
+
+Thus one can think of the individual data points as the nodes of a graph and the kernel k as defining some sort of affinity on that graph. The graph is symmetric by construction since the kernel is symmetric. It is easy to see here that from the tuple (X,k) one can construct a reversible Markov Chain. This technique is common to a variety of fields and is known as the graph Laplacian.
+
+For example, the graph K = (X,E) can be constructed using a Gaussian kernel.
+
+
+
+In the above equation, xi∼xj denotes that xi is a nearest neighbor of xj. Properly, Geodesic distance should be used to actually measure distances on the manifold. Since the exact structure of the manifold is not available, for the nearest neighbors the geodesic distance is approximated by euclidean distance. The choice σ modulates our notion of proximity in the sense that if ‖xi−xj‖2≫σ then Kij=0 and if ‖xi−xj‖2≪σ then Kij=1. The former means that very little diffusion has taken place while the latter implies that the diffusion process is nearly complete. Different strategies to choose σ can be found in.[36]
+
+In order to faithfully represent a Markov matrix, K must be normalized by the corresponding degree matrix D:
+
+
+
+P now represents a Markov chain. P(xi,xj) is the probability of transitioning from xi to xj in one time step. Similarly the probability of transitioning from xi to xj in t time steps is given by Pt(xi,xj). Here Pt is the matrix P multiplied by itself t times.
+
+The Markov matrix P constitutes some notion of local geometry of the data set X. The major difference between diffusion maps and principal component analysis is that only local features of the data are considered in diffusion maps as opposed to taking correlations of the entire data set.
+
+K defines a random walk on the data set which means that the kernel captures some local geometry of data set. The Markov chain defines fast and slow directions of propagation through the kernel values. As the walk propagates forward in time, the local geometry information aggregates in the same way as local transitions (defined by differential equations) of the dynamical system.[35]The metaphor of diffusion arises from the definition of a family diffusion distance {Dt}t∈N
+
+
+
+For fixed t, Dt defines a distance between any two points of the data set based on path connectivity: the value of Dt(x,y) will be smaller the more paths that connect x to y and vice versa. Because the quantity Dt(x,y) involves a sum over of all paths of length t, Dt is much more robust to noise in the data than geodesic distance. Dt takes into account all the relation between points x and y while calculating the distance and serves as a better notion of proximity than just Euclidean distance or even geodesic distance.
+
+
+
+#### Hessian Locally-Linear Embedding (Hessian LLE)[edit]
+
+Like LLE, Hessian LLE[37] is also based on sparse matrix techniques. It tends to yield results of a much higher quality than LLE. Unfortunately, it has a very costly computational complexity, so it is not well-suited for heavily sampled manifolds. It has no internal model.
+
+#### Modified Locally-Linear Embedding (MLLE)[edit]
+
+Modified LLE (MLLE)[38] is another LLE variant which uses multiple weights in each neighborhood to address the local weight matrix conditioning problem which leads to distortions in LLE maps. MLLE produces robust projections similar to Hessian LLE, but without the significant additional computational cost.
+
+
+
+### 4.3 Examples 
 
 examples of some Manifold Techniques
 
@@ -475,3 +605,17 @@ Results of Manifold Techniques
 122. Graph Classification - https://www.csc2.ncsu.edu/faculty/nfsamato/practical-graph-mining-with-R/slides/pdf/Classification.pdf
 123. SVMS and kernel methods for graphs - https://courses.cs.ut.ee/2011/graphmining/Main/KernelMethodsForGraphs
 124. Graph Representation Learning and Graph Classification - https://www.cs.uoregon.edu/Reports/AREA-201706-Riazi.pdf
+
+
+
+## Appendix 
+
+
+
+### Appendix 1
+
+NP-completeness
+
+A decision problem C is NP-complete iff
+C is in NP
+C is NP-hard, i.e. every other problem in NP is reducible to it.
