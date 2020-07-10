@@ -39,7 +39,7 @@ Compare the performance of an SVM trained on the given kernel, with or without t
 
 **Note:** the datasets are contained in Matlab files. The variable G contains a vector of cells, one per graph. The entry am of each cell is the adjacency matrix of the graph. The variable labels, contains the class-labels of each graph. 
 
-NEW I have added zip files with csv versions of the adjacecy matrices of the graphs and of the lavels. the files graphxxx.csv contain the adjaccency matrices, one per file, while the file labels.csv contais allthe labels 
+NEW I have added zip files with csv versions of the adjacecy matrices of the graphs and of the lavels. the files graphxxx.csv contain the adjaccency matrices, one per file, while the file labels.csv contais all the labels 
 
 - [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.zip)
 - [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.zip)
@@ -58,15 +58,205 @@ Protein Protein Interaction dataset
 
 
 
-Introduction to graph kernels, what is it?
+We are going here to answer these questions:
+
+- what is a kernel and how to create one ? 
+- what is a graph kernel? 
+- which kernels are available and where ?
 
 
 
-### 3.1 The available kernels
+### 3.1 What is a kernel
 
-explain the choice of a kernel
+In [machine learning](https://en.wikipedia.org/wiki/Machine_learning), **kernel methods** are a class of algorithms for [pattern analysis](https://en.wikipedia.org/wiki/Pattern_analysis), whose best known member is the [support vector machine](https://en.wikipedia.org/wiki/Support_vector_machine) (SVM). The general task of pattern analysis is to find and study general types of relations (for example [clusters](https://en.wikipedia.org/wiki/Cluster_analysis), [rankings](https://en.wikipedia.org/wiki/Ranking), [principal components](https://en.wikipedia.org/wiki/Principal_components), [correlations](https://en.wikipedia.org/wiki/Correlation), [classifications](https://en.wikipedia.org/wiki/Statistical_classification)) in datasets. For many algorithms that solve these tasks, the data in raw representation have to be explicitly transformed into [feature vector](https://en.wikipedia.org/wiki/Feature_vector) representations via a user-specified *feature map*: in contrast, kernel methods require only a user-specified *kernel*, i.e., a [similarity function](https://en.wikipedia.org/wiki/Similarity_function) over pairs of data points in raw representation.
 
-### 3.2 Examples 
+Kernel methods owe their name to the use of [kernel functions](https://en.wikipedia.org/wiki/Positive-definite_kernel), which enable them to operate in a high-dimensional, *implicit* [feature space](https://en.wikipedia.org/wiki/Feature_space) without ever computing the coordinates of the data in that space, but rather by simply computing the [inner products](https://en.wikipedia.org/wiki/Inner_product) between the [images](https://en.wikipedia.org/wiki/Image_(mathematics)) of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "**kernel trick**".[[1\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-1) Kernel functions have been introduced for sequence data, [graphs](https://en.wikipedia.org/wiki/Graph_kernel), text, images, as well as vectors.
+
+
+
+The kernel trick avoids the explicit mapping that is needed to get linear [learning algorithms](https://en.wikipedia.org/wiki/Learning_algorithms) to learn a nonlinear function or [decision boundary](https://en.wikipedia.org/wiki/Decision_boundary). For all x![\mathbf {x} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2) and x′![\mathbf {x'} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/7d14ab6186e99346cb608a30858c3e1580f760e6) in the input space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9), certain functions k(x,x′)![k(\mathbf {x} ,\mathbf {x'} )](https://wikimedia.org/api/rest_v1/media/math/render/svg/7d02f87329f893c16295074bcfe9d974fb72c4eb) can be expressed as an [inner product](https://en.wikipedia.org/wiki/Inner_product) in another space V![{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/47d69f309b6deb2e5008f6130ee11e09bbabd7b6). The function k:X×X→R![k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R} ](https://wikimedia.org/api/rest_v1/media/math/render/svg/ecc3c27f7e04f4ce7c0088a69e0b414a74869e3e) is often referred to as a *kernel* or a *[kernel function](https://en.wikipedia.org/wiki/Kernel_function)*. The word "kernel" is used in mathematics to denote a weighting function for a weighted sum or [integral](https://en.wikipedia.org/wiki/Integral).
+
+Certain problems in machine learning have more structure than an arbitrary weighting function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40). The computation is made much simpler if the kernel can be written in the form of a "feature map" φ:X→V![\varphi \colon {\mathcal {X}}\to {\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/b8484d2e5a2fb0ed38f151079dceaca4a395eca5) which satisfies
+
+
+
+The key restriction is that ⟨⋅,⋅⟩V![\langle \cdot ,\cdot \rangle _{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cfaf5152d8c0788782803dc35974e62634f7a635) must be a proper inner product. On the other hand, an explicit representation for φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) is not necessary, as long as V![{\mathcal {V}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/47d69f309b6deb2e5008f6130ee11e09bbabd7b6) is an [inner product space](https://en.wikipedia.org/wiki/Inner_product_space). The alternative follows from [Mercer's theorem](https://en.wikipedia.org/wiki/Mercer's_theorem): an implicitly defined function φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) exists whenever the space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) can be equipped with a suitable [measure](https://en.wikipedia.org/wiki/Measure_(mathematics))ensuring the function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) satisfies [Mercer's condition](https://en.wikipedia.org/wiki/Mercer's_condition).
+
+Mercer's theorem is similar to a generalization of the result from linear algebra that [associates an inner product to any positive-definite matrix](https://en.wikipedia.org/wiki/Positive-definite_matrix#Characterizations). In fact, Mercer's condition can be reduced to this simpler case. If we choose as our measure the [counting measure](https://en.wikipedia.org/wiki/Counting_measure) μ(T)=|T|![\mu (T)=|T|](https://wikimedia.org/api/rest_v1/media/math/render/svg/a44af909e4eab9daa53ba7b9e6901c8df5bf2bc1) for all T⊂X![T\subset X](https://wikimedia.org/api/rest_v1/media/math/render/svg/28eb68af8d21de80992dc26e6ee9b6a99f5c54f9), which counts the number of points inside the set T![T](https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0), then the integral in Mercer's theorem reduces to a summation
+
+
+
+If this summation holds for all finite sequences of points (x1,…,xn)![(\mathbf {x} _{1},\dotsc ,\mathbf {x} _{n})](https://wikimedia.org/api/rest_v1/media/math/render/svg/5b4e4c8cc45e704f262c34fda4e3a3fa52754d0e) in X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) and all choices of n![n](https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b) real-valued coefficients (c1,…,cn)![(c_{1},\dots ,c_{n})](https://wikimedia.org/api/rest_v1/media/math/render/svg/bd731fbc6215cae64c53bf0120c4ebfee01d3f96) (cf. [positive definite kernel](https://en.wikipedia.org/wiki/Positive_definite_kernel)), then the function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) satisfies Mercer's condition.
+
+Some algorithms that depend on arbitrary relationships in the native space X![{\mathcal {X}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c7e5461c5286852df4ef652fca7e4b0b63030e9) would, in fact, have a linear interpretation in a different setting: the range space of φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e). The linear interpretation gives us insight about the algorithm. Furthermore, there is often no need to compute φ![\varphi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/33ee699558d09cf9d653f6351f9fda0b2f4aaa3e) directly during computation, as is the case with [support vector machines](https://en.wikipedia.org/wiki/Support_vector_machines). Some cite this running time shortcut as the primary benefit. Researchers also use it to justify the meanings and properties of existing algorithms.
+
+Theoretically, a [Gram matrix](https://en.wikipedia.org/wiki/Gram_matrix) K∈Rn×n![\mathbf {K} \in \mathbb {R} ^{n\times n}](https://wikimedia.org/api/rest_v1/media/math/render/svg/5ddf49f743a8541a3c6812638951cc6d13015d07) with respect to {x1,…,xn}![\{\mathbf {x} _{1},\dotsc ,\mathbf {x} _{n}\}](https://wikimedia.org/api/rest_v1/media/math/render/svg/8246b26ae9914d260265dfbea03c55be5e8d00b3) (sometimes also called a "kernel matrix"[[3\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-3)), where Kij=k(xi,xj)![{\displaystyle K_{ij}=k(\mathbf {x} _{i},\mathbf {x} _{j})}](https://wikimedia.org/api/rest_v1/media/math/render/svg/bd50a73f3c68c1ec4fad86ce50b4c413b22b075e), must be [positive semi-definite (PSD)](https://en.wikipedia.org/wiki/Positive-definite_matrix).[[4\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-4) Empirically, for machine learning heuristics, choices of a function k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) that do not satisfy Mercer's condition may still perform reasonably if k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) at least approximates the intuitive idea of similarity.[[5\]](https://en.wikipedia.org/wiki/Kernel_method#cite_note-5) Regardless of whether k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) is a Mercer kernel, k![k](https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40) may still be referred to as a "kernel".
+
+
+
+### 3.2 What is a Graph kernel
+
+In [structure mining](https://en.wikipedia.org/wiki/Structure_mining), a domain of learning on structured data objects in [machine learning](https://en.wikipedia.org/wiki/Machine_learning), a **graph kernel** is a [kernel function](https://en.wikipedia.org/wiki/Positive-definite_kernel) that computes an [inner product](https://en.wikipedia.org/wiki/Inner_product_space) on [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)).[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1) Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow [kernelized](https://en.wikipedia.org/wiki/Kernel_trick) learning algorithms such as [support vector machines](https://en.wikipedia.org/wiki/Support_vector_machine) to work directly on graphs, without having to do [feature extraction](https://en.wikipedia.org/wiki/Feature_extraction) to transform them to fixed-length, real-valued [feature vectors](https://en.wikipedia.org/wiki/Feature_vector). They find applications in [bioinformatics](https://en.wikipedia.org/wiki/Bioinformatics), in [chemoinformatics](https://en.wikipedia.org/wiki/Chemoinformatics) (as a type of [molecule kernels](https://en.wikipedia.org/wiki/Molecule_kernel)[[2\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Ralaivola2005-2)), and in [social network analysis](https://en.wikipedia.org/wiki/Social_network_analysis).[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1)
+
+Concepts of graph kernels have been around since the 1999, when D. Haussler[[3\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-3) introduced convolutional kernels on discrete structures. The term graph kernels was more officially coined in 2002 by R. I. Kondor and John Lafferty[[4\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-4) as kernels *on* graphs, i.e. similarity functions between the nodes of a single graph, with the [World Wide Web](https://en.wikipedia.org/wiki/World_Wide_Web) [hyperlink](https://en.wikipedia.org/wiki/Hyperlink) graph as a suggested application. In 2003, Gaertner *et al.*[[5\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Gaertner-5) and Kashima *et al.*[[6\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Kashima-6) defined kernels *between* graphs. In 2010, Vishwanathan *et al.* gave their unified framework.[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1) In 2018, Ghosh et al. [[7\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-7) described the history of graph kernels and their evolution over two decades.
+
+An example of a kernel between graphs is the **random walk kernel**[[5\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Gaertner-5)[[6\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Kashima-6), which conceptually performs [random walks](https://en.wikipedia.org/wiki/Random_walk) on two graphs simultaneously, then counts the number of [paths](https://en.wikipedia.org/wiki/Path_(graph_theory)) that were produced by *both* walks. This is equivalent to doing random walks on the [direct product](https://en.wikipedia.org/wiki/Tensor_product_of_graphs) of the pair of graphs, and from this, a kernel can be derived that can be efficiently computed.[[1\]](https://en.wikipedia.org/wiki/Graph_kernel#cite_note-Vishwanathan-1)
+
+**Graph isomorphism**
+
+Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; i.e. (x,y) is an edge of G1 iff (f(x),f(y)) is an edge of G2. Then f is an isomorphism, and G1 and G2 are called isomorphic
+
+No polynomial-time algorithm is known for graph isomorphism Neither is it known to be NP-complete
+
+**Subgraph isomorphism**
+
+Subgraph isomorphism asks if there is a subset of edges and vertices of G1 that is isomorphic to a smaller graph G2
+
+Subgraph isomorphism is NP-complete
+
+**NP-completeness**
+
+A decision problem C is NP-complete iff
+CisinNP
+C is NP-hard, i.e. every other problem in NP is reducible to it.
+
+**Problems for the practitioner**
+
+Excessive runtime in worst case
+ Runtime may grow exponentially with the number of nodes
+
+For larger graphs with many nodes and for large datasets of graphs, this is an enormous problem
+
+**Graph kernels inspired by concepts from chemoinformatics**
+
+!  
+
+!  
+
+!  
+
+Define three new kernels (Tanimoto, MinMax, Hybrid) for function prediction of chemical compounds
+
+Based on the idea of molecular fingerprints and
+
+Counting labeled paths of depth up to *d* using depth-first search from each possible vertex
+
+**Properties**
+
+!  Tailored for applications in chemical informatics, !  Exploit the small size and
+ !  Low average degree of these molecular graphs.
+
+### 3.3 The available kernels
+
+
+
+**Principle**
+
+!  Count common walks in two input graphs G and G’
+ !  Walks are sequences of nodes that allow repetitions of nodes
+
+**Elegant computation**
+
+!  Walks of length *k* can be computed by looking at the *k*-th power of the adjacency matrix !  Construct direct product graph of G and G'
+ !  Count walks in this product graph Gx=(Vx,Ex)
+ !  Each walk in the product graph corresponds to one walk in G and G'
+
+
+
+**Disadvantages**
+
+!  Runtime problems !  Tottering
+ !  'Halting'
+
+**Potential solutions**
+
+!  Fast computation of random walk graph kernels (Vishwanathan et al., NIPS 2006) !  Preventing tottering and label enrichment (Mahe et al., ICML 2004)
+ !  Graph kernels based on shortest paths (B. and Kriegel, ICDM 2005)
+
+
+
+**Direct computation: O(n****6****)**
+
+**Solution**
+
+!  Cast computation of random walk kernel as Sylvester Equation !  These can be solved in O(n3)
+
+**Vec-Operator**
+
+vec flattens an n x n matrix A into an n2 x1 vector vec(A).
+ !  It stacks the columns of the matrix on top of each other, from left to right.
+
+Vec-Operator and Kronecker Products
+
+**Kronecker Product**
+
+!  Product of two matrices A and B
+ !  Each element of A is multiplied with the full matrix B:
+
+
+
+**Phenomenon of tottering**
+
+!  Walks allow for repetitions of nodes
+ !  A walk can visit the same cycle of nodes all over again
+ !  Kernel measures similarity in terms of common walks
+ !  Hence a small structural similarity can cause a huge kernel value
+
+
+
+Subtree Kernel (Ramon and Gaertner, 2004)
+
+
+
+**Principle**
+
+!  Compare subtree-like patterns in two graphs
+ !  Subtree-like pattern is a subtree that allows for repetitions of nodes and edges (similar to
+
+walk versus path)
+ !  ForallpairsofnodesvfromGandufromG‘:
+
+!  Compare u and v via a kernel function
+ !  Recursively compare all sets of neighbours of u and v via a kernel function
+
+**Advantages**
+
+!  Richer representation of graph structure than walk-based approach
+
+**Disadvantages**
+
+!  Runtime grows exponentially with the recursion depth of the subtree-like patterns
+
+
+
+Graphlet Kernel (B., Petri, et al., MLG 2007)
+
+
+
+**Principle**
+
+!  Count subgraphs of limited size *k* in *G* and *G‘
+\* !  These subgraphs are referred to as **graphlets** (Przulj, Bioinformatics 2007) !  Define graph kernel that counts isomorphic graphlets in two graphs
+
+**Runtime problems**
+
+!  Pairwise test of isomorphism is expensive !  Number of graphlets scales as O(nk)
+
+**Two solutions on unlabeled graphs**
+
+!  Precompute isomorphisms !  Sample graphlets
+
+**Disadvantage**
+
+!  Same solutions not feasible on labeled graphs
+
+
+
+
+
+
+
+### 3.3 Examples 
 
 examples of some kernels
 
