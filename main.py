@@ -4,9 +4,6 @@ import pandas as pd
 from PPI_SHOCK_KERNELS import launch
 
 
-print(time())
-
-
 def save():
 	with open("results.txt", "w") as ff:
 		tmp1 = pd.DataFrame(results_PPI, columns=["method", "PPI_score"])
