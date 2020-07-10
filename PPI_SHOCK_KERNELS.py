@@ -86,8 +86,8 @@ def launch(ker, red, results_PPI, results_SHOCK):
 					plt.show()
 
 			if j=="PPI":
-				results_PPI += [(pd_name, pd_acc)]
+				results_PPI += [(pd_name, pd_acc, time()-start)]
 			else:
-				results_SHOCK += [(pd_name, pd_acc)]
+				results_SHOCK += [(pd_name, pd_acc, time()-start)]
 
 	return results_PPI, results_SHOCK

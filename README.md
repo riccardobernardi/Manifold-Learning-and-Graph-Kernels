@@ -98,28 +98,44 @@ Train an SVM with the kernel chosen applying the manifold technique or not and s
 
 
 
-|      | method           | PPI_score   | SHOCK_score |
-| ---: | :--------------- | :---------- | :---------- |
-|    0 | SPK-precomputed  | Acc: 50.14% | Acc: 0.5%   |
-|    1 | SPK-linear       | Acc: 76.53% | Acc: 43.0%  |
-|    2 | SPK-rbf          | Acc: 64.17% | Acc: 35.0%  |
-|    3 | WLK-precomputed  | Acc: 41.53% | Acc: 3.5%   |
-|    4 | WLK-linear       | Acc: 69.72% | Acc: 40.5%  |
-|    5 | WLK-rbf          | Acc: 50.28% | Acc: 29.5%  |
-|    6 | STK-precomputed  | Acc: 41.53% | Acc: 2.0%   |
-|    7 | STK-linear       | Acc: 76.39% | Acc: 42.0%  |
-|    8 | STK-rbf          | Acc: 74.86% | Acc: 40.0%  |
-|    9 | DSGK-precomputed | Acc: 34.72% | Acc: 1.5%   |
-|   10 | DSGK-linear      | Acc: 78.75% | Acc: 41.5%  |
-|   11 | DSGK-rbf         | Acc: 65.14% | Acc: 28.0%  |
-|   12 | SPK-linear-RED   | Acc: 62.92% | Acc: 32.0%  |
-|   13 | SPK-rbf-RED      | Acc: 75.83% | Acc: 34.5%  |
-|   14 | WLK-linear-RED   | Acc: 53.47% | Acc: 22.5%  |
-|   15 | WLK-rbf-RED      | Acc: 64.03% | Acc: 33.0%  |
-|   16 | STK-linear-RED   | Acc: 56.81% | Acc: 17.0%  |
-|   17 | STK-rbf-RED      | Acc: 57.22% | Acc: 29.5%  |
-|   18 | DSGK-linear-RED  | Acc: 66.25% | Acc: 23.0%  |
-|   19 | DSGK-rbf-RED     | Acc: 73.19% | Acc: 33.0%  |
+|      | method                  | PPI_score   | SHOCK_score |
+| ---: | :---------------------- | :---------- | :---------- |
+|    0 | SPK-precomputed-no-RED  | Acc: 49.17% | Acc: 0.0%   |
+|    1 | SPK-linear-no-RED       | Acc: 75.14% | Acc: 43.0%  |
+|    2 | SPK-rbf-no-RED          | Acc: 62.22% | Acc: 31.5%  |
+|    3 | WLK-precomputed-no-RED  | Acc: 42.64% | Acc: 3.0%   |
+|    4 | WLK-linear-no-RED       | Acc: 75.56% | Acc: 38.5%  |
+|    5 | WLK-rbf-no-RED          | Acc: 47.78% | Acc: 26.0%  |
+|    6 | STK-precomputed-no-RED  | Acc: 41.94% | Acc: 1.5%   |
+|    7 | STK-linear-no-RED       | Acc: 73.47% | Acc: 42.5%  |
+|    8 | STK-rbf-no-RED          | Acc: 67.36% | Acc: 39.5%  |
+|    9 | DSGK-precomputed-no-RED | Acc: 36.25% | Acc: 3.5%   |
+|   10 | DSGK-linear-no-RED      | Acc: 79.17% | Acc: 42.0%  |
+|   11 | DSGK-rbf-no-RED         | Acc: 67.5%  | Acc: 30.0%  |
+|   12 | SPK-linear-ISO          | Acc: 62.92% | Acc: 32.0%  |
+|   13 | SPK-rbf-ISO             | Acc: 75.83% | Acc: 34.5%  |
+|   14 | WLK-linear-ISO          | Acc: 53.47% | Acc: 22.5%  |
+|   15 | WLK-rbf-ISO             | Acc: 64.03% | Acc: 33.0%  |
+|   16 | STK-linear-ISO          | Acc: 56.81% | Acc: 17.0%  |
+|   17 | STK-rbf-ISO             | Acc: 57.22% | Acc: 29.5%  |
+|   18 | DSGK-linear-ISO         | Acc: 66.25% | Acc: 23.0%  |
+|   19 | DSGK-rbf-ISO            | Acc: 73.19% | Acc: 33.0%  |
+|   20 | SPK-linear-LLE          | Acc: 53.33% | Acc: 18.0%  |
+|   21 | SPK-rbf-LLE             | Acc: 53.33% | Acc: 18.0%  |
+|   22 | WLK-linear-LLE          | Acc: 53.33% | Acc: 19.5%  |
+|   23 | WLK-rbf-LLE             | Acc: 53.33% | Acc: 19.5%  |
+|   24 | STK-linear-LLE          | Acc: 53.33% | Acc: 11.0%  |
+|   25 | STK-rbf-LLE             | Acc: 53.33% | Acc: 12.5%  |
+|   26 | DSGK-linear-LLE         | Acc: 53.33% | Acc: 22.0%  |
+|   27 | DSGK-rbf-LLE            | Acc: 53.33% | Acc: 22.0%  |
+|   28 | SPK-linear-TSNE         | Acc: 56.67% | Acc: 39.5%  |
+|   29 | SPK-rbf-TSNE            | Acc: 57.08% | Acc: 41.5%  |
+|   30 | WLK-linear-TSNE         | Acc: 70.83% | Acc: 27.5%  |
+|   31 | WLK-rbf-TSNE            | Acc: 70.83% | Acc: 41.5%  |
+|   32 | STK-linear-TSNE         | Acc: 48.75% | Acc: 15.0%  |
+|   33 | STK-rbf-TSNE            | Acc: 53.33% | Acc: 36.5%  |
+|   34 | DSGK-linear-TSNE        | Acc: 61.67% | Acc: 25.5%  |
+|   35 | DSGK-rbf-TSNE           | Acc: 74.31% | Acc: 33.5%  |
 
 
 
