@@ -304,17 +304,13 @@ It should be apparent, therefore, that NLDR has several applications in the fiel
 
 ### 4.2 The available Manifold Techniques
 
-#### SDD Maps[edit]
-
-SDD Maps are fast manifold learning algorithms obtained by formulating the problem as a Laplacian Linear System.[4] This is done by replacing the quadratic weighted orthonormality constraints used in popular manifold learning techniques to prevent trivial solutions with a linear constraint that prevents the same. This converts the quadratically constrained quadratic optimization problem into a simpler formulation that is a linearly constrained quadratic optimization problem. Furthermore, in the case of SDD Maps, this problem is equivalent to solving a symmetric diagonally dominant (SDD) linear system which can be solved very fast using Spielman and Teng solvers for Laplacian Linear Systems. The work by Spielman/Teng on such solvers had won a Godel prize, and found many applications later on such as the SDD Maps.
-
-#### Isomap[edit]
+#### Isomap
 
 Isomap[5] is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. Landmark-Isomap is a variant of this algorithm that uses landmarks to increase speed, at the cost of some accuracy.
 
-#### Locally-linear embedding[edit]
+#### Locally-linear embedding
 
-Locally-Linear Embedding (LLE)[6] was presented at approximately the same time as Isomap. It has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. LLE has no internal model.
+Locally-Linear Embedding (LLE) was presented at approximately the same time as Isomap. It has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. LLE has no internal model.
 
 LLE computes the barycentric coordinates of a point X**i based on its neighbors X**j. The original point is reconstructed by a linear combination, given by the weight matrix W**ij, of its neighbors. The reconstruction error is given by the cost function E(W).
 
@@ -330,7 +326,7 @@ The original data points are collected in a D dimensional space and the goal of 
 
 In this cost function, unlike the previous one, the weights Wij are kept fixed and the minimization is done on the points Yi to optimize the coordinates. This minimization problem can be solved by solving a sparse N X N eigen value problem (N being the number of data points), whose bottom d nonzero eigen vectors provide an orthogonal set of coordinates. Generally the data points are reconstructed from K nearest neighbors, as measured by Euclidean distance. For such an implementation the algorithm has only one free parameter K, which can be chosen by cross validation.
 
-#### Laplacian eigenmaps[edit]
+#### Laplacian eigenmaps
 
 See also: Manifold regularization
 
@@ -342,7 +338,7 @@ In classification applications, low dimension manifolds can be used to model dat
 
 
 
-#### Kernel principal component analysis[edit]
+#### Kernel principal component analysis
 
 Perhaps the most widely used algorithm for manifold learning is kernel PCA.[31] It is a combination of Principal component analysis and the kernel trick. PCA begins by computing the covariance matrix of the m×n matrix X
 
@@ -358,7 +354,7 @@ KPCA has an internal model, so it can be used to map points onto its embedding t
 
 
 
-#### Diffusion maps[edit]
+#### Diffusion maps
 
 Diffusion maps leverages the relationship between heat diffusion and a random walk (Markov Chain); an analogy is drawn between the diffusion operator on a manifold and a Markov transition matrix operating on functions defined on the graph whose nodes were sampled from the manifold.[34]](https://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction#cite_note-34) In particular, let a data set be represented by X=[x1,x2,…,xn]∈Ω⊂RD![\mathbf {X} =[x{1},x{2},\ldots ,x_{n}]\in \Omega \subset \mathbf {R^{D}} . The underlying assumption of diffusion map is that the high-dimensional data lies on a low-dimensional manifold of dimension d. Let X represent the data set and μ represent the distribution of the data points on X. Further, define a kernel which represents some notion of affinity of the points in X. The kernel k has the following properties[35]
 
@@ -394,11 +390,11 @@ For fixed t, Dt defines a distance between any two points of the data set based 
 
 
 
-#### Hessian Locally-Linear Embedding (Hessian LLE)[edit]
+#### Hessian Locally-Linear Embedding (Hessian LLE)
 
 Like LLE, Hessian LLE[37] is also based on sparse matrix techniques. It tends to yield results of a much higher quality than LLE. Unfortunately, it has a very costly computational complexity, so it is not well-suited for heavily sampled manifolds. It has no internal model.
 
-#### Modified Locally-Linear Embedding (MLLE)[edit]
+#### Modified Locally-Linear Embedding (MLLE)
 
 Modified LLE (MLLE)[38] is another LLE variant which uses multiple weights in each neighborhood to address the local weight matrix conditioning problem which leads to distortions in LLE maps. MLLE produces robust projections similar to Hessian LLE, but without the significant additional computational cost.
 
