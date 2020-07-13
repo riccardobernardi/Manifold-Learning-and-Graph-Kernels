@@ -61,24 +61,30 @@ Protein Protein Interaction dataset
 We are going here to answer these questions:
 
 - what is a kernel and how to create one ? 
-- what is a graph kernel? 
+- what is a graph kernel ? 
 - which kernels are available and where ?
 
 
 
 ### 3.1 What is a kernel
 
-In machine learning, kernel methods are a class of algorithms for pattern analysis, whose best known member is the support vector machine (SVM). For many algorithms that solve these tasks, the data in raw representation have to be explicitly transformed into feature vector representations via a user-specified feature map: in contrast, kernel methods require only a user-specified kernel, i.e., a similarity function over pairs of data points in raw representation.
+Kernel is a way of computing the dot product of two vectors **𝐱** and **𝐲** in some (possibly very high dimensional) feature space, which is why kernel functions are sometimes called "generalized dot product". Suppose we have a mapping 𝜑:ℝ𝑛→ℝ𝑚 that brings our vectors in $ℝ^n$ to some feature space $ℝ^𝑚$. Then the dot product of **𝐱** and **𝐲** in this space is $φ(x)^Tφ(y)$. A kernel is a function 𝑘 that corresponds to this dot product, i.e. $k(x,y)=φ(x)^Tφ(y)$. So Kernels give a way to compute dot products in some feature space without even knowing what this space is and what is 𝜑.
 
-Kernel methods owe their name to the use of kernel functions, which enable them to operate in a high-dimensional, implicit feature space without ever computing the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "kernel trick".[1] Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.
+For example, consider a simple polynomial kernel $k(x,y)=(1+x^Ty)^2$ with $x,y∈R^2$. This doesn't seem to correspond to any mapping function 𝜑, it's just a function that returns a real number. Assuming that x=(x1,x2) and y=(y1,y2), let's expand this expression:
 
-The kernel trick avoids the explicit mapping that is needed to get linear learning algorithms to learn a nonlinear function or decision boundary. For all x and x′ in the input space X, certain functions k(x,x′) can be expressed as an inner product in another space V. The function k:X×X→R is often referred to as a kernel or a kernel function. The word "kernel" is used in mathematics to denote a weighting function for a weighted sum or integral.
+$$k(x,y)=(1+x^Ty)^2=(1+x_1y_1+x_2y_2)^2==1+x_1^2y_1^2+x_2^2y_2^2+2x_1y_1+2x_2y_2+2x_1x_2y_1y_2$$
+
+Note that this is nothing else but a dot product between two vectors $(1,x_1^2,x_2^2,\sqrt{2}x_1,\sqrt{2}x_2,\sqrt{2}x_1x_2)$ and $(1,y_1^2,y_2^2,\sqrt{2}y_1,\sqrt{2}y_2,\sqrt{2}y_1y_2)$. So the kernel $k(x,y)=(1+x^Ty)^2=φ(x)^Tφ(y)$ computes a dot product in 6-dimensional space without explicitly visiting this space. 
+
+Another example is Gaussian kernel $k(x,y)=exp⁡(−γ‖x−y‖^2)$. If we Taylor-expand this function, we'll see that it corresponds to an infinite-dimensional codomain of 𝜑φ.
+
+This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "kernel trick". Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.
+
+The kernel trick avoids the explicit mapping that is needed to get linear learning algorithms to learn a nonlinear function or decision boundary.
 
 The key restriction is that ⟨⋅,⋅⟩ must be a proper inner product. On the other hand, an explicit representation for φ is not necessary, as long as V is an inner product space. The alternative follows from Mercer's theorem: an implicitly defined function φ exists whenever the space X can be equipped with a suitable measure ensuring the function k satisfies Mercer's condition.
 
-Mercer's theorem is similar to a generalization of the result from linear algebra that associates an inner product to any positive-definite matrix. In fact, Mercer's condition can be reduced to this simpler case. If we choose as our measure the counting measure μ(T)=|T| for all T⊂X, which counts the number of points inside the set T, then the integral in Mercer's theorem reduces to a summation. If this summation holds for all finite sequences of points (x1,…,xn) in X and all choices of n real-valued coefficients (c1,…,cn) (cf. positive definite kernel), then the function k satisfies Mercer's condition.
 
-Some algorithms that depend on arbitrary relationships in the native space X would, in fact, have a linear interpretation in a different setting: the range space of φ. The linear interpretation gives us insight about the algorithm. Furthermore, there is often no need to compute φ directly during computation, as is the case with support vector machines. Some cite this running time shortcut as the primary benefit. Researchers also use it to justify the meanings and properties of existing algorithms.
 
 Theoretically, a Gram matrix K∈Rn×n with respect to {x1,…,xn} (sometimes also called a "kernel matrix"[3]), where Kij=k(xi,xj), must be positive semi-definite (PSD).[4] Empirically, for machine learning heuristics, choices of a function k that do not satisfy Mercer's condition may still perform reasonably if k at least approximates the intuitive idea of similarity.[5] Regardless of whether k is a Mercer kernel, k may still be referred to as a "kernel".
 
