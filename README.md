@@ -50,6 +50,18 @@ NEW I have added zip files with csv versions of the adjacecy matrices of the gra
 
 
 
+In this section..., in the section, ecc we would like to explain...
+
+
+
+### 2.1 Disclaimer
+
+Crafter is the author of the paper
+
+
+
+### 2.2 The datasets
+
 Protein Protein Interaction dataset
 
 
@@ -108,7 +120,7 @@ All starts with Graph isomorphism: Find a mapping f of the vertices of G1 to the
 
 i.e. (x,y) is an edge of G1 iff (f(x),f(y)) is an edge of G2. Then f is an isomorphism, and G1 and G2 are called isomorphic. No polynomial-time algorithm is known for graph isomorphism. Neither is it known to be NP-complete.
 
-We can move to Subgraph isomorphism(easier?). Subgraph isomorphism asks if there is a subset of edges and vertices of G1 that is isomorphic to a smaller graph G2. Subgraph isomorphism is NP-complete.
+We can move to Subgraph isomorphism. Subgraph isomorphism asks if there is a subset of edges and vertices of G1 that is isomorphic to a smaller graph G2. Subgraph isomorphism is NP-complete.
 
 **Drawbacks:**
 
@@ -116,7 +128,7 @@ We can move to Subgraph isomorphism(easier?). Subgraph isomorphism asks if there
 - Runtime may grow exponentially with the number of nodes
 - For larger graphs with many nodes and for large datasets of graphs, this is an enormous problem
 
-The more common way is extracting some patterns that we believe are really important and can characterize well the graph such that they can be something like a fingerprint and such that it can be compared. This approach is called graph kernel through bag of patterns. The Pros are that we can control the precision and the computational cost moving from easier of more complex extractions of patterns.
+The more common way to proceed though is to create a kernel function that should perform a reasonable approximation of the graph isomorphism problem and can tell at the end of the process how much two graphs are similar to each other. The way it works is extracting some patterns that we believe are really important and can characterize well the graph such that they can be something like a fingerprint and such that it can be compared. This approach is called graph kernel through bag of patterns. The Pros are that we can control the precision and the computational cost moving from easier of more complex extractions of patterns. The Contras is that the right algorithm can be different based on the domain of the problem(i.e.: chemistry may prefer a more local approach for feature extraction instead physics a more general one)
 
 ![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/graph-kernels-13-638 copy.jpg)
 
@@ -126,7 +138,9 @@ The more common way is extracting some patterns that we believe are really impor
 
 
 
-The kernels we used come from GraKel. Explain...
+The kernels we used come from GraKel [125]. It is a library that provides implementations of several well-established graph kernels. The library unifies these kernels into a common framework. Furthermore, it provides implementations of some frameworks that work on top of graph kernels. Specifically, GraKeL contains 15 kernels and 2 frameworks.
+
+Also we introduced a brand new kernel called Dominant-Set Graph Kernel. This kernel is crafted, implemented and invented by the author of this report.
 
 
 
@@ -623,6 +637,7 @@ Results of Manifold Techniques
 122. Graph Classification - https://www.csc2.ncsu.edu/faculty/nfsamato/practical-graph-mining-with-R/slides/pdf/Classification.pdf
 123. SVMS and kernel methods for graphs - https://courses.cs.ut.ee/2011/graphmining/Main/KernelMethodsForGraphs
 124. Graph Representation Learning and Graph Classification - https://www.cs.uoregon.edu/Reports/AREA-201706-Riazi.pdf
+125. GraKeL: A Graph Kernel Library in Python - https://github.com/ysig/GraKeL
 
 
 
