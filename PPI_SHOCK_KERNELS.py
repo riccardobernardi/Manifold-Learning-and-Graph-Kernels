@@ -32,7 +32,7 @@ def launch(ker, red, results_PPI, results_SHOCK):
 
 		n_neighbors = 15
 		n_components = 2
-		iso_prj_D = None
+		iso_prj_D = D
 
 		if red == "NOP":
 			red="no-RED"
@@ -75,19 +75,18 @@ def launch(ker, red, results_PPI, results_SHOCK):
 			pd_name = ker+"-"+i+"-"+red
 			pd_acc = "Acc: "+str(str(round(acc*100, 2)))+ "%"
 
-			if (red != "no-RED"):
-				if j == "PPI":
-					plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1],c=y_PPI)
-					plt.savefig(os.path.join("./images", j+"-"+pd_name + '.png'))
-					plt.show()
-				else:
-					plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1], c=y_SHOCK)
-					plt.savefig(os.path.join("./images", j+"-" + pd_name + '.png'))
-					plt.show()
+			if j == "PPI":
+				plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1],c=y_PPI)
+				plt.savefig(os.path.join("./images", j+"-"+pd_name + '.png'))
+				plt.show()
+			else:
+				plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1], c=y_SHOCK)
+				plt.savefig(os.path.join("./images", j+"-" + pd_name + '.png'))
+				plt.show()
 
 			if j=="PPI":
-				results_PPI += [(pd_name, pd_acc, time()-start)]
+				results_PPI += [(pd_name, pd_acc)]
 			else:
-				results_SHOCK += [(pd_name, pd_acc, time()-start)]
+				results_SHOCK += [(pd_name, pd_acc)]
 
 	return results_PPI, results_SHOCK

@@ -197,6 +197,10 @@ Phenomenon of tottering:
 
 
 
+![]()
+
+
+
 #### Subtree Kernel (Ramon and Gaertner, 2004)
 
 
