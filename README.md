@@ -197,7 +197,7 @@ Phenomenon of tottering:
 
 
 
-![]()
+
 
 
 
@@ -224,6 +224,14 @@ Advantages:
 Disadvantages:
 
 - Runtime grows exponentially with the recursion depth of the subtree-like patterns
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-linear-no-RED.png)
+
+![PPI-STK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-precomputed-no-RED.png)
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-linear-no-RED.png)
+
+![SHOCK-STK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-rbf-no-RED.png)
 
 
 
@@ -291,9 +299,27 @@ Note that in Algorithm 1 we used the same node labeling functions l,*l*0,...,*l*
 
 
 
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-linear-no-RED.png)
+
+![PPI-WLK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-rbf-no-RED.png)
+
+![SHOCK-WLK-linear-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-linear-no-RED.png)
+
+![SHOCK-WLK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-precomputed-no-RED.png)
+
+![SHOCK-WLK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-rbf-no-RED.png)
+
+
+
 #### DSGK - Dominant Set Graph Kernel
 
 Explain
+
+
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-precomputed-no-RED.png)
+
+![SHOCK-DSGK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-precomputed-no-RED.png)
 
 
 
@@ -347,6 +373,12 @@ It should be apparent, therefore, that NLDR has several applications in the fiel
 #### Isomap
 
 Isomap[5] is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. Landmark-Isomap is a variant of this algorithm that uses landmarks to increase speed, at the cost of some accuracy.
+
+
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png)
+
+
 
 #### Locally-linear embedding
 
