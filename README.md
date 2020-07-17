@@ -398,6 +398,40 @@ The original data points are collected in a D dimensional space and the goal of 
 
 In this cost function, unlike the previous one, the weights Wij are kept fixed and the minimization is done on the points Yi to optimize the coordinates. This minimization problem can be solved by solving a sparse N X N eigen value problem (N being the number of data points), whose bottom d nonzero eigen vectors provide an orthogonal set of coordinates. Generally the data points are reconstructed from K nearest neighbors, as measured by Euclidean distance. For such an implementation the algorithm has only one free parameter K, which can be chosen by cross validation.
 
+
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png)
+
+![PPI-DSGK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-rbf-LLE.png)
+
+![PPI-SPK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-SPK-linear-LLE.png)
+
+![PPI-SPK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-SPK-rbf-LLE.png)
+
+![PPI-STK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-linear-LLE.png)
+
+![PPI-STK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-rbf-LLE.png)
+
+![PPI-WLK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-linear-LLE.png)
+
+![PPI-WLK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-rbf-LLE.png)
+
+![SHOCK-DSGK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-linear-LLE.png)
+
+![SHOCK-DSGK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-rbf-LLE.png)
+
+![SHOCK-SPK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-SPK-linear-LLE.png)
+
+![SHOCK-SPK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-SPK-rbf-LLE.png)
+
+![SHOCK-STK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-linear-LLE.png)
+
+![SHOCK-STK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-rbf-LLE.png)
+
+![SHOCK-WLK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-linear-LLE.png)
+
+![SHOCK-WLK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-rbf-LLE.png)
+
 #### Laplacian eigenmaps
 
 See also: Manifold regularization
