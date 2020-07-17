@@ -34,15 +34,15 @@ Choose one manifold learning technique among
 
 Compare the performance of an SVM trained on the given kernel, with or without the manifold learning step, on the following datasets:
 
-- [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.mat)
-- [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.mat)
+- PPI
+- Shock
 
 Note: the datasets are contained in Matlab files. The variable G contains a vector of cells, one per graph. The entry am of each cell is the adjacency matrix of the graph. The variable labels, contains the class-labels of each graph. 
 
 NEW I have added zip files with csv versions of the adjacecy matrices of the graphs and of the lavels. the files graphxxx.csv contain the adjaccency matrices, one per file, while the file labels.csv contais all the labels 
 
-- [PPI](https://www.dsi.unive.it/~atorsell/AI/graph/PPI.zip)
-- [Shock](https://www.dsi.unive.it/~atorsell/AI/graph/SHOCK.zip)
+- PPI
+- Shock
 
 
 
@@ -50,19 +50,15 @@ NEW I have added zip files with csv versions of the adjacecy matrices of the gra
 
 
 
-In this section..., in the section, ecc we would like to explain...
+We are going to explain in this paper the experiments we run over the two datasets provided, they are called PPI and SHOCK. The PPI dataset deals with the Protein Protein Interaction, It consists of 86 graphs that repesent proteins and between them we would like to discover interesting similarities. The second dataset contains 150 graphs and we would like as before to find a way to efficiently compute similarities between them. In the chapter 3 we are going to introduce the kernels and the graph kernels, also we are going to propose a library that provides them. In the chapter 4 we are going to look inside the possible manifold learning techniques to reduce the visited space of our algorithm and also to visualize our result in 2Dimensions. The 5th chapter talks about the Comparisons that we made and we will discuss about possible improvements. In the last chapter that is the 6th we will draw the conclusions. The other chapters at the very end of this paper are the bibliography and the appendix.
 
 
 
-### 2.1 Disclaimer
+**Disclaimer:**
 
-Crafter is the author of the paper
+This assignment was done only by Riccardo Bernardi(864018@stud.unive.it) , both the code, the report and the experiments.
 
-
-
-### 2.2 The datasets
-
-Protein Protein Interaction dataset
+During this assignment was also created the Dominant Set Graph Kernel, this was both invented and implemented by Riccardo Bernardi(864018@stud.unive.it).
 
 
 
@@ -145,6 +141,32 @@ Also we introduced a brand new kernel called Dominant-Set Graph Kernel. This ker
 
 
 #### Random Walk
+
+Random walk graph kernel has been used as an important tool for various data mining tasks including classification and similarity computation. Despite its usefulness, however, it suffers from the expensive computational cost which is at least $O(n^3)$ or $O(m^2)$ for graphs with n nodes and m edges. A more efficient way to compute it is its variant called Ark that exploits the low rank structure to quickly compute random walk graph kernels in $O(n^2)$ or $O(m)$ time.
+
+Many real-world, complex objects with structural properties can be naturally modeled as graphs. For instance, the Web can be naturally represented as a graph with the Web pages as nodes and hyper links as edges. In the medical domain, the symptom-lab test graph of a given patient, which can be constructed from his/her medical records, provides a good indicator of the structure information of possible disease s/he carries (e.g., the association between a particular symptom and some lab test, the co-occurrence of different symptom). How can we characterize the difference of the current web graph from the one from the last year to spot potential abnormal activities? How can we measure the similarities among different patients so that we can segment them into different categories?
+
+Graph kernel provides a natural tool to answer the above questions. Among others, one of the most powerful graph kernel is based on random walks, and has been successfully applied to many real world applications. Despite its success, one main challenge remains open in terms of the scalability. To date, the best known algorithm to compute random walk based graph kernel is cubic in terms of the number of the nodes in the graph. Consequently, most, if not all, of the current random walk graph kernel algorithms quickly become computationally infeasible for the graphs with more than hundreds of nodes.
+
+Random walk graph kernel has been used for classification and measuring similarities of graphs. Given two graphs, the random walk graph kernel computes the number of common walks in two graphs. Two walks are common if the lengths of the walks are equal, and the label sequences are the same (for nodes/edges labeled graphs). The computed number of common walks is used to measure the similarity of two graphs.
+
+We derive the random walk graph kernel for the unlabeled and unnormalized cases, and generalize the definition to labeled and normalized cases. Given two graphs G1 = {V1,E1} and G2 = {V2,E2}, the direct product graph G× = {V×, E×} of G1 and G2 is a graph with the node set V× = {(v1, v2)|v1 ∈ V1, v2 ∈ V2}, and the edge set E× = {((v11, v21), (v12, v22))|(v11, v12) ∈ E1,(v21,v22) ∈ E2}. A random walk on the direct product graph G× is equivalent to the simultaneous random walks on G1 and G2. Let p1 and p2 be the starting probabilities of the random walks on G1 and G2, respectively. The stopping probabilities q1 and q2 are defined similarly. Then, the number of length l common walks on the direct product graph G× is given by (q1 ⊗q2)(W1T ⊗W2T )l(p1 ⊗p2), where W1 and W2 are the adjacency matrices of G1 and G2, respectively [43]. Discounting the longer walks by the decay factor c, and summing up all the common walks for all different lengths, we derive the equation for the random walk graph kernel:
+
+k(G1, G2) = 􏰁∞l=0(q1 ⊗ q2)(W1T ⊗ W2T )l(p1 ⊗ p2) = (q1 ⊗ q2)(I − c(W1T ⊗ W2T ))−1(p1 ⊗ p2).
+
+Computing Random Walk Graph Kernel
+
+We describe methods for computing the random walk graph kernel. For simplicity, we assume that both the graphs G1 and G2 have n nodes and m edges.
+
+Naive Method. The naive algorithm is to com- pute the Equation (2.1) by inverting the n2 × n2 matrix W. Since inverting a matrix takes time proportional to the cube of the number of rows/columns, the running time is $O(n^6)$.
+
+Sylvester Method. If the weight matrix can be decomposed into one or two sums of Kronecker products, Sylvester method solves the Equation in $O(n^3)$ time. However, there are two drawbacks in Sylvester method. First, the method requires the two graphs to have the same number of nodes, which is often not true. Second, the theoretical running time of Sylvester method on the weight matrix composed of more than two Kronecker products is unknown.
+
+Spectral Decomposition Method. For unlabeled and unnormalized matrices, spectral decomposition method runs in $O(n^3)$ time. The problem of spectral decomposition method is that it can’t run on the labeled graph or normalized matrix.
+
+Conjugate Gradient Method. Conjugate gradient (CG) method is used to solve linear systems efficiently. To use CG for computing random walk graph kernel,we first solve (I−cW)x=p for x using CG, and compute qT x. Each iteration of CG takes $O(m^2)$ since the most expensive operation is the matrix-vector multiplication. Thus CG takes $O(m^{2iF} )$ time where iF denote the number of iterations. A problem of the CG method is its high memory requirement: it requires $O(m^2 )$ memory.
+
+iteration method first solves (I − cW)x = p for x by iterative matrix-vector multiplications, and then computes qT x to compute the kernel. Note that the fixed point iteration method converges only when the decay factor c is smaller than |ξ1|−1 where ξ1 is the largest magnitude eigenvalue of W . Similar to CG, the fixed point iteration method takes $O(m^{2iF} )$ time for iF iterations, and has the same problems of requiring $O(m^2)$ memory.
 
 
 
@@ -581,6 +603,10 @@ Results of Manifold Techniques
 
 
 
+Explain here...
+
+
+
 # Bibliography
 
 1. Manifold Learning and Dimensionality Reduction for Data Visualization... - Stefan Kühn - https://www.youtube.com/watch?v=j8080l9Pvic
@@ -720,5 +746,6 @@ Results of Manifold Techniques
 NP-completeness
 
 A decision problem C is NP-complete iff
-C is in NP
-C is NP-hard, i.e. every other problem in NP is reducible to it.
+
+- C is in NP
+- C is NP-hard, i.e. every other problem in NP is reducible to it.
