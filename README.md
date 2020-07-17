@@ -142,21 +142,23 @@ Also we introduced a brand new kernel called Dominant-Set Graph Kernel. This ker
 
 #### Random Walk
 
+The principle is to count common walks in two input graphs G and G’, walks are sequences of nodes that allow repetitions of nodes. The Pros are that walks of length k can be computed by looking at the k-th power of the adjacency matrix, easy. Some Disadvantages are Runtime, Tottering and Halting. Some potential solutions are presented in \[68\]\[79\]\[81\]. So the direct computation takes $O(n^6)$. The solution is to cast computation of random walk kernel as Sylvester Equation, these can be solved in $O(n^3)$. The equation:
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.37.56.png)
+
+ The Vec-Operator flattens an n x n matrix A into an $n^2$x1 vector vec(A). It stacks the columns of the matrix on top of each other, from left to right. The Kronecker Product is the product of two matrices A and B in which each element of A is multiplied with the full matrix B. An example here:
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.41.09.png)
+
+ The phenomenon of tottering occurs when walk allow for repetitions of nodes. A heavy problem can consist in a walk that can visit the same cycle of nodes all over again. Here in the image it can be that the partition visited remains only the one comprised in the cycle.
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/cycleGraph.png)
+
+Another problem relies on the fact that a kernel measures similarity in terms of common walks. Hence a small structural similarity can cause a huge kernel value.
+
 Random walk graph kernel has been used as an important tool for various data mining tasks including classification and similarity computation. Despite its usefulness, however, it suffers from the expensive computational cost which is at least $O(n^3)$ or $O(m^2)$ for graphs with n nodes and m edges. A more efficient way to compute it is its variant called Ark that exploits the low rank structure to quickly compute random walk graph kernels in $O(n^2)$ or $O(m)$ time.
 
-Many real-world, complex objects with structural properties can be naturally modeled as graphs. For instance, the Web can be naturally represented as a graph with the Web pages as nodes and hyper links as edges. In the medical domain, the symptom-lab test graph of a given patient, which can be constructed from his/her medical records, provides a good indicator of the structure information of possible disease s/he carries (e.g., the association between a particular symptom and some lab test, the co-occurrence of different symptom). How can we characterize the difference of the current web graph from the one from the last year to spot potential abnormal activities? How can we measure the similarities among different patients so that we can segment them into different categories?
-
-Graph kernel provides a natural tool to answer the above questions. Among others, one of the most powerful graph kernel is based on random walks, and has been successfully applied to many real world applications. Despite its success, one main challenge remains open in terms of the scalability. To date, the best known algorithm to compute random walk based graph kernel is cubic in terms of the number of the nodes in the graph. Consequently, most, if not all, of the current random walk graph kernel algorithms quickly become computationally infeasible for the graphs with more than hundreds of nodes.
-
-Random walk graph kernel has been used for classification and measuring similarities of graphs. Given two graphs, the random walk graph kernel computes the number of common walks in two graphs. Two walks are common if the lengths of the walks are equal, and the label sequences are the same (for nodes/edges labeled graphs). The computed number of common walks is used to measure the similarity of two graphs.
-
-We derive the random walk graph kernel for the unlabeled and unnormalized cases, and generalize the definition to labeled and normalized cases. Given two graphs G1 = {V1,E1} and G2 = {V2,E2}, the direct product graph G× = {V×, E×} of G1 and G2 is a graph with the node set V× = {(v1, v2)|v1 ∈ V1, v2 ∈ V2}, and the edge set E× = {((v11, v21), (v12, v22))|(v11, v12) ∈ E1,(v21,v22) ∈ E2}. A random walk on the direct product graph G× is equivalent to the simultaneous random walks on G1 and G2. Let p1 and p2 be the starting probabilities of the random walks on G1 and G2, respectively. The stopping probabilities q1 and q2 are defined similarly. Then, the number of length l common walks on the direct product graph G× is given by (q1 ⊗q2)(W1T ⊗W2T )l(p1 ⊗p2), where W1 and W2 are the adjacency matrices of G1 and G2, respectively [43]. Discounting the longer walks by the decay factor c, and summing up all the common walks for all different lengths, we derive the equation for the random walk graph kernel:
-
-k(G1, G2) = 􏰁∞l=0(q1 ⊗ q2)(W1T ⊗ W2T )l(p1 ⊗ p2) = (q1 ⊗ q2)(I − c(W1T ⊗ W2T ))−1(p1 ⊗ p2).
-
-Computing Random Walk Graph Kernel
-
-We describe methods for computing the random walk graph kernel. For simplicity, we assume that both the graphs G1 and G2 have n nodes and m edges.
+Computing Random Walk Graph Kernel can be done with these methods:
 
 Naive Method. The naive algorithm is to com- pute the Equation (2.1) by inverting the n2 × n2 matrix W. Since inverting a matrix takes time proportional to the cube of the number of rows/columns, the running time is $O(n^6)$.
 
@@ -167,59 +169,6 @@ Spectral Decomposition Method. For unlabeled and unnormalized matrices, spectral
 Conjugate Gradient Method. Conjugate gradient (CG) method is used to solve linear systems efficiently. To use CG for computing random walk graph kernel,we first solve (I−cW)x=p for x using CG, and compute qT x. Each iteration of CG takes $O(m^2)$ since the most expensive operation is the matrix-vector multiplication. Thus CG takes $O(m^{2iF} )$ time where iF denote the number of iterations. A problem of the CG method is its high memory requirement: it requires $O(m^2 )$ memory.
 
 iteration method first solves (I − cW)x = p for x by iterative matrix-vector multiplications, and then computes qT x to compute the kernel. Note that the fixed point iteration method converges only when the decay factor c is smaller than |ξ1|−1 where ξ1 is the largest magnitude eigenvalue of W . Similar to CG, the fixed point iteration method takes $O(m^{2iF} )$ time for iF iterations, and has the same problems of requiring $O(m^2)$ memory.
-
-
-
-Principle:
-
-- Count common walks in two input graphs G and G’
-- Walks are sequences of nodes that allow repetitions of nodes
-
-Pros:
-
-- Elegant computation
-- Walks of length k can be computed by looking at the k-th power of the adjacency matrix !  Construct direct product graph of G and G'
-- Count walks in this product graph Gx=(Vx,Ex)
-- Each walk in the product graph corresponds to one walk in G and G'
-
-Disadvantages:
-
-- Runtime problems 
-- Tottering
-- Halting
-
-Potential solutions:
-
-- Fast computation of random walk graph kernels (Vishwanathan et al., NIPS 2006) !  Preventing tottering and label enrichment (Mahe et al., ICML 2004)
-- Graph kernels based on shortest paths (B. and Kriegel, ICDM 2005)
-
-Direct computation: O(n**6)**
-
-Solution: Cast computation of random walk kernel as Sylvester Equation !  These can be solved in O(n3)
-
-Vec-Operator flattens an n x n matrix A into an n2 x1 vector vec(A).
-
-- It stacks the columns of the matrix on top of each other, from left to right.
-
-Vec-Operator and Kronecker Products
-
-Kronecker Product
-
-- Product of two matrices A and B
-- Each element of A is multiplied with the full matrix B:
-
-
-
-Phenomenon of tottering:
-
-- Walks allow for repetitions of nodes
-- A walk can visit the same cycle of nodes all over again
-- Kernel measures similarity in terms of common walks
-- Hence a small structural similarity can cause a huge kernel value
-
-
-
-
 
 
 
@@ -734,6 +683,7 @@ Explain here...
 123. SVMS and kernel methods for graphs - https://courses.cs.ut.ee/2011/graphmining/Main/KernelMethodsForGraphs
 124. Graph Representation Learning and Graph Classification - https://www.cs.uoregon.edu/Reports/AREA-201706-Riazi.pdf
 125. GraKeL: A Graph Kernel Library in Python - https://github.com/ysig/GraKeL
+126. Fast Subtree kernels on graphs - https://papers.nips.cc/paper/3813-fast-subtree-kernels-on-graphs.pdf
 
 
 
