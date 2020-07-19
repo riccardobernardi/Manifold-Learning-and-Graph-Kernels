@@ -176,38 +176,19 @@ Computing Random Walk Graph Kernel can be done with these methods:
 
 The subtree kernel on graphs compares all pairs of nodes from graphs G = (V, E, L) and G′ = (V ′, E′, L′) by iteratively comparing their neighbourhoods. Intuitively k-Ramon iteratively compares all matchings M(v, v′) between neighbours of two nodes v from G and v from G. The runtime complexity of the subtree kernel for a pair of graphs is $O(n^2h4d)$, including a comparison of all pairs of nodes $O(n^2)$, and a pairwise comparison of all matchings in their neighbourhoods in $O(4d)$, which is repeated in h iterations. h is a multiplicative factor, not an exponent, as one can implement the subtree kernel recursively, starting with $k_1$ and recursively computing $k_h$ from $k_{h−1}$.
 
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-linear-no-RED.png)
-
-![PPI-STK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-precomputed-no-RED.png)
-
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-linear-no-RED.png)
-
-![SHOCK-STK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-rbf-no-RED.png)
 
 
+#### Graphlet Kernel, Petri et al.
 
-#### Graphlet Kernel (B., Petri, et al., MLG 2007)
+Graphlets are small connected non-isomorphic induced subgraphs of a large network. An induced subgraph must contain all edges between its nodes that are present in the large network, while a partial subgraph may contain only some of these edges. 
 
+The principle is to count subgraphs of limited size k in G and G‘, these subgraphs are referred to as graphlets and then define a graph kernel that counts isomorphic graphlets in two graphs. More formally we let be G = {graphlet(1), . . . , graphlet(Nk )} be the set of size-k graphlets and G be a graph of size n. Define a vector fG of length Nk whose i-th component corresponds to the frequency of occurrence of graphlet(i) in G, #(graphlet(i) ⊑ G). We will call fG the k- spectrum of G. This statistic is the foundation of our novel graph kernel. Given two graphs G and G′ of size n ≥ k, the graphlet kernel kg is defined as kg(G,G′) := fG$\cdot$fG′.
 
+As our goal is to develop scalable graph kernels, we study graphlet kernels based on the 3-, 4- and 5- spectra of graphs here. In order to account for differences in the sizes of the graphs, which can greatly skew the frequency counts fG, we normalize the counts to probability vectors:
 
-Principle:
+Clearly, if G ∼= G′, then fG = fG′ . But is the reverse true? It has been shown that when n = k+1 and n ≤ 11, equality of k-spectra implies isomorphism. For n > 11, it is still a conjecture whether a graph of size n can be reconstructed from its subgraphs of size n − 1.
 
-- Count subgraphs of limited size k in G and G‘
-- These subgraphs are referred to as graphlets (Przulj, Bioinformatics 2007)
-- Define graph kernel that counts isomorphic graphlets in two graphs
-
-Runtime problems
-
-- Pairwise test of isomorphism is expensive !  Number of graphlets scales as O(nk)
-
-Two solutions on unlabeled graphs
-
-- Precompute isomorphisms
-- Sample graphlets
-
-Disadvantage:
-
-- Same solutions not feasible on labeled graphs
+ The runtime problems are that the pairwise test of isomorphism is expensive and another one is that the number of graphlets scales as O(nk). Two solutions on unlabeled graphs are to precompute isomorphisms and to extract sample graphlets. One disadvantage is that the same solutions not feasible on labeled graphs.
 
 
 
@@ -250,27 +231,11 @@ Note that in Algorithm 1 we used the same node labeling functions l,*l*0,...,*l*
 
 
 
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-linear-no-RED.png)
-
-![PPI-WLK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-rbf-no-RED.png)
-
-![SHOCK-WLK-linear-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-linear-no-RED.png)
-
-![SHOCK-WLK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-precomputed-no-RED.png)
-
-![SHOCK-WLK-rbf-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-rbf-no-RED.png)
-
-
-
 #### DSGK - Dominant Set Graph Kernel
 
 Explain
 
 
-
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-precomputed-no-RED.png)
-
-![SHOCK-DSGK-precomputed-no-RED](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-precomputed-no-RED.png)
 
 
 
