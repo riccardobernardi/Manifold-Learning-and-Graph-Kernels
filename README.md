@@ -88,7 +88,7 @@ Note that this is nothing else but a dot product between two vectors $(1,x_1^2,x
 
 ![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/ch06_fig_5_mlr.png)
 
-Another example is Gaussian kernel $k(x,y)=exp⁡(−γ‖x−y‖^2)$. If we Taylor-expand this function, we'll see that it corresponds to an infinite-dimensional codomain of 𝜑φ.
+Another example is Gaussian kernel $k(x,y)=exp⁡(−γ‖x−y‖^2)$. If we Taylor-expand this function, we'll see that it corresponds to an infinite-dimensional codomain of φ.
 
 This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the "kernel trick". Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.
 
@@ -242,15 +242,67 @@ Concretely, the partition of nodes by compressed label may be represented as the
 
 #### DSGK - Dominant Set Graph Kernel
 
-Explain
+The Dominant set graph kernel came out spontaneously while trying to improve the performances of the graph kernels, in particular it seemed in some cases that the weisfeiler-lehman kernel could have been the best kernel with respect to the others in the classification. The successive hypothesis was that an improvement could have been done if the algorithm could have worked on the **dominant** graphs discarding the ones that were only noise. Stating this hypothesis we used an algorithm to compute the dominant sets on an adjacency matrix through the replicator dynamic technique and after that we computed the weisfeiler-lehman kernel on the dominant set. Intuitively this improves the generality of the prediction because you are going to compute the kernel not on all the points that can be also noisy but on a set that you are guaranteed to be a robust cluster. The experiments are below and show that this algorithms works well in practice being the best one over all the other algorithms.
+
+The algorithm computes only the triangular superior matrix of similarity, in this way it is faster. There are some auxiliary functions such as the "from_set_to_adj" and the  "from_adj_to_set". These are auxiliary functions needed to be compliant with the SVM and the GraKel libraries. For sure these operations can be improved in a future version of the kernel. 
 
 
 
+```python
+class DomSetGraKer():
+	def __init__(self):
+		self.train_graphs = None
 
+	def similarity(self,g1adj,g2adj):
+		ds1list = [i for i,x in enumerate(list(dominant_set(g1adj))) if x>0]
+		ds2list = [i for i,x in enumerate(list(dominant_set(g2adj))) if x>0]
+		ds1adj = []
+		ds2adj = []
+		for i in ds1list:
+			a = []
+			for j in ds1list:
+				a += [g1adj[i][j]]
+			ds1adj += [a]
+		for i in ds2list:
+			a = []
+			for j in ds2list:
+				a += [g2adj[i][j]]
+			ds2adj += [a]
 
-### 3.3 Examples 
+		a, b, c = from_adj_to_set(ds1adj)
+		d, e, f = from_adj_to_set(ds2adj)
+    
+		tmp = WeisfeilerLehman(n_iter=4, normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
 
-examples of some kernels
+		return tmp
+
+	def fit_transform(self, graphs):
+		self.train_graphs = graphs
+		kernel_sim = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]
+
+		for i in range(len(graphs)):
+			for j in range(i, len(graphs)):
+				g1adj = from_set_to_adj(graphs[i])
+				g2adj = from_set_to_adj(graphs[j])
+				ss = self.similarity(g1adj,g2adj)
+				kernel_sim[i][j] = ss
+				kernel_sim[j][i] = ss
+
+		return copy.deepcopy(kernel_sim)
+
+	def transform(self, graphs):
+		kernel_sim = [[0 for _ in range(len(self.train_graphs))] for _ in range(len(graphs))]
+
+		for i in range(len(graphs)):
+			for j in range(len(self.train_graphs)):
+				g1adj = from_set_to_adj(graphs[i])
+				g2adj = from_set_to_adj(self.train_graphs[j])
+				ss = self.similarity(g1adj, g2adj)
+				kernel_sim[i][j] = ss
+				kernel_sim[j][i] = ss
+
+		return copy.deepcopy(kernel_sim)
+```
 
 
 
