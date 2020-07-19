@@ -210,31 +210,31 @@ To initialize the algorithm (Step 1), we set C0,n=1 for all nodes n.
 
 ![Initialization: $C\_{0,n} = 1$ for all nodes $n$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-001.png)
 
-For iteration 1, Step 2, we compute L1,n. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
+For iteration 1, Step 2, we compute L1. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
 
 ![Iteration 1, Step 2: $L\_{1,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-002.png)
 
-For iteration 1, Step 3, we introduce “compressed” labels C1,n for the nodes:
+For iteration 1, Step 3, we introduce “compressed” labels C1 for the nodes:
 
 ![Iteration 1, Step 3: $C\_{1,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-003.png)
 
-We now begin iteration 2. In iteration 2, Step 2, we compute L2,n:
+We now begin iteration 2. In iteration 2, Step 2, we compute L2:
 
 ![Iteration 2, Step 2: $L\_{2,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-004.png)
 
-In iteration 2, Step 3, we compute C2,n:
+In iteration 2, Step 3, we compute C2:
 
 ![Iteration 2, Step 3: $C\_{2,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-005.png)
 
-In iteration 3, Step 2, we compute L3,n:
+In iteration 3, Step 2, we compute L3:
 
 ![Iteration 3, Step 2: $L\_{3,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-006.png)
 
-In iteration 3, Step 3, we compute C3,n:
+In iteration 3, Step 3, we compute C3:
 
 ![Iteration 3, Step 3: $C\_{3,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-007.png)
 
-Since the partition of nodes by compressed label has not changed from C2,nto C3,n, we may terminate the algorithm here.
+Since the partition of nodes by compressed label has not changed from C2 to C3, we may terminate the algorithm here.
 
 Concretely, the partition of nodes by compressed label may be represented as the number of nodes with each compressed label. That is: **“2 7s, 1 8, and 2 9s”**. This is the canonical form of our graph. Since both Graph 1 and Graph 2 have this same canonical form, we cannot rule out the possibility that they are isomorphic (they *are* in fact isomorphic, but the algorithm doesn't allow us to conclude this definitively.)
 
