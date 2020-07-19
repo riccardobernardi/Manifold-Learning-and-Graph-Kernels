@@ -172,15 +172,9 @@ Computing Random Walk Graph Kernel can be done with these methods:
 
 
 
-#### Subtree Kernel (Ramon and Gaertner, 2004)
+#### Subtree Kernel, Ramon and Gaertner
 
-Definition The first subtree kernel on graphs was defined by [10]. It compares all pairs of nodes from graphs G = (V, E, L) and G′ = (V ′, E′, L′) by iteratively comparing their neighbourhoods
-
-Intuitively, kRamon iteratively compares all matchings M(v, v′) between neighbours of two nodes vfromGandv fromG.
-
-Complexity The runtime complexity of the subtree kernel for a pair of graphs is O(n2h4d), in- cluding a comparison of all pairs of nodes (n2), and a pairwise comparison of all matchings in their neighbourhoods in O(4d), which is repeated in h iterations. h is a multiplicative factor, not an exponent, as one can implement the subtree kernel recursively, starting with k1 and recursively com- puting kh from kh−1. For a dataset of N graphs, the resulting runtime complexity is then obviously in O(N2n2h4d).
-
-The Principle is that Compare subtree-like patterns in two graphs. Subtree-like pattern is a subtree that allows for repetitions of nodes and edges (similar to walk versus path). For all pairs of nodes v from G and u from G‘, Compare u and v via a kernel function, Recursively compare all sets of neighbours of u and v via a kernel function. The Advantages are that it has a Richer representation of graph structure than walk-based approach. The Disadvantages are that its Runtime grows exponentially with the recursion depth of the subtree-like patterns
+The subtree kernel on graphs compares all pairs of nodes from graphs G = (V, E, L) and G′ = (V ′, E′, L′) by iteratively comparing their neighbourhoods. Intuitively k-Ramon iteratively compares all matchings M(v, v′) between neighbours of two nodes v from G and v from G. The runtime complexity of the subtree kernel for a pair of graphs is $O(n^2h4d)$, including a comparison of all pairs of nodes $O(n^2)$, and a pairwise comparison of all matchings in their neighbourhoods in $O(4d)$, which is repeated in h iterations. h is a multiplicative factor, not an exponent, as one can implement the subtree kernel recursively, starting with $k_1$ and recursively computing $k_h$ from $k_{h−1}$.
 
 ![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-linear-no-RED.png)
 
