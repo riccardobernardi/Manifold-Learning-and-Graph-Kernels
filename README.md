@@ -254,54 +254,13 @@ class DomSetGraKer():
 		self.train_graphs = None
 
 	def similarity(self,g1adj,g2adj):
-		ds1list = [i for i,x in enumerate(list(dominant_set(g1adj))) if x>0]
-		ds2list = [i for i,x in enumerate(list(dominant_set(g2adj))) if x>0]
-		ds1adj = []
-		ds2adj = []
-		for i in ds1list:
-			a = []
-			for j in ds1list:
-				a += [g1adj[i][j]]
-			ds1adj += [a]
-		for i in ds2list:
-			a = []
-			for j in ds2list:
-				a += [g2adj[i][j]]
-			ds2adj += [a]
-
-		a, b, c = from_adj_to_set(ds1adj)
-		d, e, f = from_adj_to_set(ds2adj)
-    
-		tmp = WeisfeilerLehman(n_iter=4, normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
-
-		return tmp
+		# launch similarity measure Weisfeiler-lehman kernel
 
 	def fit_transform(self, graphs):
-		self.train_graphs = graphs
-		kernel_sim = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]
-
-		for i in range(len(graphs)):
-			for j in range(i, len(graphs)):
-				g1adj = from_set_to_adj(graphs[i])
-				g2adj = from_set_to_adj(graphs[j])
-				ss = self.similarity(g1adj,g2adj)
-				kernel_sim[i][j] = ss
-				kernel_sim[j][i] = ss
-
-		return copy.deepcopy(kernel_sim)
+		# return the kernel matrix given the adj matrix of the given set
 
 	def transform(self, graphs):
-		kernel_sim = [[0 for _ in range(len(self.train_graphs))] for _ in range(len(graphs))]
-
-		for i in range(len(graphs)):
-			for j in range(len(self.train_graphs)):
-				g1adj = from_set_to_adj(graphs[i])
-				g2adj = from_set_to_adj(self.train_graphs[j])
-				ss = self.similarity(g1adj, g2adj)
-				kernel_sim[i][j] = ss
-				kernel_sim[j][i] = ss
-
-		return copy.deepcopy(kernel_sim)
+		# return the kernel matrix given the training set and the test set
 ```
 
 
@@ -319,29 +278,17 @@ We are going here to answer these questions:
 
 ### 4.1 What is a Manifold Technique
 
-Also called Nonlinear dimensionality reduction.
+It is also called Nonlinear dimensionality reduction. High-dimensional data, meaning data that requires more than two or three dimensions to represent, can be difficult to interpret. One approach to simplification is to assume that the data of interest lie on an embedded non-linear manifold within the higher-dimensional space. If the manifold is of low enough dimension, the data can be visualised in the low-dimensional space.
 
-High-dimensional data, meaning data that requires more than two or three dimensions to represent, can be difficult to interpret. One approach to simplification is to assume that the data of interest lie on an embedded non-linear manifold within the higher-dimensional space. If the manifold is of low enough dimension, the data can be visualised in the low-dimensional space.
+Consider a dataset represented as a matrix (or a database table), such that each row represents a set of attributes (or features or dimensions) that describe a particular instance of something. If the number of attributes is large, then the space of unique possible rows is exponentially large. Thus, the larger the dimensionality, the more difficult it becomes to sample the space. This causes many problems. Algorithms that operate on high-dimensional data tend to have a very high time complexity. Many machine learning algorithms, for example, struggle with high-dimensional data. This has become known as the curse of dimensionality. Reducing data into fewer dimensions often makes analysis algorithms more efficient, and can help machine learning algorithms make more accurate predictions. Humans often have difficulty comprehending data in many dimensions. Thus, reducing data to a small number of dimensions is useful for visualization purposes.
 
-
-
-Consider a dataset represented as a matrix (or a database table), such that each row represents a set of attributes (or features or dimensions) that describe a particular instance of something. If the number of attributes is large, then the space of unique possible rows is exponentially large. Thus, the larger the dimensionality, the more difficult it becomes to sample the space. This causes many problems. Algorithms that operate on high-dimensional data tend to have a very high time complexity. Many machine learning algorithms, for example, struggle with high-dimensional data. This has become known as the curse of dimensionality. Reducing data into fewer dimensions often makes analysis algorithms more efficient, and can help machine learning algorithms make more accurate predictions.
-
-Humans often have difficulty comprehending data in many dimensions. Thus, reducing data to a small number of dimensions is useful for visualization purposes.
-
-
-
-Plot of the two-dimensional points that results from using a NLDR algorithm. In this case, Manifold Sculpting used to reduce the data into just two dimensions (rotation and scale).
-
-The reduced-dimensional representations of data are often referred to as "intrinsic variables". This description implies that these are the values from which the data was produced. For example, consider a dataset that contains images of a letter 'A', which has been scaled and rotated by varying amounts. Each image has 32x32 pixels. Each image can be represented as a vector of 1024 pixel values. Each row is a sample on a two-dimensional manifold in 1024-dimensional space (a Hamming space). The intrinsic dimensionality is two, because two variables (rotation and scale) were varied in order to produce the data. Information about the shape or look of a letter 'A' is not part of the intrinsic variables because it is the same in every instance. Nonlinear dimensionality reduction will discard the correlated information (the letter 'A') and recover only the varying information (rotation and scale). The image to the right shows sample images from this dataset (to save space, not all input images are shown), and a plot of the two-dimensional points that results from using a NLDR algorithm (in this case, Manifold Sculpting was used) to reduce the data into just two dimensions.
-
-
+The reduced-dimensional representations of data are often referred to as "intrinsic variables". This description implies that these are the values from which the data was produced. For example, consider a dataset that contains images of a letter 'A', which has been scaled and rotated by varying amounts. Each image has 32x32 pixels. Each image can be represented as a vector of 1024 pixel values. Each row is a sample on a two-dimensional manifold in 1024-dimensional space (a Hamming space). The intrinsic dimensionality is two, because two variables (rotation and scale) were varied in order to produce the data. Information about the shape or look of a letter 'A' is not part of the intrinsic variables because it is the same in every instance. Nonlinear dimensionality reduction will discard the correlated information (the letter 'A') and recover only the varying information (rotation and scale). 
 
 PCA (a linear dimensionality reduction algorithm) is used to reduce this same dataset into two dimensions, the resulting values are not so well organized.
 
-By comparison, if Principal component analysis, which is a linear dimensionality reduction algorithm, is used to reduce this same dataset into two dimensions, the resulting values are not so well organized. This demonstrates that the high-dimensional vectors (each representing a letter 'A') that sample this manifold vary in a non-linear manner.
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/1*bzJ1D1FLhzzKZGm4FKOhRQ.png)
 
-It should be apparent, therefore, that NLDR has several applications in the field of computer-vision. For example, consider a robot that uses a camera to navigate in a closed static environment. The images obtained by that camera can be considered to be samples on a manifold in high-dimensional space, and the intrinsic variables of that manifold will represent the robot's position and orientation. This utility is not limited to robots. Dynamical systems, a more general class of systems, which includes robots, are defined in terms of a manifold. Active research in NLDR seeks to unfold the observation manifolds associated with dynamical systems to develop techniques for modeling such systems and enable them to operate autonomously.[3]
+By comparison, if Principal component analysis, which is a linear dimensionality reduction algorithm, is used to reduce this same dataset into two dimensions, the resulting values are not so well organized. This demonstrates that the high-dimensional vectors (each representing a letter 'A') that sample this manifold vary in a non-linear manner.
 
 
 
@@ -349,91 +296,23 @@ It should be apparent, therefore, that NLDR has several applications in the fiel
 
 #### Isomap
 
-Isomap[5] is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. Landmark-Isomap is a variant of this algorithm that uses landmarks to increase speed, at the cost of some accuracy.
-
-
-
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png)
+Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. 
 
 
 
 #### Locally-linear embedding
 
-Locally-Linear Embedding (LLE) was presented at approximately the same time as Isomap. It has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. LLE has no internal model.
-
-LLE computes the barycentric coordinates of a point X**i based on its neighbors X**j. The original point is reconstructed by a linear combination, given by the weight matrix W**ij, of its neighbors. The reconstruction error is given by the cost function E(W).
+Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. 
 
 
-
-The weights W**ij refer to the amount of contribution the point X**j has while reconstructing the point X**i. The cost function is minimized under two constraints: (a) Each data point X**i is reconstructed only from its neighbors, thus enforcing W**ij to be zero if point X**j is not a neighbor of the point X**i and (b) The sum of every row of the weight matrix equals 1.
-
-
-
-The original data points are collected in a D dimensional space and the goal of the algorithm is to reduce the dimensionality to d such that D >> d. The same weights W**ij that reconstructs the ith data point in the D dimensional space will be used to reconstruct the same point in the lower d dimensional space. A neighborhood preserving map is created based on this idea. Each point Xi in the D dimensional space is mapped onto a point Yi in the d dimensional space by minimizing the cost function
-
-
-
-In this cost function, unlike the previous one, the weights Wij are kept fixed and the minimization is done on the points Yi to optimize the coordinates. This minimization problem can be solved by solving a sparse N X N eigen value problem (N being the number of data points), whose bottom d nonzero eigen vectors provide an orthogonal set of coordinates. Generally the data points are reconstructed from K nearest neighbors, as measured by Euclidean distance. For such an implementation the algorithm has only one free parameter K, which can be chosen by cross validation.
-
-
-
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png)
-
-![PPI-DSGK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-rbf-LLE.png)
-
-![PPI-SPK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-SPK-linear-LLE.png)
-
-![PPI-SPK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-SPK-rbf-LLE.png)
-
-![PPI-STK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-linear-LLE.png)
-
-![PPI-STK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-STK-rbf-LLE.png)
-
-![PPI-WLK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-linear-LLE.png)
-
-![PPI-WLK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-WLK-rbf-LLE.png)
-
-![SHOCK-DSGK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-linear-LLE.png)
-
-![SHOCK-DSGK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-DSGK-rbf-LLE.png)
-
-![SHOCK-SPK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-SPK-linear-LLE.png)
-
-![SHOCK-SPK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-SPK-rbf-LLE.png)
-
-![SHOCK-STK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-linear-LLE.png)
-
-![SHOCK-STK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-STK-rbf-LLE.png)
-
-![SHOCK-WLK-linear-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-linear-LLE.png)
-
-![SHOCK-WLK-rbf-LLE](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/SHOCK-WLK-rbf-LLE.png)
 
 #### Laplacian eigenmaps
 
-See also: Manifold regularization
-
-Laplacian Eigenmaps[7] uses spectral techniques to perform dimensionality reduction. This technique relies on the basic assumption that the data lies in a low-dimensional manifold in a high-dimensional space.[8] This algorithm cannot embed out-of-sample points, but techniques based on Reproducing kernel Hilbert space regularization exist for adding this capability.[9] Such techniques can be applied to other nonlinear dimensionality reduction algorithms as well.
+Laplacian Eigenmaps uses spectral techniques to perform dimensionality reduction. This technique relies on the basic assumption that the data lies in a low-dimensional manifold in a high-dimensional space. This algorithm cannot embed out-of-sample points, but techniques based on Reproducing kernel Hilbert space regularization exist for adding this capability.[9] Such techniques can be applied to other nonlinear dimensionality reduction algorithms as well.
 
 Traditional techniques like principal component analysis do not consider the intrinsic geometry of the data. Laplacian eigenmaps builds a graph from neighborhood information of the data set. Each data point serves as a node on the graph and connectivity between nodes is governed by the proximity of neighboring points (using e.g. the k-nearest neighbor algorithm). The graph thus generated can be considered as a discrete approximation of the low-dimensional manifold in the high-dimensional space. Minimization of a cost function based on the graph ensures that points close to each other on the manifold are mapped close to each other in the low-dimensional space, preserving local distances. The eigenfunctions of the Laplace–Beltrami operator on the manifold serve as the embedding dimensions, since under mild conditions this operator has a countable spectrum that is a basis for square integrable functions on the manifold (compare to Fourier serieson the unit circle manifold). Attempts to place Laplacian eigenmaps on solid theoretical ground have met with some success, as under certain nonrestrictive assumptions, the graph Laplacian matrix has been shown to converge to the Laplace–Beltrami operator as the number of points goes to infinity.[10] Matlab code for Laplacian Eigenmaps can be found in algorithms[11] and the PhD thesis of Belkin can be found at the Ohio State University.[12]
 
 In classification applications, low dimension manifolds can be used to model data classes which can be defined from sets of observed instances. Each observed instance can be described by two independent factors termed ’content’ and ’style’, where ’content’ is the invariant factor related to the essence of the class and ’style’ expresses variations in that class between instances.[13]Unfortunately, Laplacian Eigenmaps may fail to produce a coherent representation of a class of interest when training data consist of instances varying significantly in terms of style.[14] In the case of classes which are represented by multivariate sequences, Structural Laplacian Eigenmaps has been proposed to overcome this issue by adding additional constraints within the Laplacian Eigenmaps neighborhood information graph to better reflect the intrinsic structure of the class.[15] More specifically, the graph is used to encode both the sequential structure of the multivariate sequences and, to minimise stylistic variations, proximity between data points of different sequences or even within a sequence, if it contains repetitions. Using dynamic time warping, proximity is detected by finding correspondences between and within sections of the multivariate sequences that exhibit high similarity. Experiments conducted on vision-based activity recognition, object orientation classification and human 3D pose recovery applications have demonstrate the added value of Structural Laplacian Eigenmaps when dealing with multivariate sequence data.[15] An extension of Structural Laplacian Eigenmaps, Generalized Laplacian Eigenmaps led to the generation of manifolds where one of the dimensions specifically represents variations in style. This has proved particularly valuable in applications such as tracking of the human articulated body and silhouette extraction.[16]
-
-
-
-#### Kernel principal component analysis
-
-Perhaps the most widely used algorithm for manifold learning is kernel PCA.[31] It is a combination of Principal component analysis and the kernel trick. PCA begins by computing the covariance matrix of the m×n matrix X
-
-
-
-It then projects the data onto the first k eigenvectors of that matrix. By comparison, KPCA begins by computing the covariance matrix of the data after being transformed into a higher-dimensional space,
-
-
-
-It then projects the transformed data onto the first k eigenvectors of that matrix, just like PCA. It uses the kernel trick to factor away much of the computation, such that the entire process can be performed without actually computing Φ(x). Of course Φ must be chosen such that it has a known corresponding kernel. Unfortunately, it is not trivial to find a good kernel for a given problem, so KPCA does not yield good results with some problems when using standard kernels. For example, it is known to perform poorly with these kernels on the Swiss roll manifold. However, one can view certain other methods that perform well in such settings (e.g., Laplacian Eigenmaps, LLE) as special cases of kernel PCA by constructing a data-dependent kernel matrix.[32]
-
-KPCA has an internal model, so it can be used to map points onto its embedding that were not available at training time.
 
 
 
@@ -470,24 +349,6 @@ K defines a random walk on the data set which means that the kernel captures som
 
 
 For fixed t, Dt defines a distance between any two points of the data set based on path connectivity: the value of Dt(x,y) will be smaller the more paths that connect x to y and vice versa. Because the quantity Dt(x,y) involves a sum over of all paths of length t, Dt is much more robust to noise in the data than geodesic distance. Dt takes into account all the relation between points x and y while calculating the distance and serves as a better notion of proximity than just Euclidean distance or even geodesic distance.
-
-
-
-#### Hessian Locally-Linear Embedding (Hessian LLE)
-
-Like LLE, Hessian LLE[37] is also based on sparse matrix techniques. It tends to yield results of a much higher quality than LLE. Unfortunately, it has a very costly computational complexity, so it is not well-suited for heavily sampled manifolds. It has no internal model.
-
-#### Modified Locally-Linear Embedding (MLLE)
-
-Modified LLE (MLLE)[38] is another LLE variant which uses multiple weights in each neighborhood to address the local weight matrix conditioning problem which leads to distortions in LLE maps. MLLE produces robust projections similar to Hessian LLE, but without the significant additional computational cost.
-
-
-
-### 4.3 Examples 
-
-examples of some Manifold Techniques
-
-
 
 
 
