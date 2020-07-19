@@ -172,12 +172,6 @@ Computing Random Walk Graph Kernel can be done with these methods:
 
 
 
-#### Subtree Kernel, Ramon and Gaertner
-
-The subtree kernel on graphs compares all pairs of nodes from graphs G = (V, E, L) and G′ = (V ′, E′, L′) by iteratively comparing their neighbourhoods. Intuitively k-Ramon iteratively compares all matchings M(v, v′) between neighbours of two nodes v from G and v from G. The runtime complexity of the subtree kernel for a pair of graphs is $O(n^2h4d)$, including a comparison of all pairs of nodes $O(n^2)$, and a pairwise comparison of all matchings in their neighbourhoods in $O(4d)$, which is repeated in h iterations. h is a multiplicative factor, not an exponent, as one can implement the subtree kernel recursively, starting with $k_1$ and recursively computing $k_h$ from $k_{h−1}$.
-
-
-
 #### Graphlet Kernel, Petri et al.
 
 Graphlets are small connected non-isomorphic induced subgraphs of a large network. An induced subgraph must contain all edges between its nodes that are present in the large network, while a partial subgraph may contain only some of these edges. 
@@ -192,42 +186,57 @@ Clearly, if G ∼= G′, then fG = fG′ . But is the reverse true? It has been 
 
 
 
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/All-2-to-5-node-graphlets-They-contain-73-topologically-unique-node-orbits-In-a.png)
+
+
+
 #### Weisfeiler-Lehman Kernel
 
-Our graph kernels use concepts from the Weisfeiler-Lehman test of isomorphism (Weisfeiler and Lehman, 1968), more specifically its 1-dimensional variant, also known as “naive vertex refine- ment”. Assume we are given two graphs *G* and *G*′ and we would like to test whether they are isomorphic. The 1-dimensional Weisfeiler-Lehman test proceeds in iterations, which we index by *i* and which comprise the steps given in Algorithm 1.
+the kernel comes directly from the Weisfeiler-Lehman Isomorphism test that is explained here below.
 
-The key idea of the algorithm is to augment the node labels by the sorted set of node labels of neighbouring nodes, and compress these augmented labels into new, short labels. These steps are then repeated until the node label sets of *G* and *G*′ differ, or the number of iterations reaches *n*. See Figure 2, a-d, for an illustration of these steps (note however, that the two graphs in the figure would directly be identified as non-isomorphic by the Weisfeiler-Lehman test, as their label sets are already different in the beginning).
+Here is the algorithm for the Weisfeiler-Lehman Isomorphism Test. It produces for each graph a canonical form. If the canonical forms of two graphs are not equivalent, then the graphs are definitively not isomorphic. However, it is possible for two non-isomorphic graphs to share a canonical form, so this test alone cannot provide conclusive evidence that two graphs are isomorphic.
 
-Sorting the set of multisets allows for a straightforward definition and implementation of *f* for the compression of labels in step 4: one keeps a counter variable for *f* that records the number of distinct strings that *f* has compressed before. *f* assigns the current value of this counter to a string if an identical string has been compressed before, but when one encounters a new string, one increments the counter by one and *f* assigns its value to the new string. The sorted order of the set of multisets guarantees that all identical strings are mapped to the same number, because they occur in a consecutive block. However, note that the sorting of the set of multisets is not required for defining *f* . Any other injective mapping will give equivalent results. The alphabet Σ has to be sufficiently large for *f* to be injective. For two graphs, |Σ| = 2*n* suffices.
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-19 at 13.49.04.png)
 
-The Weisfeiler-Lehman algorithm terminates after step 4 of iteration *i* if {*l**i*(*v*)|*v* ∈ *V* } ≠ {*l**i*(*v*′)| ′′′
+When using this method to determine graph isomorphism, it may be applied in parallel to the two graphs. The algorithm may be terminated early after iteration i if the sizes of partitions of nodes partitioned by compressed labels diverges between the two graphs; if this is the case, the graphs are not isomorphic.
 
-*v* ∈ *V* }, that is, if the sets of newly created labels are not identical in *G* and *G* . The graphs are then not isomorphic. If the sets are identical after *n* iterations, it means that either *G* and *G*′ are isomorphic, or the algorithm has not been able to determine that they are not isomorphic (see Cai et al., 1992, for examples of graphs that cannot be distinguished by this algorithm or its higher- dimensional variants). As a side note, we mention that the 1-dimensional Weisfeiler-Lehman algorithm has been shown to be a valid isomorphism test for almost all graphs (Babai and Kucera, 1979).
+Example of the Weisfeiler-Lehman Isomorphism Test:
 
-Note that in Algorithm 1 we used the same node labeling functions l,*l*0,...,*l**h* for both *G* and *G*′ in order not to overload the notation. We will continue using this notation throughout the paper and assume without loss of generality that the domain of these functions l,*l*0,...,*l**h* is the set of all nodes in our data set of graphs, which corresponds to *V* ∪ *V* ′ in the case of Algorithm 1.
+We demonstrate here the Weisfeiler-Lehman isomorphism test using the example graphs from above. The graphs are shown again here for completeness.
 
+![Two isomorphic graphs are shown.](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-000.png)*Figure: Graph 1 and Graph 2 are isomorphic. We will apply the Weisfeiler-Lehman isomorphism test to these graphs as a means of illustrating the test.*
 
+To initialize the algorithm (Step 1), we set C0,n=1 for all nodes n.
 
-**Algorithm 1** One iteration of the 1-dim. Weisfeiler-Lehman test of graph isomorphism 
+![Initialization: $C\_{0,n} = 1$ for all nodes $n$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-001.png)
 
-1: Multiset-labeldetermination
+For iteration 1, Step 2, we compute L1,n. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
 
-​	• For*i*=0,set*M*(*v*):=*l* (*v*)=l(*v*). 2 *i*0
+![Iteration 1, Step 2: $L\_{1,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-002.png)
 
-​	• For *i* > 0, assign a multiset-label *M**i*(*v*) to each node *v* in *G* and *G*′ which consists of the multiset {*l**i*−1(*u*)|*u* ∈ *N* (*v*)}.
+For iteration 1, Step 3, we introduce “compressed” labels C1,n for the nodes:
 
-2: Sortingeachmultiset
-	• Sort elements in *M**i*(*v*) in ascending order and concatenate them into a string *s**i*(*v*). 
+![Iteration 1, Step 3: $C\_{1,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-003.png)
 
-​	• Add *l**i*−1(*v*) as a prefix to *s**i*(*v*) and call the resulting string *s**i*(*v*).
+We now begin iteration 2. In iteration 2, Step 2, we compute L2,n:
 
-3: Labelcompression
-	• Sort all of the strings *s**i*(*v*) for all *v* from *G* and *G*′ in ascending order.
-	• Map each string *s**i*(*v*) to a new compressed label, using a function *f* : Σ∗ → Σ such that *f* (*s**i*(*v*)) = *f* (*s**i*(*w*)) if and only if *s**i*(*v*) = *s**i*(*w*). 
+![Iteration 2, Step 2: $L\_{2,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-004.png)
 
-4: Relabeling
+In iteration 2, Step 3, we compute C2,n:
 
-​	• Set *l**i*(*v*) := *f*(*s**i*(*v*)) for all nodes in *G* and *G* .
+![Iteration 2, Step 3: $C\_{2,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-005.png)
+
+In iteration 3, Step 2, we compute L3,n:
+
+![Iteration 3, Step 2: $L\_{3,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-006.png)
+
+In iteration 3, Step 3, we compute C3,n:
+
+![Iteration 3, Step 3: $C\_{3,n}$](https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-007.png)
+
+Since the partition of nodes by compressed label has not changed from C2,nto C3,n, we may terminate the algorithm here.
+
+Concretely, the partition of nodes by compressed label may be represented as the number of nodes with each compressed label. That is: **“2 7s, 1 8, and 2 9s”**. This is the canonical form of our graph. Since both Graph 1 and Graph 2 have this same canonical form, we cannot rule out the possibility that they are isomorphic (they *are* in fact isomorphic, but the algorithm doesn't allow us to conclude this definitively.)
 
 
 
@@ -629,6 +638,7 @@ Explain here...
 124. Graph Representation Learning and Graph Classification - https://www.cs.uoregon.edu/Reports/AREA-201706-Riazi.pdf
 125. GraKeL: A Graph Kernel Library in Python - https://github.com/ysig/GraKeL
 126. Fast Subtree kernels on graphs - https://papers.nips.cc/paper/3813-fast-subtree-kernels-on-graphs.pdf
+127. weisfeiler lehman isomorphism test - https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/
 
 
 
