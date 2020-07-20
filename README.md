@@ -294,6 +294,10 @@ By comparison, if Principal component analysis, which is a linear dimensionality
 
 ### 4.2 The available Manifold Techniques
 
+
+
+#### PCA
+
 #### Isomap
 
 Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. 
@@ -313,42 +317,6 @@ Locally-Linear Embedding (LLE) has several advantages over Isomap, including fas
 Laplacian Eigenmaps uses spectral techniques to perform dimensionality reduction. This technique relies on the basic assumption that the data lies in a low-dimensional manifold in a high-dimensional space. This algorithm cannot embed out-of-sample points, but techniques based on Reproducing kernel Hilbert space regularization exist for adding this capability. Such techniques can be applied to other nonlinear dimensionality reduction algorithms as well.
 
 Traditional techniques like principal component analysis do not consider the intrinsic geometry of the data. Laplacian eigenmaps builds a graph from neighborhood information of the data set. Each data point serves as a node on the graph and connectivity between nodes is governed by the proximity of neighboring points (using e.g. the k-nearest neighbor algorithm). The graph thus generated can be considered as a discrete approximation of the low-dimensional manifold in the high-dimensional space. Minimization of a cost function based on the graph ensures that points close to each other on the manifold are mapped close to each other in the low-dimensional space, preserving local distances. The eigenfunctions of the Laplace–Beltrami operator on the manifold serve as the embedding dimensions, since under mild conditions this operator has a countable spectrum that is a basis for square integrable functions on the manifold (compare to Fourier serieson the unit circle manifold). Attempts to place Laplacian eigenmaps on solid theoretical ground have met with some success, as under certain nonrestrictive assumptions, the graph Laplacian matrix has been shown to converge to the Laplace–Beltrami operator as the number of points goes to infinity.
-
-
-
-#### Diffusion maps
-
-Diffusion maps leverages the relationship between heat diffusion and a random walk (Markov Chain); an analogy is drawn between the diffusion operator on a manifold and a Markov transition matrix operating on functions defined on the graph whose nodes were sampled from the manifold. In particular, let a data set be represented by X=[x1,x2,…,xn]∈Ω⊂RD![\mathbf {X} =[x{1},x{2},\ldots ,x_{n}]\in \Omega \subset \mathbf {R^{D}} . The underlying assumption of diffusion map is that the high-dimensional data lies on a low-dimensional manifold of dimension d. Let X represent the data set and μ represent the distribution of the data points on X. Further, define a kernel which represents some notion of affinity of the points in X. The kernel k has the following properties.
-
-
-
-k is symmetric
-
-
-
-k is positivity preserving
-
-Thus one can think of the individual data points as the nodes of a graph and the kernel k as defining some sort of affinity on that graph. The graph is symmetric by construction since the kernel is symmetric. It is easy to see here that from the tuple (X,k) one can construct a reversible Markov Chain. This technique is common to a variety of fields and is known as the graph Laplacian.
-
-For example, the graph K = (X,E) can be constructed using a Gaussian kernel.
-
-
-
-In the above equation, xi∼xj denotes that xi is a nearest neighbor of xj. Properly, Geodesic distance should be used to actually measure distances on the manifold. Since the exact structure of the manifold is not available, for the nearest neighbors the geodesic distance is approximated by euclidean distance. The choice σ modulates our notion of proximity in the sense that if ‖xi−xj‖2≫σ then Kij=0 and if ‖xi−xj‖2≪σ then Kij=1. The former means that very little diffusion has taken place while the latter implies that the diffusion process is nearly complete. Different strategies to choose σ can be found in.[36]
-
-In order to faithfully represent a Markov matrix, K must be normalized by the corresponding degree matrix D:
-
-
-
-P now represents a Markov chain. P(xi,xj) is the probability of transitioning from xi to xj in one time step. Similarly the probability of transitioning from xi to xj in t time steps is given by Pt(xi,xj). Here Pt is the matrix P multiplied by itself t times.
-
-The Markov matrix P constitutes some notion of local geometry of the data set X. The major difference between diffusion maps and principal component analysis is that only local features of the data are considered in diffusion maps as opposed to taking correlations of the entire data set.
-
-K defines a random walk on the data set which means that the kernel captures some local geometry of data set. The Markov chain defines fast and slow directions of propagation through the kernel values. As the walk propagates forward in time, the local geometry information aggregates in the same way as local transitions (defined by differential equations) of the dynamical system.[35]The metaphor of diffusion arises from the definition of a family diffusion distance {Dt}t∈N
-
-
-
-For fixed t, Dt defines a distance between any two points of the data set based on path connectivity: the value of Dt(x,y) will be smaller the more paths that connect x to y and vice versa. Because the quantity Dt(x,y) involves a sum over of all paths of length t, Dt is much more robust to noise in the data than geodesic distance. Dt takes into account all the relation between points x and y while calculating the distance and serves as a better notion of proximity than just Euclidean distance or even geodesic distance.
 
 
 
