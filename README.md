@@ -300,6 +300,16 @@ By comparison, if Principal component analysis, which is a linear dimensionality
 
 
 
+Principal component analysis (PCA) is a technique that is useful for the compression and classification of data. The purpose is to reduce the dimensionality of a data set (sample) by finding a new set of variables, smaller than the original set of variables, that nonetheless retains most of the sample's information.
+
+By information we mean the variation present in the sample, given by the correlations between the original variables. The new variables, called principal components (PCs), are uncorrelated, and are ordered by the fraction of the total information each retains.
+
+More formally: given a sample of *n* observations on a vector of *p* variables. Define the first principal component of the sample by the linear transformation $z_1 = a_1^Tx$ where the vector $a_1 = (a_{11},...,a{p1})$ is chosen such that is maximum the $Var[z_1]$. You continue adding other dimensions but constraining the successive dimension being orthogonal to the previous one so having zero correlation. Another constraint is the fact that $a_k^Ta_k=1$.
+
+![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_pca_illu3d.png)
+
+
+
 #### Isomap
 
 Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. 
@@ -311,14 +321,6 @@ Isomap is a combination of the Floyd–Warshall algorithm with classic Multidime
 Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. 
 
 ![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png)
-
-
-
-#### Laplacian eigenmaps
-
-Laplacian Eigenmaps uses spectral techniques to perform dimensionality reduction. This technique relies on the basic assumption that the data lies in a low-dimensional manifold in a high-dimensional space. This algorithm cannot embed out-of-sample points, but techniques based on Reproducing kernel Hilbert space regularization exist for adding this capability. Such techniques can be applied to other nonlinear dimensionality reduction algorithms as well.
-
-Traditional techniques like principal component analysis do not consider the intrinsic geometry of the data. Laplacian eigenmaps builds a graph from neighborhood information of the data set. Each data point serves as a node on the graph and connectivity between nodes is governed by the proximity of neighboring points (using e.g. the k-nearest neighbor algorithm). The graph thus generated can be considered as a discrete approximation of the low-dimensional manifold in the high-dimensional space. Minimization of a cost function based on the graph ensures that points close to each other on the manifold are mapped close to each other in the low-dimensional space, preserving local distances. The eigenfunctions of the Laplace–Beltrami operator on the manifold serve as the embedding dimensions, since under mild conditions this operator has a countable spectrum that is a basis for square integrable functions on the manifold (compare to Fourier serieson the unit circle manifold). Attempts to place Laplacian eigenmaps on solid theoretical ground have met with some success, as under certain nonrestrictive assumptions, the graph Laplacian matrix has been shown to converge to the Laplace–Beltrami operator as the number of points goes to infinity.
 
 
 
