@@ -290,8 +290,6 @@ The reduced-dimensional representations of data are often referred to as "intrin
 
 PCA (a linear dimensionality reduction algorithm) is used to reduce this same dataset into two dimensions, the resulting values are not so well organized.
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/1*bzJ1D1FLhzzKZGm4FKOhRQ.png" style="zoom:67%;" />
-
 By comparison, if Principal component analysis, which is a linear dimensionality reduction algorithm, is used to reduce this same dataset into two dimensions, the resulting values are not so well organized. This demonstrates that the high-dimensional vectors (each representing a letter 'A') that sample this manifold vary in a non-linear manner.
 
 
@@ -323,22 +321,6 @@ Isomap is a combination of the Floyd–Warshall algorithm with classic Multidime
 Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. 
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png" style="zoom:67%;" />
-
-#### tSNE
-
-
-
-Previous non-linear dimensionality reduction methods have a fixed assignment in low-dimensional space for a data point in the high-dimensional space, but this often fails to correctly capture a portion of the ambiguous points that could belong several to local neighborhoods. SNE aims to best capture neighborhood identity by considering the probability that one point is the neighbor of all other points. Formally, it defines n × n similarity matrix P in the high dimensional space whose entries are
-
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-20 at 17.18.57.png" style="zoom: 50%;" />
-
-where $\sigma_i^2$ is the variance for the Gaussian distribution centered around $x_i$. And n × n similarity matrix Q in the low dimensional space whose entries are
-
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-20 at 17.46.17.png" style="zoom:50%;" />
-
-Note that we can interpret pj|i as the probability that xj is a neighbor of xi’s, and P is simply a probability distribution. Then define the cost function as the Kullback-Leibler divergence over P and Q:
-
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-20 at 17.50.09.png" style="zoom:50%;" />
 
 
 
