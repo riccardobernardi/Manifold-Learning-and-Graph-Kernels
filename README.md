@@ -330,14 +330,6 @@ Train an SVM with the kernel chosen applying the manifold technique or not and s
 
 
 
-### 4.1 Training without Manifold
-
-Training without Manifold
-
-### 4.2 Training with Manifold
-
-Training with Manifold
-
 ### 4.2 Results
 
 Results of Manifold Techniques
