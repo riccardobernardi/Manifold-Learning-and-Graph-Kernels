@@ -324,9 +324,29 @@ Locally-Linear Embedding (LLE) has several advantages over Isomap, including fas
 
 
 
-# 5. Comparison
+# 5. Experiments and Analysis
 
-Train an SVM with the kernel chosen applying the manifold technique or not and show the difference
+To start the experiments we have first chose the kernels below to be tested:
+
+- SPK -> Shortest path
+- WLK -> Weisfeiler-lehman
+- STK -> Subtree
+- DSGK -> Dominant-Set
+
+We have chosen these kernels because they were the most important ones but also they were the faster kernels! For example the Random walk kernel resulted too slow at a first glance so it was discarded. The Dominant set kernels as seen before is a brand-new kernel invented during these experiments to prove the hypothesis that "working on a dominant set is better because improves generality of the results".
+
+The kernels above are tested in their "Vanilla"(no modifications) option.
+
+Each kernel is tested composing the input kernel with other kernels(linear, rbf) or with no composition(precomputed). In the case of reduced matrices it is not possible to use the "precomputed" option because it is needed to have a square matrix as input to the SVM but it is not going to be so with the reduction.
+
+The kernels above are also tested using dimensionality reduction to improve the results(higher generality) and to permit the visualisation. The manifold techniques are listed here:
+
+- no-RED -> no reduction is applied
+- ISO -> isometric reduction
+- LLE -> linear local embedding reduction
+- tSNE -> t-distributed Stochastic Neighbour Embedding applied
+
+In the first column we have a progressive number so the reader can go to the code and find out the specific test in which she is interested in. The second column is a composition of the words we have just seen before, in particular you can read for example "SPK-precomputed-no-RED" in this way: "Shortest path kernel composed with precomputed kernel(so no composition) and no reduction".  In the third column we have the scores for the PPI dataset. In the last column we have the SHOCK dataset scores.
 
 
 
