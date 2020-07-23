@@ -399,7 +399,7 @@ Results of Manifold Techniques
 
 
 
-Explain here...
+It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more and hopefully it can worths a publication. We hope that this can be an advancement in this field. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
 
 
 
