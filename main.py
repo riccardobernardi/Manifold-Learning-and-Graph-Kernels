@@ -24,7 +24,7 @@ def printa():
 	print(tmp1.to_markdown())
 
 
-for i in ["PCA"]: #, "NOP", "ISO", "LLE", "TSNE"]:
+for i in ["PCA", "NOP", "ISO", "LLE", "TSNE"]:
 	results_PPI, results_SHOCK = launch("SPK", i, results_PPI, results_SHOCK)
 	save()
 	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK)
