@@ -50,7 +50,7 @@ NEW I have added zip files with csv versions of the adjacecy matrices of the gra
 
 
 
-We are going to explain in this paper the experiments we run over the two datasets provided, they are called PPI and SHOCK. The PPI dataset deals with the Protein Protein Interaction, It consists of 86 graphs that repesent proteins and between them we would like to discover interesting similarities. The second dataset contains 150 graphs and we would like as before to find a way to efficiently compute similarities between them. In the chapter 3 we are going to introduce the kernels and the graph kernels, also we are going to propose a library that provides them. In the chapter 4 we are going to look inside the possible manifold learning techniques to reduce the visited space of our algorithm and also to visualize our result in 2Dimensions. The 5th chapter talks about the Comparisons that we made and we will discuss about possible improvements. In the last chapter that is the 6th we will draw the conclusions. The other chapters at the very end of this paper are the bibliography and the appendix.
+We are going to explain in this paper the experiments we run over the two datasets provided, they are called PPI and SHOCK. The PPI dataset deals with the Protein Protein Interaction, It consists of 86 graphs that repesent proteins and between them we would like to discover interesting similarities. In the former dataset ew would like to classify between 2 classes "Acidovorax" and "Acidobacteria". The second dataset contains 150 graphs and we would like as before to find a way to efficiently compute similarities between them. In the chapter 3 we are going to introduce the kernels and the graph kernels, also we are going to propose a library that provides them. In this second dataset there are 10 classes used to classify the graphs. In the chapter 4 we are going to look inside the possible manifold learning techniques to reduce the visited space of our algorithm and also to visualize our result in 2Dimensions. The 5th chapter talks about the Comparisons that we made and we will discuss about possible improvements. In the last chapter that is the 6th we will draw the conclusions. The other chapters at the very end of this paper are the bibliography and the appendix.
 
 
 
@@ -172,7 +172,7 @@ Computing Random Walk Graph Kernel can be done with these methods:
 
 
 
-#### Graphlet Kernel, Petri et al.
+#### Graphlet Kernel
 
 Graphlets are small connected non-isomorphic induced subgraphs of a large network. An induced subgraph must contain all edges between its nodes that are present in the large network, while a partial subgraph may contain only some of these edges. 
 
@@ -364,7 +364,7 @@ In the first column we have a progressive number so the reader can go to the cod
 
 
 
-### 4.2 Results
+### 4.2 General Results
 
 Results of Manifold Techniques
 
