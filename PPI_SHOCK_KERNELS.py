@@ -73,18 +73,12 @@ def launch(ker, red, results_PPI, results_SHOCK):
 				strat_k_fold = StratifiedKFold(n_splits = 10, shuffle = True) #10
 				scores_ln = cross_val_score(clf, D, y, cv = strat_k_fold, n_jobs= 8)
 			print(str(np.min(scores_ln)) + " - " +str(np.mean(scores_ln))+ " - " + str(np.max(scores_ln)) + " - "+ str(np.std(scores_ln)))
-			ll = [np.min(scores_ln),np.mean(scores_ln),np.max(scores_ln),np.std(scores_ln)]
-			names = ["min ","avg ","max ","std "]
-			def put_in_order(acc):
-				return str(str(round(acc*100, 2))) +","
 
 			#acc= np.mean(scores_ln)
 
 			pd_name = ker+"-"+i+"-"+red
 			#pd_acc = "Acc: "+str(str(round(acc*100, 2)))+ "%"
-			ll = list(ll).map(put_in_order).reduce(sum)
-			print(ll)
-			pd_Acc = "Acc: " + ll
+			pd_acc = "Acc: min " + str(np.min(scores_ln))[:4] + " - avg " +str(np.mean(scores_ln))[:4]+ " - max " + str(np.max(scores_ln))[:4] + " - std "+ str(np.std(scores_ln))[:5]
 
 			if j == "PPI":
 				plt.scatter(iso_prj_D[:, 0], iso_prj_D[:, 1],c=y_PPI)

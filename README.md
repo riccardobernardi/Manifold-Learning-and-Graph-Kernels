@@ -368,46 +368,44 @@ In the first column we have a progressive number so the reader can go to the cod
 
 Results of Manifold Techniques
 
-|      | method                  | PPI_score   | SHOCK_score |
-| ---: | :---------------------- | :---------- | :---------- |
-|    0 | SPK-precomputed-no-RED  | Acc: 49.17% | Acc: 0.0%   |
-|    1 | SPK-linear-no-RED       | Acc: 75.14% | Acc: 43.0%  |
-|    2 | SPK-rbf-no-RED          | Acc: 62.22% | Acc: 31.5%  |
-|    3 | WLK-precomputed-no-RED  | Acc: 42.64% | Acc: 3.0%   |
-|    4 | WLK-linear-no-RED       | Acc: 75.56% | Acc: 38.5%  |
-|    5 | WLK-rbf-no-RED          | Acc: 47.78% | Acc: 26.0%  |
-|    6 | STK-precomputed-no-RED  | Acc: 41.94% | Acc: 1.5%   |
-|    7 | STK-linear-no-RED       | Acc: 73.47% | Acc: 42.5%  |
-|    8 | STK-rbf-no-RED          | Acc: 67.36% | Acc: 39.5%  |
-|    9 | DSGK-precomputed-no-RED | Acc: 36.25% | Acc: 3.5%   |
-|   10 | DSGK-linear-no-RED      | Acc: 79.17% | Acc: 42.0%  |
-|   11 | DSGK-rbf-no-RED         | Acc: 67.5%  | Acc: 30.0%  |
-|   12 | SPK-linear-ISO          | Acc: 62.92% | Acc: 32.0%  |
-|   13 | SPK-rbf-ISO             | Acc: 75.83% | Acc: 34.5%  |
-|   14 | WLK-linear-ISO          | Acc: 53.47% | Acc: 22.5%  |
-|   15 | WLK-rbf-ISO             | Acc: 64.03% | Acc: 33.0%  |
-|   16 | STK-linear-ISO          | Acc: 56.81% | Acc: 17.0%  |
-|   17 | STK-rbf-ISO             | Acc: 57.22% | Acc: 29.5%  |
-|   18 | DSGK-linear-ISO         | Acc: 66.25% | Acc: 23.0%  |
-|   19 | DSGK-rbf-ISO            | Acc: 73.19% | Acc: 33.0%  |
-|   20 | SPK-linear-LLE          | Acc: 53.33% | Acc: 18.0%  |
-|   21 | SPK-rbf-LLE             | Acc: 53.33% | Acc: 18.0%  |
-|   22 | WLK-linear-LLE          | Acc: 53.33% | Acc: 19.5%  |
-|   23 | WLK-rbf-LLE             | Acc: 53.33% | Acc: 19.5%  |
-|   24 | STK-linear-LLE          | Acc: 53.33% | Acc: 11.0%  |
-|   25 | STK-rbf-LLE             | Acc: 53.33% | Acc: 12.5%  |
-|   26 | DSGK-linear-LLE         | Acc: 53.33% | Acc: 22.0%  |
-|   27 | DSGK-rbf-LLE            | Acc: 53.33% | Acc: 22.0%  |
-|   28 | SPK-linear-TSNE         | Acc: 56.67% | Acc: 39.5%  |
-|   29 | SPK-rbf-TSNE            | Acc: 57.08% | Acc: 41.5%  |
-|   30 | WLK-linear-TSNE         | Acc: 70.83% | Acc: 27.5%  |
-|   31 | WLK-rbf-TSNE            | Acc: 70.83% | Acc: 41.5%  |
-|   32 | STK-linear-TSNE         | Acc: 48.75% | Acc: 15.0%  |
-|   33 | STK-rbf-TSNE            | Acc: 53.33% | Acc: 36.5%  |
-|   34 | DSGK-linear-TSNE        | Acc: 61.67% | Acc: 25.5%  |
-|   35 | DSGK-rbf-TSNE           | Acc: 74.31% | Acc: 33.5%  |
-
-
+|      | method                  | PPI_score                                       | SHOCK_score                                     |
+| ---: | :---------------------- | :---------------------------------------------- | :---------------------------------------------- |
+|    0 | SPK-linear-PCA          | Acc: min 0.44 - avg 0.73 - max 1.0 - std 0.180  | Acc: min 0.2 - avg 0.36 - max 0.5 - std 0.097   |
+|    1 | SPK-rbf-PCA             | Acc: min 0.44 - avg 0.72 - max 1.0 - std 0.176  | Acc: min 0.2 - avg 0.37 - max 0.45 - std 0.067  |
+|    2 | WLK-linear-PCA          | Acc: min 0.44 - avg 0.68 - max 0.87 - std 0.118 | Acc: min 0.1 - avg 0.36 - max 0.5 - std 0.107   |
+|    3 | WLK-rbf-PCA             | Acc: min 0.22 - avg 0.59 - max 0.88 - std 0.219 | Acc: min 0.1 - avg 0.36 - max 0.5 - std 0.105   |
+|    4 | STK-linear-PCA          | Acc: min 0.62 - avg 0.76 - max 1.0 - std 0.105  | Acc: min 0.2 - avg 0.41 - max 0.6 - std 0.106   |
+|    5 | STK-rbf-PCA             | Acc: min 0.44 - avg 0.71 - max 0.88 - std 0.154 | Acc: min 0.15 - avg 0.27 - max 0.45 - std 0.100 |
+|    6 | DSGK-linear-PCA         | Acc: min 0.55 - avg 0.76 - max 0.88 - std 0.096 | Acc: min 0.1 - avg 0.33 - max 0.5 - std 0.130   |
+|    7 | DSGK-rbf-PCA            | Acc: min 0.55 - avg 0.76 - max 0.88 - std 0.085 | Acc: min 0.1 - avg 0.27 - max 0.4 - std 0.09    |
+|    8 | SPK-precomputed-no-RED  | Acc: min 0.33 - avg 0.47 - max 0.77 - std 0.143 | Acc: min 0.0 - avg 0.0 - max 0.0 - std 0.0      |
+|    9 | SPK-linear-no-RED       | Acc: min 0.55 - avg 0.77 - max 0.87 - std 0.105 | Acc: min 0.25 - avg 0.40 - max 0.7 - std 0.142  |
+|   10 | SPK-rbf-no-RED          | Acc: min 0.11 - avg 0.62 - max 0.88 - std 0.198 | Acc: min 0.2 - avg 0.35 - max 0.6 - std 0.122   |
+|   11 | WLK-precomputed-no-RED  | Acc: min 0.11 - avg 0.41 - max 0.77 - std 0.166 | Acc: min 0.0 - avg 0.03 - max 0.1 - std 0.045   |
+|   12 | WLK-linear-no-RED       | Acc: min 0.22 - avg 0.69 - max 0.88 - std 0.197 | Acc: min 0.1 - avg 0.35 - max 0.55 - std 0.112  |
+|   13 | WLK-rbf-no-RED          | Acc: min 0.37 - avg 0.47 - max 0.55 - std 0.053 | Acc: min 0.1 - avg 0.28 - max 0.4 - std 0.09    |
+|   14 | STK-precomputed-no-RED  | Acc: min 0.11 - avg 0.43 - max 0.77 - std 0.191 | Acc: min 0.0 - avg 0.04 - max 0.2 - std 0.061   |
+|   15 | STK-linear-no-RED       | Acc: min 0.33 - avg 0.73 - max 1.0 - std 0.208  | Acc: min 0.1 - avg 0.37 - max 0.55 - std 0.155  |
+|   16 | STK-rbf-no-RED          | Acc: min 0.5 - avg 0.73 - max 1.0 - std 0.151   | Acc: min 0.2 - avg 0.37 - max 0.5 - std 0.095   |
+|   17 | DSGK-precomputed-no-RED | Acc: min 0.12 - avg 0.36 - max 0.55 - std 0.146 | Acc: min 0.0 - avg 0.02 - max 0.1 - std 0.040   |
+|   18 | DSGK-linear-no-RED      | Acc: min 0.55 - avg 0.79 - max 0.88 - std 0.106 | Acc: min 0.2 - avg 0.41 - max 0.6 - std 0.128   |
+|   19 | DSGK-rbf-no-RED         | Acc: min 0.37 - avg 0.68 - max 0.88 - std 0.163 | Acc: min 0.2 - avg 0.24 - max 0.3 - std 0.043   |
+|   20 | SPK-linear-ISO          | Acc: min 0.22 - avg 0.62 - max 0.87 - std 0.180 | Acc: min 0.1 - avg 0.32 - max 0.45 - std 0.105  |
+|   21 | SPK-rbf-ISO             | Acc: min 0.55 - avg 0.75 - max 0.87 - std 0.088 | Acc: min 0.2 - avg 0.34 - max 0.45 - std 0.085  |
+|   22 | WLK-linear-ISO          | Acc: min 0.33 - avg 0.53 - max 0.66 - std 0.112 | Acc: min 0.0 - avg 0.22 - max 0.4 - std 0.110   |
+|   23 | WLK-rbf-ISO             | Acc: min 0.37 - avg 0.64 - max 1.0 - std 0.181  | Acc: min 0.0 - avg 0.32 - max 0.45 - std 0.128  |
+|   24 | STK-linear-ISO          | Acc: min 0.25 - avg 0.56 - max 0.87 - std 0.157 | Acc: min 0.05 - avg 0.16 - max 0.3 - std 0.081  |
+|   25 | STK-rbf-ISO             | Acc: min 0.22 - avg 0.57 - max 0.77 - std 0.168 | Acc: min 0.2 - avg 0.29 - max 0.4 - std 0.072   |
+|   26 | DSGK-linear-ISO         | Acc: min 0.37 - avg 0.66 - max 1.0 - std 0.192  | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.116   |
+|   27 | DSGK-rbf-ISO            | Acc: min 0.55 - avg 0.73 - max 0.88 - std 0.116 | Acc: min 0.2 - avg 0.32 - max 0.45 - std 0.087  |
+|   28 | SPK-linear-LLE          | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.18 - max 0.3 - std 0.084   |
+|   29 | SPK-rbf-LLE             | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.18 - max 0.3 - std 0.084   |
+|   30 | WLK-linear-LLE          | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.19 - max 0.3 - std 0.105   |
+|   31 | WLK-rbf-LLE             | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.19 - max 0.3 - std 0.105   |
+|   32 | STK-linear-LLE          | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.11 - max 0.2 - std 0.069   |
+|   33 | STK-rbf-LLE             | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.12 - max 0.2 - std 0.075   |
+|   34 | DSGK-linear-LLE         | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.095   |
+|   35 | DSGK-rbf-LLE            | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.095   |
 
 # 6. Conclusions
 
