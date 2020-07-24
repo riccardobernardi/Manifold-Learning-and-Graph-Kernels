@@ -324,6 +324,22 @@ Locally-Linear Embedding (LLE) has several advantages over Isomap, including fas
 
 
 
+#### Example of the Manifold Reduction
+
+In this example we can see below the various manifold reduction that we experimented with, these tests are all conducted on the Dominant Set Kernel composed with the linear kernel.
+
+| No Reduction                                                 | Isomap                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-no-RED.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png" style="zoom:50%;" /> |
+
+| LLE                                                          | tSNE                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-TSNE.png" style="zoom:50%;" /> |
+
+
+
+
+
 # 5. Experiments and Analysis
 
 To start the experiments we have first chose the kernels below to be tested:
