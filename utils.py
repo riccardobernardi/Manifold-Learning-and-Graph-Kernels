@@ -12,6 +12,7 @@ from grakel.graph import Graph
 import numpy as np
 from numpy.linalg import norm
 from numexpr.necompiler import evaluate
+from sklearn.decomposition import PCA
 
 from sklearn import manifold
 from sklearn.metrics import pairwise_distances

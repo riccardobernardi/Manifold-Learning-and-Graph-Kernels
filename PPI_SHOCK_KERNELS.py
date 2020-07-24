@@ -40,6 +40,9 @@ def launch(ker, red, results_PPI, results_SHOCK):
 		if red == "ISO":
 			iso_prj_D = manifold.Isomap(n_neighbors, n_components).fit_transform(D)
 
+		if red == "PCA":
+			iso_prj_D = PCA(n_neighbors, n_components).fit_transform(D)
+
 		if red == "LLE":
 			iso_prj_D = manifold.LocallyLinearEmbedding(n_components).fit_transform(D)
 

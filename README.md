@@ -56,7 +56,7 @@ We are going to explain in this paper the experiments we run over the two datase
 
 **Disclaimer:**
 
-This assignment was done only by Riccardo Bernardi(864018@stud.unive.it) , both the code, the report and the experiments.
+This assignment was done only by Riccardo Bernardi(864018@stud.unive.it) , both the code, the report and the experiments. Material taken from internet or books is cited in the bibliography.
 
 During this assignment was also created the Dominant Set Graph Kernel, this was both invented and implemented by Riccardo Bernardi(864018@stud.unive.it).
 
