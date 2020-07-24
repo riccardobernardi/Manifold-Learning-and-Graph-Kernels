@@ -1,6 +1,16 @@
-|    | method         | PPI_score   | SHOCK_score   |
-|---:|:---------------|:------------|:--------------|
-|  0 | SPK-linear-PCA | Acc: 73.47% | Acc: 36.5%    |
-|  1 | SPK-rbf-PCA    | Acc: 72.22% | Acc: 37.0%    |
-|  2 | WLK-linear-PCA | Acc: 68.89% | Acc: 36.5%    |
-|  3 | WLK-rbf-PCA    | Acc: 59.44% | Acc: 36.5%    |
+|    | method                 | PPI_score   | SHOCK_score   |
+|---:|:-----------------------|:------------|:--------------|
+|  0 | SPK-linear-PCA         | Acc: 73.47% | Acc: 36.5%    |
+|  1 | SPK-rbf-PCA            | Acc: 72.22% | Acc: 37.0%    |
+|  2 | WLK-linear-PCA         | Acc: 68.89% | Acc: 36.5%    |
+|  3 | WLK-rbf-PCA            | Acc: 59.44% | Acc: 36.5%    |
+|  4 | STK-linear-PCA         | Acc: 76.81% | Acc: 41.0%    |
+|  5 | STK-rbf-PCA            | Acc: 71.11% | Acc: 27.5%    |
+|  6 | DSGK-linear-PCA        | Acc: 76.94% | Acc: 34.0%    |
+|  7 | DSGK-rbf-PCA           | Acc: 76.81% | Acc: 28.0%    |
+|  8 | SPK-precomputed-no-RED | Acc: 46.53% | Acc: 0.0%     |
+|  9 | SPK-linear-no-RED      | Acc: 77.08% | Acc: 46.5%    |
+| 10 | SPK-rbf-no-RED         | Acc: 64.86% | Acc: 37.0%    |
+| 11 | WLK-precomputed-no-RED | Acc: 41.94% | Acc: 3.5%     |
+| 12 | WLK-linear-no-RED      | Acc: 75.69% | Acc: 42.0%    |
+| 13 | WLK-rbf-no-RED         | Acc: 48.89% | Acc: 31.5%    |

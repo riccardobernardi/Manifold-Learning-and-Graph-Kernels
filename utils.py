@@ -216,7 +216,7 @@ class DomSetGraKer():
 		kernel_sim = [[0 for _ in range(len(self.train_graphs))] for _ in range(len(graphs))]
 
 		for i in range(len(graphs)):
-			for j in range(len(self.train_graphs)):
+			for j in range(i, len(self.train_graphs)):
 				#g1 = nx.from_numpy_matrix(from_set_to_adj(graphs[i]))
 				#g2 = nx.from_numpy_matrix(from_set_to_adj(self.train_graphs[j]))
 				#kernel_sim[i][j] = self.similarity2(g1,g2)
