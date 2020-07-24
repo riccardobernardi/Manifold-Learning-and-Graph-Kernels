@@ -14,6 +14,8 @@ from numpy.linalg import norm
 from numexpr.necompiler import evaluate
 from sklearn.decomposition import PCA
 
+from pygraham import *
+
 from sklearn import manifold
 from sklearn.metrics import pairwise_distances
 
