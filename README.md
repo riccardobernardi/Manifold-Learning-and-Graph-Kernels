@@ -324,6 +324,16 @@ Isomap is a combination of the Floyd–Warshall algorithm with classic Multidime
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/vbxE9.jpg" style="zoom:67%;" />
 
+Isomap works in 3 phases:
+
+- First we want to determine the umber of nearest neighbors on the manifold using the Euclidean distance, the number of neighbors is selected within a fixed circumference or with a fixed number, for example it can be used the KNN
+- In the second step we are going to estimate the shortest path between each pair of points, to do so we can use the dijkstra algorithm
+- The third step is about the application of the multi dimensional scaling on the distance matrix of the geodesics to move it to an euclidean space with the same geometrical structure. The vectors of the euclidean space are selected to minimize the cost function ![img](https://www.deeplearningitalia.com/wp-content/uploads/2017/11/i3.png) where $Dy$ is the matrix of the euclidean distances, $D_G$ is the geodesic matrix, L2 is the classic norm-2 and the $\tau$ is a conversion function.
+
+Choosing the right radius is also important:
+
+![i2](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/i2.png)
+
 #### Locally-linear embedding
 
 Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. As we can see here in the image LLE and Isomap are not so different in the result but LLE can perform better on sparse matrices:
