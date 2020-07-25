@@ -569,18 +569,3 @@ It's astonishing but the brand new kernel called DSGK invented during the develo
 128. A tutorial on Principal Components Analysis - http://www.cs.otago.ac.nz/cosc453/student_tutorials/principal_components.pdf
 129. Numexpr - We show how to significantly speed up your mathematical calculations in Numpy and Pandas using a small library - https://www.kdnuggets.com/2020/07/speed-up-numpy-pandas-numexpr-package.html
 130. An Introduction to Locally Linear Embedding - https://cs.nyu.edu/~roweis/lle/papers/lleintro.pdf
-
-
-
-# Appendix 
-
-
-
-### Appendix 1
-
-NP-completeness
-
-A decision problem C is NP-complete iff
-
-- C is in NP
-- C is NP-hard, i.e. every other problem in NP is reducible to it.
