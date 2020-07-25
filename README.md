@@ -336,15 +336,9 @@ Locally-Linear Embedding (LLE) has several advantages over Isomap, including fas
 
 In this example we can see below the various manifold reduction that we experimented with, these tests are all conducted on the Dominant Set Kernel composed with the linear kernel.
 
-| No Reduction                                                 | Isomap                                                       |
+| LLE                                                          | Isomap                                                       |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-no-RED.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png" style="zoom:50%;" /> |
-
-| LLE                                                          | tSNE                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-TSNE.png" style="zoom:50%;" /> |
-
-
+| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png" style="zoom:50%;" /> |
 
 
 
@@ -423,7 +417,7 @@ Results of Manifold Techniques
 
 At the end we would like to mention that the trials to build up this analysis were much more, in particular we tried also to run the graphlet algorithm but due to its high complexity on these huge datasets the time to complete was too long so we dropped. Another dropped kernel was the random walk one, for the same reasons of the graphlet one it was excluded. The Dominant set kernel was improved to perform well than the mere rude version ptting attention on the implementation of the cycles in particular. Another important thing to be mentioned is that the calculus of the Dominant set itself is pretty expensive but we have found a library called "numexpr" that takes numpy arrays and drastically improves the computations on them. The benchmarks are present on the website[129].
 
-It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more and hopefully it can worths a publication. We hope that this can be an advancement in this field. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
+It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more and hopefully it can worths a publication. We hope that this can end up with an advancement in this field. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
 
 
 
