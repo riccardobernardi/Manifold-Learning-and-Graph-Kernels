@@ -76,7 +76,7 @@ We are going here to answer these questions:
 
 ### 3.1 What is a kernel
 
-Kernel is a way of computing the dot product of two vectors **𝐱** and **𝐲** in some (possibly very high dimensional) feature space, which is why kernel functions are sometimes called "generalized dot product". Suppose we have a mapping 𝜑:ℝ𝑛→ℝ𝑚 that brings our vectors in $ℝ^n$ to some feature space $ℝ^𝑚$. Then the dot product of **𝐱** and **𝐲** in this space is $φ(x)^Tφ(y)$. A kernel is a function 𝑘 that corresponds to this dot product, i.e. $k(x,y)=φ(x)^Tφ(y)$. So Kernels give a way to compute dot products in some feature space without even knowing what this space is and what is 𝜑.
+Kernel is a way of computing the dot product of two vectors **𝐱** and **𝐲** in some (possibly very high dimensional) feature space, which is why kernel functions are sometimes called "generalized dot product". Suppose we have a mapping 𝜑:ℝ𝑛→ℝ𝑚 that brings our vectors in $ℝ^n$ to some feature space $ℝ^𝑚$. Then the dot product of **𝐱** and **𝐲** in this space is $φ(x)^Tφ(y)$. A kernel is a function 𝑘 that corresponds to this dot product, i.e. $k(x,y)=φ(x)^Tφ(y)$. So Kernels give a way to compute dot products in some feature space without even knowing what this space is and what is 𝜑. here the dot product visually :
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Dot-product-of-vectors.png" style="zoom:67%;" />
 
@@ -84,7 +84,7 @@ For example, consider a simple polynomial kernel $k(x,y)=(1+x^Ty)^2$ with $x,y�
 
 $$k(x,y)=(1+x^Ty)^2=(1+x_1y_1+x_2y_2)^2==1+x_1^2y_1^2+x_2^2y_2^2+2x_1y_1+2x_2y_2+2x_1x_2y_1y_2$$
 
-Note that this is nothing else but a dot product between two vectors $(1,x_1^2,x_2^2,\sqrt{2}x_1,\sqrt{2}x_2,\sqrt{2}x_1x_2)$ and $(1,y_1^2,y_2^2,\sqrt{2}y_1,\sqrt{2}y_2,\sqrt{2}y_1y_2)$. So the kernel $k(x,y)=(1+x^Ty)^2=φ(x)^Tφ(y)$ computes a dot product in 6-dimensional space without explicitly visiting this space. 
+Note that this is nothing else but a dot product between two vectors $(1,x_1^2,x_2^2,\sqrt{2}x_1,\sqrt{2}x_2,\sqrt{2}x_1x_2)$ and $(1,y_1^2,y_2^2,\sqrt{2}y_1,\sqrt{2}y_2,\sqrt{2}y_1y_2)$. So the kernel $k(x,y)=(1+x^Ty)^2=φ(x)^Tφ(y)$ computes a dot product in 6-dimensional space without explicitly visiting this space. In the image below we can see the idea of the kernel, it finds a non linear dividing hyperplane on a higher-space:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/ch06_fig_5_mlr.png" style="zoom:67%;" />
 
@@ -112,11 +112,11 @@ Theoretically, a Gram matrix K∈Rn×n with respect to {x1,…,xn} (sometimes al
 
 ### 3.2 What is a Graph kernel
 
-A graph kernel is a kernel function that computes an inner product on graphs. Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow kernelized learning algorithms such as support vector machines to work directly on graphs, without having to do feature extraction to transform them to fixed-length, real-valued feature vectors.
+A graph kernel is a kernel function that computes an inner product on graphs. Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow kernelized learning algorithms such as support vector machines to work directly on graphs, without having to do feature extraction to transform them to fixed-length, real-valued feature vectors. Here a graphical way to see the kernel graph isomorphism problem:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/graph-kernels-13-638.jpg" style="zoom:67%;" />
 
-All starts with Graph isomorphism: Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; 
+All starts with Graph isomorphism: Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; Here an example of an isomorphism problem:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/1etPf.jpg" style="zoom:67%;" />
 
@@ -128,7 +128,7 @@ We can move to Subgraph isomorphism. Subgraph isomorphism asks if there is a sub
 
 - Subgraph isomorphism is simpler
 - more approximation ease the problem
-- solves the problem
+- Solving the problem
 
 **Drawbacks:**
 
@@ -136,9 +136,7 @@ We can move to Subgraph isomorphism. Subgraph isomorphism asks if there is a sub
 - Runtime may grow exponentially with the number of nodes
 - For larger graphs with many nodes and for large datasets of graphs, this is an enormous problem
 
-The more common way to proceed though is to create a kernel function that should perform a reasonable approximation of the graph isomorphism problem and can tell at the end of the process how much two graphs are similar to each other. The way it works is extracting some patterns that we believe are really important and can characterize well the graph such that they can be something like a fingerprint and such that it can be compared. This approach is called graph kernel through bag of patterns. The Pros are that we can control the precision and the computational cost moving from easier of more complex extractions of patterns. The Contras is that the right algorithm can be different based on the domain of the problem(i.e.: chemistry may prefer a more local approach for feature extraction instead physics a more general one)
-
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/graph-kernels-13-638 copy.jpg)
+The more common way to proceed though is to create a kernel function that should perform a reasonable approximation of the graph isomorphism problem and can tell at the end of the process how much two graphs are similar to each other. The way it works is extracting some patterns that we believe are really important and can characterize well the graph such that they can be something like a fingerprint and such that it can be compared.
 
 
 
@@ -162,7 +160,7 @@ The principle is to count common walks in two input graphs G and G’, walks are
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.41.09.png" style="zoom:67%;" />
 
- The phenomenon of tottering occurs when walk allow for repetitions of nodes. A heavy problem can consist in a walk that can visit the same cycle of nodes all over again. Here in the image it can be that the partition visited remains only the one comprised in the cycle.
+ The phenomenon of tottering occurs when walk allow for repetitions of nodes. A heavy problem can consist in a walk that can visit the same cycle of nodes all over again. Here in the image it can be that the partition visited remains only the one comprised in the cycle. Here an example of a graph that can coduct to tottering because standing that it is un directed it has a cycle that can be walked indefinitely:
 
 ![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/cycleGraph.png)
 
@@ -188,13 +186,15 @@ Computing Random Walk Graph Kernel can be done with these methods:
 
 Graphlets are small connected non-isomorphic induced subgraphs of a large network. An induced subgraph must contain all edges between its nodes that are present in the large network, while a partial subgraph may contain only some of these edges. 
 
-The principle is to count subgraphs of limited size k in G and G‘, these subgraphs are referred to as graphlets and then define a graph kernel that counts isomorphic graphlets in two graphs. More formally we let be G = {graphlet(1), . . . , graphlet(Nk )} be the set of size-k graphlets and G be a graph of size n. Define a vector fG of length Nk whose i-th component corresponds to the frequency of occurrence of graphlet(i) in G, #(graphlet(i) ⊑ G). We will call fG the k- spectrum of G. This statistic is the foundation of our novel graph kernel. Given two graphs G and G′ of size n ≥ k, the graphlet kernel kg is defined as kg(G,G′) := fG$\cdot$fG′.
+The principle is to count subgraphs of limited size $k$ in $G$ and $G‘$, these subgraphs are referred to as graphlets and then define a graph kernel that counts isomorphic graphlets in two graphs. More formally we let be $G = \{graphlet(1), . . . , graphlet(N_k )\}$ be the set of size-k graphlets and $G$ be a graph of size $n$. Define a vector $f_G$ of length $N_k$ whose i-th component corresponds to the frequency of occurrence of $graphlet(i)$ in $G$, #(graphlet(i) ⊑ G). We will call $f_G$ the k- spectrum of G. This statistic is the foundation of our novel graph kernel. Given two graphs $G$ and $G′$ of size $n ≥ k$, the graphlet kernel $kg$ is defined as $kg(G,G′) := f_G\cdot f_G′$.
 
-As our goal is to develop scalable graph kernels, we study graphlet kernels based on the 3-, 4- and 5- spectra of graphs here. In order to account for differences in the sizes of the graphs, which can greatly skew the frequency counts fG, we normalize the counts to probability vectors:
+As our goal is to develop scalable graph kernels, we study graphlet kernels based on the 3, 4 and 5 spectra of graphs here. In order to account for differences in the sizes of the graphs, which can greatly skew the frequency counts $f_G$, we normalize the counts to probability vectors:
 
-Clearly, if G ∼= G′, then fG = fG′ . But is the reverse true? It has been shown that when n = k+1 and n ≤ 11, equality of k-spectra implies isomorphism. For n > 11, it is still a conjecture whether a graph of size n can be reconstructed from its subgraphs of size n − 1.
+Clearly, if $G ∼= G′$, then $f_G = f_G′$ . But is the reverse true? It has been shown that when n = k+1 and n ≤ 11, equality of k-spectra implies isomorphism. For n > 11, it is still a conjecture whether a graph of size n can be reconstructed from its subgraphs of size n − 1.
 
- The runtime problems are that the pairwise test of isomorphism is expensive and another one is that the number of graphlets scales as O(nk). Two solutions on unlabeled graphs are to precompute isomorphisms and to extract sample graphlets. One disadvantage is that the same solutions not feasible on labeled graphs.
+ The runtime problems are that the pairwise test of isomorphism is expensive and another one is that the number of graphlets scales as $O(n^k)$. Two solutions on unlabeled graphs are to precompute isomorphisms and to extract sample graphlets. One disadvantage is that the same solutions not feasible on labeled graphs.
+
+Here an example of the most used graphlets:
 
 
 
@@ -206,7 +206,7 @@ Clearly, if G ∼= G′, then fG = fG′ . But is the reverse true? It has been 
 
 the kernel comes directly from the Weisfeiler-Lehman Isomorphism test that is explained here below.
 
-Here is the algorithm for the Weisfeiler-Lehman Isomorphism Test. It produces for each graph a canonical form. If the canonical forms of two graphs are not equivalent, then the graphs are definitively not isomorphic. However, it is possible for two non-isomorphic graphs to share a canonical form, so this test alone cannot provide conclusive evidence that two graphs are isomorphic.
+Here is the algorithm for the Weisfeiler-Lehman Isomorphism Test. It produces for each graph a canonical form. If the canonical forms of two graphs are not equivalent, then the graphs are definitively not isomorphic. However, it is possible for two non-isomorphic graphs to share a canonical form, so this test alone cannot provide conclusive evidence that two graphs are isomorphic. Here the algorithm:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-19 at 13.49.04.png" style="zoom:67%;" />
 
@@ -214,37 +214,35 @@ When using this method to determine graph isomorphism, it may be applied in para
 
 Example of the Weisfeiler-Lehman Isomorphism Test:
 
-We demonstrate here the Weisfeiler-Lehman isomorphism test using the example graphs from above. The graphs are shown again here for completeness.
+We demonstrate here the Weisfeiler-Lehman isomorphism test using the example graphs from above. The graphs are shown again here for completeness. In the figure here below Graph 1 and Graph 2 are isomorphic. We will apply the Weisfeiler-Lehman isomorphism test to these graphs as a means of illustrating the test:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-000.png" alt="Two isomorphic graphs are shown." style="zoom:67%;" />
 
-*Figure: Graph 1 and Graph 2 are isomorphic. We will apply the Weisfeiler-Lehman isomorphism test to these graphs as a means of illustrating the test.*
-
-To initialize the algorithm (Step 1), we set C0,n=1 for all nodes n.
+**(Step 1)**To initialize the algorithm, we set C0,n=1 for all nodes n.
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-001.png" alt="Initialization: $C\_{0,n} = 1$ for all nodes $n$" style="zoom:67%;" />
 
-For iteration 1, Step 2, we compute L1. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
+**(Step 2)**For **(Iteration 1)**, we compute L1. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-002.png" alt="Iteration 1, Step 2: $L\_{1,n}$" style="zoom:67%;" />
 
-For iteration 1, Step 3, we introduce “compressed” labels C1 for the nodes:
+**(Step 3)**For **(Iteration 1)**, we introduce “compressed” labels C1 for the nodes:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-003.png" alt="Iteration 1, Step 3: $C\_{1,n}$" style="zoom:67%;" />
 
-We now begin iteration 2. In iteration 2, Step 2, we compute L2:
+**(Step 2)**We now begin **(Iteration 2)**. We compute L2:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-004.png" alt="Iteration 2, Step 2: $L\_{2,n}$" style="zoom:67%;" />
 
-In iteration 2, Step 3, we compute C2:
+**(Step 3)**In **(Iteration 2)**, We compute C2:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-005.png" alt="Iteration 2, Step 3: $C\_{2,n}$" style="zoom:67%;" />
 
-In iteration 3, Step 2, we compute L3:
+**(Step 2)**In **(Iteration 3)**, We compute L3:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-006.png" alt="Iteration 3, Step 2: $L\_{3,n}$" style="zoom:67%;" />
 
-In iteration 3, Step 3, we compute C3:
+**(Step 3)**In **(Iteration 3)**, we compute C3:
 
 <img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-007.png" alt="Iteration 3, Step 3: $C\_{3,n}$" style="zoom:67%;" />
 
@@ -258,7 +256,7 @@ Concretely, the partition of nodes by compressed label may be represented as the
 
 The Dominant set graph kernel came out spontaneously while trying to improve the performances of the graph kernels, in particular it seemed in some cases that the weisfeiler-lehman kernel could have been the best kernel with respect to the others in the classification. The successive hypothesis was that an improvement could have been done if the algorithm could have worked on the **dominant** graphs discarding the ones that were only noise. Stating this hypothesis we used an algorithm to compute the dominant sets on an adjacency matrix through the replicator dynamic technique and after that we computed the weisfeiler-lehman kernel on the dominant set. Intuitively this improves the generality of the prediction because you are going to compute the kernel not on all the points that can be also noisy but on a set that you are guaranteed to be a robust cluster. The experiments are below and show that this algorithms works well in practice being the best one over all the other algorithms.
 
-The algorithm computes only the triangular superior matrix of similarity, in this way it is faster. There are some auxiliary functions such as the "from_set_to_adj" and the  "from_adj_to_set". These are auxiliary functions needed to be compliant with the SVM and the GraKel libraries. For sure these operations can be improved in a future version of the kernel. 
+The algorithm computes only the triangular superior matrix of similarity, in this way it is faster. There are some auxiliary functions such as the "from_set_to_adj" and the  "from_adj_to_set". These are auxiliary functions needed to be compliant with the SVM, GraKel and networkx libraries. For sure these operations can be improved in a future version of the kernel. 
 
 
 
@@ -310,11 +308,11 @@ By comparison, if Principal component analysis, which is a linear dimensionality
 
 #### PCA
 
-Principal component analysis (PCA) is a technique that is useful for the compression and classification of data. The purpose is to reduce the dimensionality of a data set (sample) by finding a new set of variables, smaller than the original set of variables, that nonetheless retains most of the sample's information.
+Principal component analysis (PCA) is a technique that is useful for the compression, visualisation, summarisation and classification of data. The purpose is to reduce the dimensionality of a data set (sample) by finding a new set of variables, smaller than the original set of variables, that nonetheless retains most of the sample's information.
 
 By information we mean the variation present in the sample, given by the correlations between the original variables. The new variables, called principal components (PCs), are uncorrelated, and are ordered by the fraction of the total information each retains.
 
-More formally: given a sample of *n* observations on a vector of *p* variables. Define the first principal component of the sample by the linear transformation $z_1 = a_1^Tx$ where the vector $a_1 = (a_{11},...,a{p1})$ is chosen such that is maximum the $Var[z_1]$. You continue adding other dimensions but constraining the successive dimension being orthogonal to the previous one so having zero correlation. Another constraint is the fact that $a_k^Ta_k=1$.
+More formally: given a sample of *n* observations on a vector of *p* variables. Define the first principal component of the sample by the linear transformation $z_1 = a_1^Tx$ where the vector $a_1 = (a_{11},...,a{p1})$ is chosen such that is maximum the $Var[z_1]$. You continue adding other dimensions but constraining the successive dimension being orthogonal to the previous one so having zero correlation. Another constraint is the fact that $a_k^Ta_k=1$. In the image below we can se that through the PCA we are moving from a 3D space to a 2D space.
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_pca_illu3d.png" style="zoom:67%;" />
 
@@ -322,13 +320,13 @@ More formally: given a sample of *n* observations on a vector of *p* variables. 
 
 #### Isomap
 
-Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. 
+Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. In the image below we can see that while the reduction provided by the PCA is linear w.r.t. the input, the Isomap is non-linear and can capture a greater variance:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/vbxE9.jpg" style="zoom:67%;" />
 
 #### Locally-linear embedding
 
-Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. 
+Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. As we can see here in the image LLE and Isomap are not so different in the result but LLE can perform better on sparse matrices:
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png" style="zoom:67%;" />
 
@@ -422,6 +420,8 @@ Results of Manifold Techniques
 # 6. Conclusions
 
 
+
+At the end we would like to mention that the trials to build up this analysis were much more, in particular we tried also to run the graphlet algorithm but due to its high complexity on these huge datasets the time to complete was too long so we dropped. Another dropped kernel was the random walk one, for the same reasons of the graphlet one it was excluded. The Dominant set kernel was improved to perform well than the mere rude version ptting attention on the implementation of the cycles in particular. Another important thing to be mentioned is that the calculus of the Dominant set itself is pretty expensive but we have found a library called "numexpr" that takes numpy arrays and drastically improves the computations on them. The benchmarks are present on the website[129].
 
 It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more and hopefully it can worths a publication. We hope that this can be an advancement in this field. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
 
@@ -557,6 +557,7 @@ It's astonishing but the brand new kernel called DSGK invented during the develo
 126. Fast Subtree kernels on graphs - https://papers.nips.cc/paper/3813-fast-subtree-kernels-on-graphs.pdf
 127. weisfeiler lehman isomorphism test - https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/
 128. A tutorial on Principal Components Analysis - http://www.cs.otago.ac.nz/cosc453/student_tutorials/principal_components.pdf
+129. Numexpr - We show how to significantly speed up your mathematical calculations in Numpy and Pandas using a small library - https://www.kdnuggets.com/2020/07/speed-up-numpy-pandas-numexpr-package.html
 
 
 
