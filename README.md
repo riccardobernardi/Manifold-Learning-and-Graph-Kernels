@@ -352,9 +352,9 @@ Also the computation of LLE as the ISOMAP happens in 3 main steps:
 
 In this example we can see below the various manifold reduction that we experimented with, these tests are all conducted on the Dominant Set Kernel composed with the linear kernel.
 
-| LLE                                                          | Isomap                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png" style="zoom:50%;" /> |
+| PCA                                                          | LLE                                                          | Isomap                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-PCA.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-LLE.png" style="zoom:50%;" /> | <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/PPI-DSGK-linear-ISO.png" style="zoom:50%;" /> |
 
 
 
