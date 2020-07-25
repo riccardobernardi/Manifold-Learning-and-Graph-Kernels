@@ -78,7 +78,7 @@ We are going here to answer these questions:
 
 Kernel is a way of computing the dot product of two vectors **𝐱** and **𝐲** in some (possibly very high dimensional) feature space, which is why kernel functions are sometimes called "generalized dot product". Suppose we have a mapping 𝜑:ℝ𝑛→ℝ𝑚 that brings our vectors in $ℝ^n$ to some feature space $ℝ^𝑚$. Then the dot product of **𝐱** and **𝐲** in this space is $φ(x)^Tφ(y)$. A kernel is a function 𝑘 that corresponds to this dot product, i.e. $k(x,y)=φ(x)^Tφ(y)$. So Kernels give a way to compute dot products in some feature space without even knowing what this space is and what is 𝜑. here the dot product visually :
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Dot-product-of-vectors.png" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Dot-product-of-vectors.png" style="zoom:50%;" />
 
 For example, consider a simple polynomial kernel $k(x,y)=(1+x^Ty)^2$ with $x,y∈R^2$. This doesn't seem to correspond to any mapping function 𝜑, it's just a function that returns a real number. Assuming that x=(x1,x2) and y=(y1,y2), let's expand this expression:
 
@@ -86,7 +86,7 @@ $$k(x,y)=(1+x^Ty)^2=(1+x_1y_1+x_2y_2)^2==1+x_1^2y_1^2+x_2^2y_2^2+2x_1y_1+2x_2y_2
 
 Note that this is nothing else but a dot product between two vectors $(1,x_1^2,x_2^2,\sqrt{2}x_1,\sqrt{2}x_2,\sqrt{2}x_1x_2)$ and $(1,y_1^2,y_2^2,\sqrt{2}y_1,\sqrt{2}y_2,\sqrt{2}y_1y_2)$. So the kernel $k(x,y)=(1+x^Ty)^2=φ(x)^Tφ(y)$ computes a dot product in 6-dimensional space without explicitly visiting this space. In the image below we can see the idea of the kernel, it finds a non linear dividing hyperplane on a higher-space:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/ch06_fig_5_mlr.png" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/ch06_fig_5_mlr.png" style="zoom:50%;" />
 
 Another example is Gaussian kernel $k(x,y)=exp⁡(−γ‖x−y‖^2)$. If we Taylor-expand this function, we'll see that it corresponds to an infinite-dimensional codomain of φ.
 
@@ -114,11 +114,11 @@ Theoretically, a Gram matrix K∈Rn×n with respect to {x1,…,xn} (sometimes al
 
 A graph kernel is a kernel function that computes an inner product on graphs. Graph kernels can be intuitively understood as functions measuring the similarity of pairs of graphs. They allow kernelized learning algorithms such as support vector machines to work directly on graphs, without having to do feature extraction to transform them to fixed-length, real-valued feature vectors. Here a graphical way to see the kernel graph isomorphism problem:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/graph-kernels-13-638.jpg" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/graph-kernels-13-638.jpg" style="zoom:50%;" />
 
 All starts with Graph isomorphism: Find a mapping f of the vertices of G1 to the vertices of G2 such that G1 and G2 are identical; Here an example of an isomorphism problem:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/1etPf.jpg" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/1etPf.jpg" style="zoom:50%;" />
 
 i.e. (x,y) is an edge of G1 iff (f(x),f(y)) is an edge of G2. Then f is an isomorphism, and G1 and G2 are called isomorphic. No polynomial-time algorithm is known for graph isomorphism. Neither is it known to be NP-complete.
 
@@ -154,15 +154,15 @@ Also we introduced a brand new kernel called Dominant-Set Graph Kernel. This ker
 
 The principle is to count common walks in two input graphs G and G’, walks are sequences of nodes that allow repetitions of nodes. The Pros are that walks of length k can be computed by looking at the k-th power of the adjacency matrix, easy. Some Disadvantages are Runtime, Tottering and Halting. Some potential solutions are presented in \[68\]\[79\]\[81\]. So the direct computation takes $O(n^6)$. The solution is to cast computation of random walk kernel as Sylvester Equation, these can be solved in $O(n^3)$. The equation:
 
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.37.56.png)
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.37.56.png" style="zoom:50%;" />
 
  The Vec-Operator flattens an n x n matrix A into an $n^2$x1 vector vec(A). It stacks the columns of the matrix on top of each other, from left to right. The Kronecker Product is the product of two matrices A and B in which each element of A is multiplied with the full matrix B. An example here:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.41.09.png" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/Screenshot 2020-07-17 at 14.41.09.png" style="zoom:50%;" />
 
  The phenomenon of tottering occurs when walk allow for repetitions of nodes. A heavy problem can consist in a walk that can visit the same cycle of nodes all over again. Here in the image it can be that the partition visited remains only the one comprised in the cycle. Here an example of a graph that can coduct to tottering because standing that it is un directed it has a cycle that can be walked indefinitely:
 
-![](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/cycleGraph.png)
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/cycleGraph.png" style="zoom:50%;" />
 
 Another problem lies on the fact that a kernel measures similarity in terms of common walks. Hence a small structural similarity can cause a huge kernel value.
 
@@ -216,35 +216,35 @@ Example of the Weisfeiler-Lehman Isomorphism Test:
 
 We demonstrate here the Weisfeiler-Lehman isomorphism test using the example graphs from above. The graphs are shown again here for completeness. In the figure here below Graph 1 and Graph 2 are isomorphic. We will apply the Weisfeiler-Lehman isomorphism test to these graphs as a means of illustrating the test:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-000.png" alt="Two isomorphic graphs are shown." style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-000.png" alt="Two isomorphic graphs are shown." style="zoom: 33%;" />
 
 **(Step 1)**To initialize the algorithm, we set C0,n=1 for all nodes n.
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-001.png" alt="Initialization: $C\_{0,n} = 1$ for all nodes $n$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-001.png" alt="Initialization: $C\_{0,n} = 1$ for all nodes $n$" style="zoom: 33%;" />
 
 **(Step 2)**For **(Iteration 1)**, we compute L1. The first part of a node's L is the node's old compressed label; the second part of a node's L is the multiset of the neighboring nodes’ compressed labels.
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-002.png" alt="Iteration 1, Step 2: $L\_{1,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-002.png" alt="Iteration 1, Step 2: $L\_{1,n}$" style="zoom: 33%;" />
 
 **(Step 3)**For **(Iteration 1)**, we introduce “compressed” labels C1 for the nodes:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-003.png" alt="Iteration 1, Step 3: $C\_{1,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-003.png" alt="Iteration 1, Step 3: $C\_{1,n}$" style="zoom: 33%;" />
 
 **(Step 2)**We now begin **(Iteration 2)**. We compute L2:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-004.png" alt="Iteration 2, Step 2: $L\_{2,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-004.png" alt="Iteration 2, Step 2: $L\_{2,n}$" style="zoom: 33%;" />
 
 **(Step 3)**In **(Iteration 2)**, We compute C2:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-005.png" alt="Iteration 2, Step 3: $C\_{2,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-005.png" alt="Iteration 2, Step 3: $C\_{2,n}$" style="zoom: 33%;" />
 
 **(Step 2)**In **(Iteration 3)**, We compute L3:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-006.png" alt="Iteration 3, Step 2: $L\_{3,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-006.png" alt="Iteration 3, Step 2: $L\_{3,n}$" style="zoom: 33%;" />
 
 **(Step 3)**In **(Iteration 3)**, we compute C3:
 
-<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-007.png" alt="Iteration 3, Step 3: $C\_{3,n}$" style="zoom:67%;" />
+<img src="https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/graph-isomorphism-007.png" alt="Iteration 3, Step 3: $C\_{3,n}$" style="zoom: 33%;" />
 
 Since the partition of nodes by compressed label has not changed from C2 to C3, we may terminate the algorithm here.
 
@@ -314,7 +314,7 @@ By information we mean the variation present in the sample, given by the correla
 
 More formally: given a sample of *n* observations on a vector of *p* variables. Define the first principal component of the sample by the linear transformation $z_1 = a_1^Tx$ where the vector $a_1 = (a_{11},...,a{p1})$ is chosen such that is maximum the $Var[z_1]$. You continue adding other dimensions but constraining the successive dimension being orthogonal to the previous one so having zero correlation. Another constraint is the fact that $a_k^Ta_k=1$. In the image below we can se that through the PCA we are moving from a 3D space to a 2D space.
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_pca_illu3d.png" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_pca_illu3d.png" style="zoom: 50%;" />
 
 
 
@@ -322,7 +322,7 @@ More formally: given a sample of *n* observations on a vector of *p* variables. 
 
 Isomap is a combination of the Floyd–Warshall algorithm with classic Multidimensional Scaling. Classic Multidimensional Scaling (MDS) takes a matrix of pair-wise distances between all points and computes a position for each point. Isomap assumes that the pair-wise distances are only known between neighboring points, and uses the Floyd–Warshall algorithm to compute the pair-wise distances between all other points. This effectively estimates the full matrix of pair-wise geodesic distances between all of the points. Isomap then uses classic MDS to compute the reduced-dimensional positions of all the points. In the image below we can see that while the reduction provided by the PCA is linear w.r.t. the input, the Isomap is non-linear and can capture a greater variance:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/vbxE9.jpg" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/vbxE9.jpg" style="zoom: 50%;" />
 
 Isomap works in 3 phases:
 
@@ -332,13 +332,13 @@ Isomap works in 3 phases:
 
 Choosing the right radius is also important:
 
-![i2](/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/i2.png)
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/i2.png" alt="i2" style="zoom:50%;" />
 
 #### Locally-linear embedding
 
 Locally-Linear Embedding (LLE) has several advantages over Isomap, including faster optimization when implemented to take advantage of sparse matrix algorithms, and better results with many problems. LLE also begins by finding a set of the nearest neighbors of each point. It then computes a set of weights for each point that best describes the point as a linear combination of its neighbors. Finally, it uses an eigenvector-based optimization technique to find the low-dimensional embedding of points, such that each point is still described with the same linear combination of its neighbors. LLE tends to handle non-uniform sample densities poorly because there is no fixed unit to prevent the weights from drifting as various regions differ in sample densities. As we can see here in the image LLE and Isomap are not so different in the result but LLE can perform better on sparse matrices:
 
-<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png" style="zoom:67%;" />
+<img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png" style="zoom: 50%;" />
 
 Also the computation of LLE as the ISOMAP happens in 3 main steps:
 
