@@ -340,6 +340,12 @@ Locally-Linear Embedding (LLE) has several advantages over Isomap, including fas
 
 <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/fig_S_manifold_PCA_1.png" style="zoom:67%;" />
 
+Also the computation of LLE as the ISOMAP happens in 3 main steps:
+
+- Compute the neighbors of each data point.
+- Compute the weights that best reconstruct each data point from its neighbors, minimizing the cost in  <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/equetion1.png" alt="equetion1" style="zoom:20%;" />by constrained linear fits. This represents the cost of reconstruction error of a point using the neighbours.
+- Compute the vectors best reconstructed by the weights ,minimizing the quadratic form in <img src="/Users/rr/PycharmProjects/Manifold-Learning-and-Graph-Kernels/images/equation2.png" alt="equation2" style="zoom:20%;" />by its bottom nonzero eigenvectors. This represents the cost for a vector $X_i$ to be represented with lower dimensional reconstruction called $Y_i$.
+
 
 
 #### Example of the Manifold Reduction
@@ -562,6 +568,7 @@ It's astonishing but the brand new kernel called DSGK invented during the develo
 127. weisfeiler lehman isomorphism test - https://davidbieber.com/post/2019-05-10-weisfeiler-lehman-isomorphism-test/
 128. A tutorial on Principal Components Analysis - http://www.cs.otago.ac.nz/cosc453/student_tutorials/principal_components.pdf
 129. Numexpr - We show how to significantly speed up your mathematical calculations in Numpy and Pandas using a small library - https://www.kdnuggets.com/2020/07/speed-up-numpy-pandas-numexpr-package.html
+130. An Introduction to Locally Linear Embedding - https://cs.nyu.edu/~roweis/lle/papers/lleintro.pdf
 
 
 
