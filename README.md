@@ -504,7 +504,7 @@ In this case we tried to move the number of neighbors of the WLK from 1 to 20 us
 
 ### 4.5 LLE experiments Results
 
-
+In this case we tried to move the number of neighbors of the WLK from 1 to 20 using a step of 2. As the reader can note the values are stable on 53% in the PPI and the same occurs for the shock dataset, this is strange and probably occurs because the manifold is really compressed in in a blob so the difference between the use of a different number of neighbours is zero. The number of output dimensions is kept as 2 because of the visualization's sake.
 
 |      | method                           | PPI_score                                      | SHOCK_score                                   |
 | ---: | :------------------------------- | :--------------------------------------------- | :-------------------------------------------- |
@@ -537,7 +537,7 @@ In this case we tried to move the number of neighbors of the WLK from 1 to 20 us
 
 At the end we would like to mention that the trials to build up this analysis were much more, in particular we tried also to run the graphlet algorithm but due to its high complexity on these huge datasets the time to complete was too long so we dropped. Another dropped kernel was the random walk one, but for the same reasons of the graphlet one it was excluded. The Dominant set kernel was improved to perform well than the mere rude version putting attention on the implementation of the cycles in particular. Another important thing to be mentioned is that the calculus of the Dominant set itself is pretty expensive but we have found a library called "numexpr" that takes numpy arrays and drastically improves the computations on them such as summations and products. The benchmarks are present on the website[129].
 
-It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
+It's astonishing but the brand new kernel called DSGK invented during the development of this project is one of the best performing in the overall ranking so probably it has to be tested more . Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases. In some cases also is interestesting to note that the computation stuck changing the parameter of the number of neoghbors and we can imagine that this is because of the very small output dimension(it is only 2 because we want to visualize the result) and also because the points can be all of them contained in a dense blob so this can explain inability to increase the precision while increasing the neighbors.
 
 
 
