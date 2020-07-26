@@ -4,6 +4,8 @@ from utils import *
 
 def launch(ker, red, results_PPI, results_SHOCK, n_iter=4,n_neighbors = 15, n_components = 2):
 	# Uses the shortest path kernel to generate the kernel matrices
+	print(red)
+
 	gk = None
 	if ker == "SPK":
 		gk = ShortestPath(normalize=True)
@@ -37,14 +39,19 @@ def launch(ker, red, results_PPI, results_SHOCK, n_iter=4,n_neighbors = 15, n_co
 		if red == "NOP":
 			red="no-RED"
 
+		tmp= red
+
 		if red == "ISO":
 			iso_prj_D = manifold.Isomap(n_neighbors, n_components).fit_transform(D)
+			tmp = red+"(neigh "+str(n_neighbors)+",comp "+str(n_components)+")"
 
 		if red == "PCA":
 			iso_prj_D = PCA(n_neighbors, n_components).fit_transform(D)
+			tmp = red+"(neigh "+str(n_neighbors)+",comp "+str(n_components)+")"
 
 		if red == "LLE":
 			iso_prj_D = manifold.LocallyLinearEmbedding(n_components).fit_transform(D)
+			tmp = red+"(neigh "+str(n_neighbors)+",comp "+str(n_components)+")"
 
 		if red == "SE":
 			iso_prj_D = manifold.SpectralEmbedding(n_components).fit_transform(D)
@@ -76,7 +83,7 @@ def launch(ker, red, results_PPI, results_SHOCK, n_iter=4,n_neighbors = 15, n_co
 
 			#acc= np.mean(scores_ln)
 
-			pd_name = ker+"-"+i+"-"+red
+			pd_name = ker+"-"+i+"-"+tmp
 			#pd_acc = "Acc: "+str(str(round(acc*100, 2)))+ "%"
 			pd_acc = "Acc: min " + str(np.min(scores_ln))[:4] + " - avg " +str(np.mean(scores_ln))[:4]+ " - max " + str(np.max(scores_ln))[:4] + " - std "+ str(np.std(scores_ln))[:5]
 

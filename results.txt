@@ -1,11 +1,20 @@
-|    | method                   | PPI_score                                       | SHOCK_score                                     |
-|---:|:-------------------------|:------------------------------------------------|:------------------------------------------------|
-|  0 | DSGK1-linear-PCA         | Acc: min 0.5 - avg 0.73 - max 1.0 - std 0.154   | Acc: min 0.0 - avg 0.12 - max 0.25 - std 0.059  |
-|  1 | DSGK1-rbf-PCA            | Acc: min 0.25 - avg 0.59 - max 0.88 - std 0.169 | Acc: min 0.05 - avg 0.13 - max 0.25 - std 0.060 |
-|  2 | DSGK1-precomputed-no-RED | Acc: min 0.12 - avg 0.39 - max 0.77 - std 0.172 | Acc: min 0.0 - avg 0.03 - max 0.15 - std 0.050  |
-|  3 | DSGK1-linear-no-RED      | Acc: min 0.44 - avg 0.73 - max 0.88 - std 0.122 | Acc: min 0.0 - avg 0.12 - max 0.25 - std 0.074  |
-|  4 | DSGK1-rbf-no-RED         | Acc: min 0.37 - avg 0.56 - max 0.88 - std 0.133 | Acc: min 0.0 - avg 0.15 - max 0.3 - std 0.093   |
-|  5 | DSGK1-linear-ISO         | Acc: min 0.25 - avg 0.55 - max 0.87 - std 0.193 | Acc: min 0.05 - avg 0.10 - max 0.2 - std 0.041  |
-|  6 | DSGK1-rbf-ISO            | Acc: min 0.5 - avg 0.69 - max 0.88 - std 0.138  | Acc: min 0.1 - avg 0.16 - max 0.3 - std 0.062   |
-|  7 | DSGK1-linear-LLE         | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.09 - max 0.2 - std 0.061   |
-|  8 | DSGK1-rbf-LLE            | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.08 - max 0.15 - std 0.050  |
+|    | method                           | PPI_score                                       | SHOCK_score                                    |
+|---:|:---------------------------------|:------------------------------------------------|:-----------------------------------------------|
+|  0 | WLK1-linear-ISO(neigh 2,comp 2)  | Acc: min 0.44 - avg 0.52 - max 0.62 - std 0.053 | Acc: min 0.1 - avg 0.14 - max 0.2 - std 0.047  |
+|  1 | WLK1-rbf-ISO(neigh 2,comp 2)     | Acc: min 0.33 - avg 0.51 - max 0.55 - std 0.064 | Acc: min 0.05 - avg 0.12 - max 0.2 - std 0.051 |
+|  2 | WLK1-linear-ISO(neigh 4,comp 2)  | Acc: min 0.22 - avg 0.58 - max 0.77 - std 0.200 | Acc: min 0.1 - avg 0.22 - max 0.3 - std 0.060  |
+|  3 | WLK1-rbf-ISO(neigh 4,comp 2)     | Acc: min 0.25 - avg 0.59 - max 0.88 - std 0.182 | Acc: min 0.1 - avg 0.28 - max 0.4 - std 0.086  |
+|  4 | WLK1-linear-ISO(neigh 6,comp 2)  | Acc: min 0.44 - avg 0.66 - max 1.0 - std 0.186  | Acc: min 0.0 - avg 0.22 - max 0.3 - std 0.087  |
+|  5 | WLK1-rbf-ISO(neigh 6,comp 2)     | Acc: min 0.44 - avg 0.67 - max 1.0 - std 0.187  | Acc: min 0.2 - avg 0.33 - max 0.5 - std 0.077  |
+|  6 | WLK1-linear-ISO(neigh 8,comp 2)  | Acc: min 0.25 - avg 0.54 - max 0.75 - std 0.150 | Acc: min 0.0 - avg 0.22 - max 0.3 - std 0.087  |
+|  7 | WLK1-rbf-ISO(neigh 8,comp 2)     | Acc: min 0.33 - avg 0.60 - max 0.77 - std 0.151 | Acc: min 0.2 - avg 0.33 - max 0.5 - std 0.076  |
+|  8 | WLK1-linear-ISO(neigh 10,comp 2) | Acc: min 0.25 - avg 0.49 - max 0.66 - std 0.120 | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.078  |
+|  9 | WLK1-rbf-ISO(neigh 10,comp 2)    | Acc: min 0.33 - avg 0.61 - max 0.88 - std 0.188 | Acc: min 0.1 - avg 0.25 - max 0.4 - std 0.088  |
+| 10 | WLK1-linear-ISO(neigh 12,comp 2) | Acc: min 0.25 - avg 0.48 - max 0.62 - std 0.109 | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.094 |
+| 11 | WLK1-rbf-ISO(neigh 12,comp 2)    | Acc: min 0.37 - avg 0.62 - max 0.88 - std 0.179 | Acc: min 0.1 - avg 0.24 - max 0.5 - std 0.109  |
+| 12 | WLK1-linear-ISO(neigh 14,comp 2) | Acc: min 0.25 - avg 0.51 - max 0.66 - std 0.126 | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.094 |
+| 13 | WLK1-rbf-ISO(neigh 14,comp 2)    | Acc: min 0.33 - avg 0.61 - max 0.88 - std 0.167 | Acc: min 0.2 - avg 0.29 - max 0.5 - std 0.094  |
+| 14 | WLK1-linear-ISO(neigh 16,comp 2) | Acc: min 0.25 - avg 0.51 - max 0.66 - std 0.126 | Acc: min 0.15 - avg 0.27 - max 0.5 - std 0.090 |
+| 15 | WLK1-rbf-ISO(neigh 16,comp 2)    | Acc: min 0.25 - avg 0.60 - max 1.0 - std 0.216  | Acc: min 0.2 - avg 0.29 - max 0.4 - std 0.083  |
+| 16 | WLK1-linear-ISO(neigh 18,comp 2) | Acc: min 0.25 - avg 0.51 - max 0.66 - std 0.126 | Acc: min 0.15 - avg 0.26 - max 0.5 - std 0.095 |
+| 17 | WLK1-rbf-ISO(neigh 18,comp 2)    | Acc: min 0.25 - avg 0.58 - max 0.88 - std 0.196 | Acc: min 0.2 - avg 0.3 - max 0.5 - std 0.1     |

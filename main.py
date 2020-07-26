@@ -34,8 +34,12 @@ def printa():
 # 	results_PPI, results_SHOCK = launch("DSGK", i, results_PPI, results_SHOCK)
 # 	save()
 
-for i in ["PCA", "NOP", "ISO", "LLE"]:
-	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK, n_iter= 1, n_neighbors = 15, n_components = 2)
+# for i in ["PCA", "NOP", "ISO", "LLE"]:
+# 	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK, n_iter= 1, n_neighbors = 10, n_components = 5)
+# 	save()
+
+for i in range(2,20,2):
+	results_PPI, results_SHOCK = launch("WLK", "ISO", results_PPI, results_SHOCK, n_iter= 1, n_neighbors = i, n_components = 2)
 	save()
 
 

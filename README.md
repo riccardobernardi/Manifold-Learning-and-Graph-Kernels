@@ -386,6 +386,12 @@ In the first column we have a progressive number so the reader can go to the cod
 
 ### 4.2 General Results
 
+These results below are conducted using these values as defaults:
+
+- n_iter=4 for the WLK
+- n_neighbors = 15 and n_components = 2 for the LLE, ISO, PCA
+- r=3 and d=2 as radius and siameter for the STK
+
 Results of Manifold Techniques
 
 |      | method                  | PPI_score                                       | SHOCK_score                                     |
@@ -431,8 +437,6 @@ Results of Manifold Techniques
 
 ### 4.3 WLK experiments Results
 
-
-
 After the results above in which the Weisfeiler Lehman number of iterations was set by default to 4 we decided to try with different parameters to find an higher accuracy. It seems also that the best performing reduction is the PCA to improve the accuracy. As you can see here we effectlively managed to find a better result with a WLK1 of 88%:
 
 |      | method                  | PPI_score                                       | SHOCK_score                                    |
@@ -453,7 +457,7 @@ After the results above in which the Weisfeiler Lehman number of iterations was 
 
 ### 4.3 DSGK experiments Results
 
-
+In this experiment we tried to stress the Dominant set kernel changing the parameters of the underlying weifeiler lehman kernel, the results are stable with respect to the original results. In particular we tried to run the algorithm with a WLK with 1 iteration instead of 4 iterations.
 
 |      | method                   | PPI_score                                       | SHOCK_score                                     |
 | ---: | :----------------------- | :---------------------------------------------- | :---------------------------------------------- |
@@ -471,13 +475,59 @@ After the results above in which the Weisfeiler Lehman number of iterations was 
 
 ### 4.4 Isomap experiments Results
 
+In this case we tried to move the number of neighbors of the WLK from 1 to 20 using a step of 2. As the reader can note the values are stable between 50 and 60% in the PPI and the same occurs for the shock dataset, this is because the algorithm and the dataset are the same the only thing that changes is the dimensionality reduction algorithm.
 
+|      | method                           | PPI_score                                       | SHOCK_score                                    |
+| ---: | :------------------------------- | :---------------------------------------------- | :--------------------------------------------- |
+|    0 | WLK1-linear-ISO(neigh 1,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.13 - max 0.2 - std 0.045  |
+|    1 | WLK1-rbf-ISO(neigh 1,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.12 - max 0.2 - std 0.033  |
+|    2 | WLK1-linear-ISO(neigh 3,comp 2)  | Acc: min 0.25 - avg 0.65 - max 0.88 - std 0.203 | Acc: min 0.0 - avg 0.12 - max 0.3 - std 0.087  |
+|    3 | WLK1-rbf-ISO(neigh 3,comp 2)     | Acc: min 0.33 - avg 0.64 - max 0.88 - std 0.172 | Acc: min 0.1 - avg 0.18 - max 0.4 - std 0.081  |
+|    4 | WLK1-linear-ISO(neigh 5,comp 2)  | Acc: min 0.44 - avg 0.66 - max 0.88 - std 0.170 | Acc: min 0.1 - avg 0.21 - max 0.3 - std 0.066  |
+|    5 | WLK1-rbf-ISO(neigh 5,comp 2)     | Acc: min 0.44 - avg 0.67 - max 1.0 - std 0.158  | Acc: min 0.1 - avg 0.29 - max 0.5 - std 0.105  |
+|    6 | WLK1-linear-ISO(neigh 7,comp 2)  | Acc: min 0.44 - avg 0.66 - max 1.0 - std 0.186  | Acc: min 0.0 - avg 0.22 - max 0.3 - std 0.084  |
+|    7 | WLK1-rbf-ISO(neigh 7,comp 2)     | Acc: min 0.44 - avg 0.67 - max 1.0 - std 0.197  | Acc: min 0.2 - avg 0.32 - max 0.4 - std 0.060  |
+|    8 | WLK1-linear-ISO(neigh 9,comp 2)  | Acc: min 0.25 - avg 0.49 - max 0.66 - std 0.120 | Acc: min 0.15 - avg 0.24 - max 0.4 - std 0.069 |
+|    9 | WLK1-rbf-ISO(neigh 9,comp 2)     | Acc: min 0.33 - avg 0.60 - max 0.88 - std 0.183 | Acc: min 0.2 - avg 0.26 - max 0.4 - std 0.074  |
+|   10 | WLK1-linear-ISO(neigh 11,comp 2) | Acc: min 0.25 - avg 0.49 - max 0.66 - std 0.120 | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.094 |
+|   11 | WLK1-rbf-ISO(neigh 11,comp 2)    | Acc: min 0.33 - avg 0.62 - max 0.88 - std 0.180 | Acc: min 0.2 - avg 0.27 - max 0.5 - std 0.09   |
+|   12 | WLK1-linear-ISO(neigh 13,comp 2) | Acc: min 0.25 - avg 0.51 - max 0.66 - std 0.126 | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.094 |
+|   13 | WLK1-rbf-ISO(neigh 13,comp 2)    | Acc: min 0.33 - avg 0.62 - max 0.88 - std 0.166 | Acc: min 0.2 - avg 0.26 - max 0.4 - std 0.069  |
+|   14 | WLK1-linear-ISO(neigh 15,comp 2) | Acc: min 0.25 - avg 0.5 - max 0.66 - std 0.127  | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.096 |
+|   15 | WLK1-rbf-ISO(neigh 15,comp 2)    | Acc: min 0.25 - avg 0.58 - max 0.88 - std 0.203 | Acc: min 0.2 - avg 0.3 - max 0.5 - std 0.1     |
+|   16 | WLK1-linear-ISO(neigh 17,comp 2) | Acc: min 0.25 - avg 0.51 - max 0.66 - std 0.126 | Acc: min 0.15 - avg 0.27 - max 0.5 - std 0.092 |
+|   17 | WLK1-rbf-ISO(neigh 17,comp 2)    | Acc: min 0.25 - avg 0.57 - max 0.88 - std 0.207 | Acc: min 0.2 - avg 0.3 - max 0.5 - std 0.1     |
+|   18 | WLK1-linear-ISO(neigh 19,comp 2) | Acc: min 0.25 - avg 0.5 - max 0.66 - std 0.127  | Acc: min 0.15 - avg 0.26 - max 0.5 - std 0.092 |
+|   19 | WLK1-rbf-ISO(neigh 19,comp 2)    | Acc: min 0.25 - avg 0.56 - max 0.88 - std 0.201 | Acc: min 0.2 - avg 0.29 - max 0.4 - std 0.078  |
 
 
 
 ### 4.5 LLE experiments Results
 
 
+
+|      | method                           | PPI_score                                      | SHOCK_score                                   |
+| ---: | :------------------------------- | :--------------------------------------------- | :-------------------------------------------- |
+|    0 | WLK1-linear-LLE(neigh 1,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|    1 | WLK1-rbf-LLE(neigh 1,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|    2 | WLK1-linear-LLE(neigh 3,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|    3 | WLK1-rbf-LLE(neigh 3,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|    4 | WLK1-linear-LLE(neigh 5,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|    5 | WLK1-rbf-LLE(neigh 5,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|    6 | WLK1-linear-LLE(neigh 7,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|    7 | WLK1-rbf-LLE(neigh 7,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|    8 | WLK1-linear-LLE(neigh 9,comp 2)  | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|    9 | WLK1-rbf-LLE(neigh 9,comp 2)     | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|   10 | WLK1-linear-LLE(neigh 11,comp 2) | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|   11 | WLK1-rbf-LLE(neigh 11,comp 2)    | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|   12 | WLK1-linear-LLE(neigh 13,comp 2) | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|   13 | WLK1-rbf-LLE(neigh 13,comp 2)    | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|   14 | WLK1-linear-LLE(neigh 15,comp 2) | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|   15 | WLK1-rbf-LLE(neigh 15,comp 2)    | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|   16 | WLK1-linear-LLE(neigh 17,comp 2) | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|   17 | WLK1-rbf-LLE(neigh 17,comp 2)    | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
+|   18 | WLK1-linear-LLE(neigh 19,comp 2) | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03  |
+|   19 | WLK1-rbf-LLE(neigh 19,comp 2)    | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027 | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047 |
 
 
 
