@@ -2,17 +2,19 @@ from sklearn.metrics import pairwise_distances
 
 from utils import *
 
-def launch(ker, red, results_PPI, results_SHOCK):
+def launch(ker, red, results_PPI, results_SHOCK, n_iter=4,n_neighbors = 15, n_components = 2):
 	# Uses the shortest path kernel to generate the kernel matrices
 	gk = None
 	if ker == "SPK":
 		gk = ShortestPath(normalize=True)
 	if ker == "WLK":
-		gk = WeisfeilerLehman(n_iter=4, normalize=True)
+		gk = WeisfeilerLehman(n_iter=n_iter, normalize=True)
+		ker = "WLK"+str(n_iter)
 	if ker == "STK":
 		gk = NeighborhoodSubgraphPairwiseDistance(r=3, d=2)
 	if ker == "DSGK":
-		gk = DomSetGraKer()
+		gk = DomSetGraKer(n_iter=n_iter)
+		ker = "DSGK"+str(n_iter)
 
 	if red == "NOP":
 		red = "no-RED"
@@ -30,8 +32,6 @@ def launch(ker, red, results_PPI, results_SHOCK):
 			D = pairwise_distances(K, metric='euclidean', n_jobs=4)
 			y=y_SHOCK
 
-		n_neighbors = 15
-		n_components = 2
 		iso_prj_D = D
 
 		if red == "NOP":

@@ -168,13 +168,11 @@ def dominant_set(A, x=None, epsilon=1.0e-4):
 	return x
 
 class DomSetGraKer():
-	def __init__(self):
+	def __init__(self, n_iter):
 		self.train_graphs = None
+		self.n_iter = n_iter
 
-	def similarity(self,g1,g2):
-		return jaccard(set(dominating_set(g1)), set(dominating_set(g2)))
-
-	def similarity2(self,g1adj,g2adj):
+	def similarity(self,g1adj,g2adj):
 		ds1list = [i for i,x in enumerate(list(dominant_set(g1adj))) if x>0]
 		ds2list = [i for i,x in enumerate(list(dominant_set(g2adj))) if x>0]
 		ds1adj = []
@@ -194,7 +192,7 @@ class DomSetGraKer():
 		d, e, f = from_adj_to_set(ds2adj)
 
 		# tmp = ShortestPath(normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
-		tmp = WeisfeilerLehman(n_iter=4, normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
+		tmp = WeisfeilerLehman(n_iter=self.n_iter, normalize=True).fit_transform([[a, b, c], [d, e, f]])[0][1]
 
 		return tmp
 
@@ -208,7 +206,7 @@ class DomSetGraKer():
 				#g2 = nx.from_numpy_matrix(from_set_to_adj(graphs[j]))
 				g1adj = from_set_to_adj(graphs[i])
 				g2adj = from_set_to_adj(graphs[j])
-				ss = self.similarity2(g1adj,g2adj)
+				ss = self.similarity(g1adj,g2adj)
 				kernel_sim[i][j] = ss
 				kernel_sim[j][i] = ss
 
@@ -224,7 +222,7 @@ class DomSetGraKer():
 				#kernel_sim[i][j] = self.similarity2(g1,g2)
 				g1adj = from_set_to_adj(graphs[i])
 				g2adj = from_set_to_adj(self.train_graphs[j])
-				ss = self.similarity2(g1adj, g2adj)
+				ss = self.similarity(g1adj, g2adj)
 				kernel_sim[i][j] = ss
 				kernel_sim[j][i] = ss
 

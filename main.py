@@ -24,16 +24,19 @@ def printa():
 	print(tmp1.to_markdown())
 
 
-for i in ["PCA", "NOP", "ISO", "LLE"]:
-	results_PPI, results_SHOCK = launch("SPK", i, results_PPI, results_SHOCK)
-	save()
-	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK)
-	save()
-	results_PPI, results_SHOCK = launch("STK", i, results_PPI, results_SHOCK)
-	save()
-	results_PPI, results_SHOCK = launch("DSGK", i, results_PPI, results_SHOCK)
-	save()
+# for i in ["PCA", "NOP", "ISO", "LLE"]:
+# 	results_PPI, results_SHOCK = launch("SPK", i, results_PPI, results_SHOCK)
+# 	save()
+# 	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK)
+# 	save()
+# 	results_PPI, results_SHOCK = launch("STK", i, results_PPI, results_SHOCK)
+# 	save()
+# 	results_PPI, results_SHOCK = launch("DSGK", i, results_PPI, results_SHOCK)
+# 	save()
 
+for i in ["PCA", "NOP", "ISO", "LLE"]:
+	results_PPI, results_SHOCK = launch("WLK", i, results_PPI, results_SHOCK, n_iter= 1, n_neighbors = 15, n_components = 2)
+	save()
 
 
 save()

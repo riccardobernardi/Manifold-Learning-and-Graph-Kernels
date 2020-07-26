@@ -427,13 +427,67 @@ Results of Manifold Techniques
 |   34 | DSGK-linear-LLE         | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.095   |
 |   35 | DSGK-rbf-LLE            | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.22 - max 0.4 - std 0.095   |
 
+
+
+### 4.3 WLK experiments Results
+
+
+
+After the results above in which the Weisfeiler Lehman number of iterations was set by default to 4 we decided to try with different parameters to find an higher accuracy. It seems also that the best performing reduction is the PCA to improve the accuracy. As you can see here we effectlively managed to find a better result with a WLK1 of 88%:
+
+|      | method                  | PPI_score                                       | SHOCK_score                                    |
+| ---: | :---------------------- | :---------------------------------------------- | :--------------------------------------------- |
+|    0 | WLK1-linear-PCA         | Acc: min 0.25 - avg 0.61 - max 0.88 - std 0.183 | Acc: min 0.15 - avg 0.26 - max 0.5 - std 0.105 |
+|    1 | WLK1-rbf-PCA            | Acc: min 0.25 - avg 0.55 - max 0.77 - std 0.162 | Acc: min 0.1 - avg 0.21 - max 0.4 - std 0.089  |
+|    2 | WLK1-precomputed-no-RED | Acc: min 0.0 - avg 0.40 - max 0.77 - std 0.220  | Acc: min 0.0 - avg 0.04 - max 0.1 - std 0.043  |
+|    3 | WLK1-linear-no-RED      | Acc: min 0.33 - avg 0.58 - max 0.88 - std 0.160 | Acc: min 0.1 - avg 0.24 - max 0.4 - std 0.086  |
+|    4 | WLK1-rbf-no-RED         | Acc: min 0.25 - avg 0.50 - max 0.55 - std 0.089 | Acc: min 0.0 - avg 0.18 - max 0.35 - std 0.087 |
+|    5 | WLK1-linear-ISO         | Acc: min 0.25 - avg 0.5 - max 0.66 - std 0.127  | Acc: min 0.15 - avg 0.25 - max 0.5 - std 0.096 |
+|    6 | WLK1-rbf-ISO            | Acc: min 0.25 - avg 0.58 - max 0.88 - std 0.203 | Acc: min 0.2 - avg 0.3 - max 0.5 - std 0.1     |
+|    7 | WLK1-linear-LLE         | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.1 - avg 0.11 - max 0.2 - std 0.03   |
+|    8 | WLK1-rbf-LLE            | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.10 - max 0.2 - std 0.047  |
+
+ This also means that probably there is room for improvement also for the Dominant set kernel since it exploits the Weisfeiler Lehman kernel.
+
+
+
+### 4.3 DSGK experiments Results
+
+
+
+|      | method                   | PPI_score                                       | SHOCK_score                                     |
+| ---: | :----------------------- | :---------------------------------------------- | :---------------------------------------------- |
+|    0 | DSGK1-linear-PCA         | Acc: min 0.5 - avg 0.73 - max 1.0 - std 0.154   | Acc: min 0.0 - avg 0.12 - max 0.25 - std 0.059  |
+|    1 | DSGK1-rbf-PCA            | Acc: min 0.25 - avg 0.59 - max 0.88 - std 0.169 | Acc: min 0.05 - avg 0.13 - max 0.25 - std 0.060 |
+|    2 | DSGK1-precomputed-no-RED | Acc: min 0.12 - avg 0.39 - max 0.77 - std 0.172 | Acc: min 0.0 - avg 0.03 - max 0.15 - std 0.050  |
+|    3 | DSGK1-linear-no-RED      | Acc: min 0.44 - avg 0.73 - max 0.88 - std 0.122 | Acc: min 0.0 - avg 0.12 - max 0.25 - std 0.074  |
+|    4 | DSGK1-rbf-no-RED         | Acc: min 0.37 - avg 0.56 - max 0.88 - std 0.133 | Acc: min 0.0 - avg 0.15 - max 0.3 - std 0.093   |
+|    5 | DSGK1-linear-ISO         | Acc: min 0.25 - avg 0.55 - max 0.87 - std 0.193 | Acc: min 0.05 - avg 0.10 - max 0.2 - std 0.041  |
+|    6 | DSGK1-rbf-ISO            | Acc: min 0.5 - avg 0.69 - max 0.88 - std 0.138  | Acc: min 0.1 - avg 0.16 - max 0.3 - std 0.062   |
+|    7 | DSGK1-linear-LLE         | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.09 - max 0.2 - std 0.061   |
+|    8 | DSGK1-rbf-LLE            | Acc: min 0.5 - avg 0.53 - max 0.55 - std 0.027  | Acc: min 0.0 - avg 0.08 - max 0.15 - std 0.050  |
+
+
+
+### 4.4 Isomap experiments Results
+
+
+
+
+
+### 4.5 LLE experiments Results
+
+
+
+
+
 # 6. Conclusions
 
 
 
-At the end we would like to mention that the trials to build up this analysis were much more, in particular we tried also to run the graphlet algorithm but due to its high complexity on these huge datasets the time to complete was too long so we dropped. Another dropped kernel was the random walk one, for the same reasons of the graphlet one it was excluded. The Dominant set kernel was improved to perform well than the mere rude version ptting attention on the implementation of the cycles in particular. Another important thing to be mentioned is that the calculus of the Dominant set itself is pretty expensive but we have found a library called "numexpr" that takes numpy arrays and drastically improves the computations on them. The benchmarks are present on the website[129].
+At the end we would like to mention that the trials to build up this analysis were much more, in particular we tried also to run the graphlet algorithm but due to its high complexity on these huge datasets the time to complete was too long so we dropped. Another dropped kernel was the random walk one, but for the same reasons of the graphlet one it was excluded. The Dominant set kernel was improved to perform well than the mere rude version putting attention on the implementation of the cycles in particular. Another important thing to be mentioned is that the calculus of the Dominant set itself is pretty expensive but we have found a library called "numexpr" that takes numpy arrays and drastically improves the computations on them such as summations and products. The benchmarks are present on the website[129].
 
-It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more and hopefully it can worths a publication. We hope that this can end up with an advancement in this field. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
+It's astonishing but the brand new kernel called DSGK invented during the development of this project is the best performing in the overall ranking so probably it has to be tested more. Another conclusion to be drawn is that the reduction reduced the time of the computation but severely decreased the accuracy of the result in the majority of the cases.
 
 
 
